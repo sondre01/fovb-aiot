@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Learn about All in Juan Vital Sign's mission to provide affordable, portable healthcare monitoring across the Philippines.">
+    <title>About Us | All in Juan Vital Sign</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <img class="logo" src="/pictures/logo.png" alt="All in Juan Vital Sign Logo">
+            <div class="title">All in Juan Vital Sign</div>
+            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html" class="active">About Us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" style="background-image: url('/pictures/about-hero.jpg');">
+            <div class="hero-content">
+                <h1>About Us</h1>
+                <p>Revolutionizing Healthcare Accessibility in the Philippines</p>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section class="section mission">
+            <h2>Our Mission</h2>
+            <p class="text-center">
+                We are committed to making healthcare accessible, affordable, and portable for every Filipino. Through
+                innovative technology and advanced sensors, we're bringing vital health monitoring directly to
+                communities across the Philippines.
+            </p>
+        </section>
+
+        <!-- Features Grid -->
+        <section class="section features">
+            <h2>Why Choose Us</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>💓 Advanced Monitoring</h3>
+                    <p>Accurate real‑time tracking of heart rate, blood pressure, oxygen levels, and body temperature.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 Early Detection</h3>
+                    <p>AI‑driven analytics predict potential health issues before they become serious.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Portable & Accessible</h3>
+                    <p>Compact, easy‑to‑use devices bring professional‑grade monitoring to remote areas.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💰 Affordable Care</h3>
+                    <p>Medical‑grade monitoring at a fraction of traditional costs.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🌐 Connected Health</h3>
+                    <p>Seamless data sync with healthcare providers for continuous monitoring.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🇵🇭 For Every Juan</h3>
+                    <p>Designed specifically for Filipino communities, empowering millions across the archipelago.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

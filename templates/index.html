@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All in Juan Vital Sign | Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <img class="logo" src="/pictures/logo.png" alt="All in Juan Vital Sign Logo">
+            <div class="title">All in Juan Vital Sign</div>
+
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i> &#9776;
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About us</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Welcome to All in Juan Vital Sign</h1>
+                <p class="hero-text">
+                    <b>All in Juan Vital Sign</b> is a cutting-edge prototype designed with advanced sensors to monitor
+                    and
+                    collect vital health data. It helps predict potential diseases early, providing accessible and
+                    portable health checkups for every
+                    Juan in the Philippines.
+                </p>
+                <a href="about.html" class="btn">Learn More</a>
+            </div>
+            <div class="hero-image-container">
+                <img class="hero-image" src="/pictures/hero-image.png" alt="All in Juan Vital Sign Device">
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>
