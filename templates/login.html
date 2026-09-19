@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In | FOVB-AIoT - RTU Pasig Clinic{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo-badge">
+                    <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="FOVB-AIoT Logo">
+                </div>
+                <h2>Welcome Back, Ka-RTU!</h2>
+                <p>Sign in to view your FOVB-AIoT vital signs history, BMI trends, and AI health prediction.</p>
+            </div>
+
+            <!-- Instant One-Click Demo Access for Thesis Evaluation -->
+            <div class="demo-login-box">
+                <div class="demo-box-icon"><i class="fas fa-sparkles text-red"></i></div>
+                <div class="demo-box-text">
+                    <strong>Thesis Defense / Rapid Testing Mode:</strong>
+                    <p>Click below to immediately log in with the pre-configured student profile and checkup logs.</p>
+                </div>
+                <a href="{{ url_for('demo_login') }}" class="btn-demo-login">
+                    <i class="fas fa-arrow-right-to-bracket"></i> 1-Click Demo Student Login
+                </a>
+            </div>
+
+            <div class="or-divider"><span>or sign in with your credentials</span></div>
+
+            <form action="{{ url_for('login') }}" method="POST" class="auth-form">
+                <div class="form-group">
+                    <label for="identifier"><i class="fas fa-id-card"></i> Student ID, Email, or RFID UID <span class="req">*</span></label>
+                    <input type="text" id="identifier" name="identifier" placeholder="e.g. 2022-104928 or user@rtu.edu.ph" required autofocus>
+                    <small class="form-hint">You can also type your 4-byte RFID UID (e.g. E2 80 68 31).</small>
+                </div>
+
+                <div class="form-group">
+                    <div class="label-flex">
+                        <label for="password"><i class="fas fa-lock"></i> Password <span class="req">*</span></label>
+                    </div>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn-primary btn-submit-full mt-3">
+                    <i class="fas fa-right-to-bracket"></i> Sign In to Health Dashboard
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>New to RTU Pasig Clinic Kiosk? <a href="{{ url_for('register') }}">Register online now &rarr;</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,840 @@
+{% extends "base.html" %}
+
+{% block title %}My Health Dashboard | FOVB-AIoT - RTU Pasig Clinic{% endblock %}
+
+{% block extra_head %}
+<!-- Chart.js CDN for interactive trend visualization -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- QRCode.js for generating digital RFID pass QR -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Top Welcome & Profile Bar -->
+    <section class="dashboard-header-section">
+        <div class="container">
+            <div class="dash-welcome-flex">
+                <div class="welcome-text">
+                    <span class="greeting-badge"><span class="pulse-dot"></span> Kumusta, Ka-RTU!</span>
+                    <h1>{{ user['full_name'] }}</h1>
+                    <p class="dash-meta">
+                        <span><i class="fas fa-id-badge"></i> Student ID: <strong>{{ user['student_id'] }}</strong></span>
+                        <span><i class="fas fa-building-columns"></i> {{ user['department'] or 'College of Engineering' }}</span>
+                        <span><i class="fas fa-venus-mars"></i> {{ user['sex'] or 'N/A' }}, {{ user['age'] or 'N/A' }} yrs old</span>
+                    </p>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="dash-actions">
+                    <button type="button" class="btn-primary" id="btnOpenSimulate">
+                        <i class="fas fa-play"></i> Simulate Kiosk Checkup
+                    </button>
+                    {% if latest %}
+                        <button type="button" class="btn-outline" id="btnPrintSlip" onclick="openPrintModal()">
+                            <i class="fas fa-print"></i> Print Official Clinic Slip
+                        </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container dashboard-main-grid">
+        <!-- Left Column: RFID Pass & AI Risk Prediction -->
+        <aside class="dash-sidebar">
+            <!-- Digital RFID Smart Pass Card -->
+            <div class="rfid-card-widget">
+                <div class="rfid-card-front">
+                    <div class="rfid-top-row">
+                        <div class="rfid-chip-icon">
+                            <i class="fas fa-microchip"></i>
+                            <span>NFC / RFID 13.56 MHz</span>
+                        </div>
+                        <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="Logo" class="rfid-logo-micro">
+                    </div>
+                    
+                    <div class="rfid-holder-name">{{ user['full_name'] }}</div>
+                    <div class="rfid-holder-id">ID: {{ user['student_id'] }}</div>
+                    
+                    <div class="rfid-bottom-row">
+                        <div class="rfid-uid-display">
+                            <span class="uid-label">RFID UID TAG</span>
+                            <span class="uid-value">{{ user['rfid_uid'] or 'NOT LINKED' }}</span>
+                        </div>
+                        <div id="rfidQrCode" class="rfid-qr-box" title="Scan at RTU Kiosk"></div>
+                    </div>
+                </div>
+                <div class="rfid-card-footer">
+                    <button type="button" class="btn-link-edit" onclick="openRfidModal()">
+                        <i class="fas fa-pen-to-square"></i> Change / Re-link RFID Tag
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Comprehensive Health Risk Gauge Widget -->
+            <div class="dash-widget ai-risk-widget">
+                <div class="widget-header">
+                    <div class="widget-title">
+                        <i class="fas fa-brain text-red"></i>
+                        <h3>AI Health Risk Prediction</h3>
+                    </div>
+                    {% if latest %}
+                        <span class="risk-badge badge-{{ latest['risk_level']|lower|replace(' ', '-') }}">
+                            {{ latest['risk_level'] }}
+                        </span>
+                    {% endif %}
+                </div>
+
+                {% if latest %}
+                    <div class="risk-score-display">
+                        <div class="gauge-circle">
+                            <div class="score-value">{{ latest['risk_score'] }}%</div>
+                            <div class="score-subtitle">Comprehensive Risk</div>
+                        </div>
+                        <div class="risk-bar-container">
+                            <div class="risk-bar-fill fill-{{ latest['risk_level']|lower|replace(' ', '-') }}" style="width: {{ latest['risk_score'] }}%;"></div>
+                        </div>
+                        <div class="risk-scale-labels">
+                            <span>0% Low</span>
+                            <span>50% Moderate</span>
+                            <span>100% High</span>
+                        </div>
+                    </div>
+
+                    <div class="ai-recommendation-box">
+                        <h4><i class="fas fa-notes-medical"></i> Clinical AI Assessment:</h4>
+                        <p>{{ latest['ai_recommendation'] }}</p>
+                    </div>
+
+                    <div class="kiosk-stamp">
+                        <small><i class="fas fa-clock"></i> Evaluated: {{ latest['checkup_date'] }}</small><br>
+                        <small><i class="fas fa-desktop"></i> Station: {{ latest['kiosk_id'] }}</small>
+                    </div>
+                {% else %}
+                    <div class="no-data-hint">
+                        <i class="fas fa-heart-circle-exclamation"></i>
+                        <p>No checkup records found yet. Click <strong>Simulate Kiosk Checkup</strong> above to log your first screening session!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </aside>
+
+        <!-- Right Column: Latest Vital Cards, Charts, and History Table -->
+        <main class="dash-content-column">
+            {% if latest %}
+                <!-- 6 Vital Signs Cards Grid -->
+                <div class="vitals-metric-grid">
+                    <!-- 1. Body Temperature -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-temp"><i class="fas fa-temperature-three-quarters"></i></span>
+                            <span class="sensor-mini-badge">MLX90614</span>
+                        </div>
+                        <div class="metric-value">{{ latest['temperature'] }} <span class="metric-unit">°C</span></div>
+                        <div class="metric-label">Body Temperature</div>
+                        <div class="metric-status">
+                            {% if latest['temperature'] >= 37.6 %}
+                                <span class="pill pill-warning"><i class="fas fa-triangle-exclamation"></i> Low Fever</span>
+                            {% elif latest['temperature'] < 36.0 %}
+                                <span class="pill pill-info"><i class="fas fa-snowflake"></i> Subnormal</span>
+                            {% else %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (36.5–37.5)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- 2. Blood Pressure (AI OCR) -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-bp"><i class="fas fa-heart-pulse"></i></span>
+                            <span class="sensor-mini-badge">YOLO AI Vision</span>
+                        </div>
+                        <div class="metric-value">
+                            {{ latest['bp_systolic'] }}/{{ latest['bp_diastolic'] }} 
+                            <span class="metric-unit">mmHg</span>
+                        </div>
+                        <div class="metric-label">Blood Pressure (Sys / Dia)</div>
+                        <div class="metric-status">
+                            {% if 'Stage' in latest['bp_category'] or 'Crisis' in latest['bp_category'] %}
+                                <span class="pill pill-danger"><i class="fas fa-circle-exclamation"></i> {{ latest['bp_category'] }}</span>
+                            {% elif 'Elevated' in latest['bp_category'] %}
+                                <span class="pill pill-warning"><i class="fas fa-triangle-exclamation"></i> Elevated</span>
+                            {% else %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> {{ latest['bp_category'] }} (&lt;120/&lt;80)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- 3. Heart Rate (Pulse) -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-hr"><i class="fas fa-heartbeat pulse-anim"></i></span>
+                            <span class="sensor-mini-badge">MAX30102</span>
+                        </div>
+                        <div class="metric-value">{{ latest['heart_rate'] }} <span class="metric-unit">BPM</span></div>
+                        <div class="metric-label">Heart Rate (Pulse)</div>
+                        <div class="metric-status">
+                            {% if latest['heart_rate'] > 100 %}
+                                <span class="pill pill-warning">Tachycardia (&gt;100)</span>
+                            {% elif latest['heart_rate'] < 60 %}
+                                <span class="pill pill-info">Bradycardia (&lt;60)</span>
+                            {% else %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (60–100)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- 4. Respiratory Rate -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-rr"><i class="fas fa-lungs"></i></span>
+                            <span class="sensor-mini-badge">MAX30102 PPG</span>
+                        </div>
+                        <div class="metric-value">{{ latest['respiratory_rate'] }} <span class="metric-unit">br/min</span></div>
+                        <div class="metric-label">Respiratory Rate</div>
+                        <div class="metric-status">
+                            {% if latest['respiratory_rate'] > 20 %}
+                                <span class="pill pill-warning">Tachypnea (&gt;20)</span>
+                            {% else %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (12–20)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- 5. SpO2 Oxygen Saturation -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-spo2"><i class="fas fa-droplet"></i></span>
+                            <span class="sensor-mini-badge">MAX30102</span>
+                        </div>
+                        <div class="metric-value">{{ latest['spo2'] }} <span class="metric-unit">%</span></div>
+                        <div class="metric-label">Oxygen Saturation (SpO2)</div>
+                        <div class="metric-status">
+                            {% if latest['spo2'] < 95 %}
+                                <span class="pill pill-danger"><i class="fas fa-triangle-exclamation"></i> Low (&lt;95%)</span>
+                            {% else %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (95–100%)</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- 6. BMI (Height & Weight) -->
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <span class="metric-icon icon-bmi"><i class="fas fa-person"></i></span>
+                            <span class="sensor-mini-badge">LiDAR + Load Cell</span>
+                        </div>
+                        <div class="metric-value">{{ latest['bmi'] }} <span class="metric-unit">kg/m²</span></div>
+                        <div class="metric-label">BMI ({{ latest['height_cm'] }}cm • {{ latest['weight_kg'] }}kg)</div>
+                        <div class="metric-status">
+                            {% if latest['bmi_category'] == 'Normal' %}
+                                <span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal Weight</span>
+                            {% elif latest['bmi_category'] == 'Underweight' %}
+                                <span class="pill pill-warning"><i class="fas fa-arrow-down"></i> Underweight</span>
+                            {% else %}
+                                <span class="pill pill-danger"><i class="fas fa-arrow-up"></i> {{ latest['bmi_category'] }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Longitudinal Charts Panel -->
+                <div class="dash-widget mt-4">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <i class="fas fa-chart-line text-red"></i>
+                            <h3>Longitudinal Health Trends</h3>
+                        </div>
+                        <div class="chart-tab-controls">
+                            <button type="button" class="tab-btn active" onclick="switchChart('bp')">Blood Pressure</button>
+                            <button type="button" class="tab-btn" onclick="switchChart('bmi')">BMI &amp; Weight</button>
+                            <button type="button" class="tab-btn" onclick="switchChart('hr')">Heart Rate &amp; SpO2</button>
+                        </div>
+                    </div>
+
+                    <div class="chart-container" style="position: relative; height: 320px; width: 100%;">
+                        <canvas id="healthTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- History Logs Table -->
+                <div class="dash-widget mt-4">
+                    <div class="widget-header">
+                        <div class="widget-title">
+                            <i class="fas fa-clock-rotate-left text-red"></i>
+                            <h3>Complete Screening History ({{ logs|length }} Sessions)</h3>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="dash-table">
+                            <thead>
+                                <tr>
+                                    <th>Date &amp; Time</th>
+                                    <th>Blood Pressure</th>
+                                    <th>Heart Rate</th>
+                                    <th>Temp</th>
+                                    <th>SpO2</th>
+                                    <th>BMI</th>
+                                    <th>AI Risk</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for log in logs %}
+                                    <tr>
+                                        <td><strong>{{ log['checkup_date'] }}</strong></td>
+                                        <td>
+                                            <span class="font-semibold">{{ log['bp_systolic'] }}/{{ log['bp_diastolic'] }}</span> mmHg
+                                            <small class="block text-muted">{{ log['bp_category'] }}</small>
+                                        </td>
+                                        <td>{{ log['heart_rate'] }} bpm</td>
+                                        <td>{{ log['temperature'] }} °C</td>
+                                        <td>{{ log['spo2'] }}%</td>
+                                        <td>
+                                            {{ log['bmi'] }}
+                                            <small class="block text-muted">({{ log['bmi_category'] }})</small>
+                                        </td>
+                                        <td>
+                                            <span class="table-badge badge-{{ log['risk_level']|lower|replace(' ', '-') }}">
+                                                {{ log['risk_level'] }} ({{ log['risk_score'] }}%)
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn-table-action" onclick="viewLogReceipt({{ loop.index0 }})" title="View / Print Receipt">
+                                                <i class="fas fa-receipt"></i> Slip
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% else %}
+                <div class="empty-state-card">
+                    <img src="{{ url_for('static', filename='pictures/hero-image.png') }}" alt="Kiosk" class="empty-state-img">
+                    <h2>No Checkup Logs Yet!</h2>
+                    <p>
+                        Your account is ready and linked with RFID UID: <strong>{{ user['rfid_uid'] or 'Not Linked' }}</strong>.<br>
+                        Visit the RTU Pasig Clinic to take your first test, or click the button below to simulate an interactive kiosk screening!
+                    </p>
+                    <button type="button" class="btn-primary mt-3" onclick="document.getElementById('btnOpenSimulate').click()">
+                        <i class="fas fa-play"></i> Simulate Your First Checkup Now
+                    </button>
+                </div>
+            {% endif %}
+        </main>
+    </div>
+</div>
+
+<!-- MODAL 1: KIOSK SIMULATION MODAL -->
+<div class="modal-overlay" id="simulateModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-play-circle text-red"></i>
+                <h3>FOVB-AIoT Kiosk Simulation</h3>
+            </div>
+            <button type="button" class="modal-close" onclick="closeSimulateModal()">&times;</button>
+        </div>
+
+        <p class="modal-desc">
+            Simulate a patient screening at the <strong>RTU Pasig Clinic Kiosk</strong>. You can randomize parameters or customize them to test the AI Risk Prediction model.
+        </p>
+
+        <form action="{{ url_for('simulate_checkup') }}" method="POST" id="simulateForm">
+            <div class="sim-controls-top">
+                <button type="button" class="btn-sim-preset" onclick="applyPreset('healthy')">
+                    <i class="fas fa-heart text-green"></i> Healthy Profile
+                </button>
+                <button type="button" class="btn-sim-preset" onclick="applyPreset('fever')">
+                    <i class="fas fa-temperature-high text-yellow"></i> Fever Profile
+                </button>
+                <button type="button" class="btn-sim-preset" onclick="applyPreset('hypertension')">
+                    <i class="fas fa-gauge-high text-red"></i> High BP Profile
+                </button>
+            </div>
+
+            <div class="form-row mt-3">
+                <div class="form-group">
+                    <label>Height (cm) - TF-Luna LiDAR</label>
+                    <input type="number" step="0.5" name="height_cm" id="sim_height" value="171.0" required>
+                </div>
+                <div class="form-group">
+                    <label>Weight (kg) - HX711 Load Cell</label>
+                    <input type="number" step="0.5" name="weight_kg" id="sim_weight" value="65.0" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Body Temp (°C) - MLX90614</label>
+                    <input type="number" step="0.1" name="temperature" id="sim_temp" value="36.6" required>
+                </div>
+                <div class="form-group">
+                    <label>SpO2 (%) - MAX30102</label>
+                    <input type="number" name="spo2" id="sim_spo2" value="98" min="70" max="100" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Heart Rate (BPM)</label>
+                    <input type="number" name="heart_rate" id="sim_hr" value="74" required>
+                </div>
+                <div class="form-group">
+                    <label>Respiratory Rate (br/min)</label>
+                    <input type="number" name="respiratory_rate" id="sim_rr" value="16" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Systolic BP (mmHg) - YOLO OCR</label>
+                    <input type="number" name="bp_systolic" id="sim_sys" value="118" required>
+                </div>
+                <div class="form-group">
+                    <label>Diastolic BP (mmHg) - YOLO OCR</label>
+                    <input type="number" name="bp_diastolic" id="sim_dia" value="78" required>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeSimulateModal()">Cancel</button>
+                <button type="submit" class="btn-primary"><i class="fas fa-check"></i> Run Screening &amp; Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL 2: PRINTABLE OFFICIAL RTU CLINIC HEALTH SLIP MODAL -->
+<div class="modal-overlay" id="printSlipModal">
+    <div class="modal-box modal-slip-box">
+        <div class="modal-header no-print">
+            <div class="modal-title">
+                <i class="fas fa-receipt text-red"></i>
+                <h3>Official RTU Pasig Clinic Health Slip</h3>
+            </div>
+            <button type="button" class="modal-close" onclick="closePrintModal()">&times;</button>
+        </div>
+
+        <!-- Printable Document Content -->
+        <div class="printable-clinic-slip" id="printableSlipArea">
+            <div class="slip-header">
+                <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="RTU Logo" class="slip-logo">
+                <div class="slip-header-text">
+                    <h3>RIZAL TECHNOLOGICAL UNIVERSITY</h3>
+                    <h4>PASIG CAMPUS HEALTH CLINIC</h4>
+                    <p>M. Eusebio Avenue, Maybunga, Pasig City</p>
+                    <div class="slip-doc-title">FOVB-AIoT VITAL SIGNS &amp; RISK REPORT</div>
+                </div>
+            </div>
+
+            <div class="slip-divider"></div>
+
+            <div class="slip-patient-info">
+                <div class="info-line"><span>Patient Name:</span> <strong id="slip_patient_name">{{ user['full_name'] }}</strong></div>
+                <div class="info-line"><span>Student/Staff ID:</span> <strong id="slip_patient_id">{{ user['student_id'] }}</strong></div>
+                <div class="info-line"><span>Department:</span> <strong id="slip_department">{{ user['department'] or 'Engineering' }}</strong></div>
+                <div class="info-line"><span>Date &amp; Time:</span> <span id="slip_date">--</span></div>
+                <div class="info-line"><span>RFID Token UID:</span> <span id="slip_rfid">{{ user['rfid_uid'] }}</span></div>
+                <div class="info-line"><span>Station ID:</span> <span id="slip_kiosk_id">RTU-PASIG-KIOSK-01</span></div>
+            </div>
+
+            <div class="slip-divider"></div>
+
+            <table class="slip-vitals-table">
+                <thead>
+                    <tr>
+                        <th>PHYSIOLOGICAL METRIC</th>
+                        <th>READING</th>
+                        <th>STANDARD BENCHMARK</th>
+                        <th>CLINICAL REMARKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Body Temperature (MLX90614)</td>
+                        <td><strong id="slip_temp">--</strong> °C</td>
+                        <td>36.5 – 37.5 °C</td>
+                        <td id="slip_temp_rem">Normal</td>
+                    </tr>
+                    <tr>
+                        <td>Blood Pressure (YOLO OCR)</td>
+                        <td><strong id="slip_bp">--</strong> mmHg</td>
+                        <td>&lt; 120 / &lt; 80 mmHg</td>
+                        <td id="slip_bp_rem">--</td>
+                    </tr>
+                    <tr>
+                        <td>Heart Rate (MAX30102)</td>
+                        <td><strong id="slip_hr">--</strong> BPM</td>
+                        <td>60 – 100 BPM</td>
+                        <td id="slip_hr_rem">--</td>
+                    </tr>
+                    <tr>
+                        <td>Respiratory Rate</td>
+                        <td><strong id="slip_rr">--</strong> br/min</td>
+                        <td>12 – 20 br/min</td>
+                        <td id="slip_rr_rem">--</td>
+                    </tr>
+                    <tr>
+                        <td>Oxygen Saturation (SpO2)</td>
+                        <td><strong id="slip_spo2">--</strong>%</td>
+                        <td>95% – 100%</td>
+                        <td id="slip_spo2_rem">--</td>
+                    </tr>
+                    <tr>
+                        <td>Height &amp; Weight (BMI)</td>
+                        <td><strong id="slip_bmi">--</strong> kg/m²</td>
+                        <td>18.5 – 22.9 kg/m² (WHO Asia)</td>
+                        <td id="slip_bmi_rem">--</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="slip-divider"></div>
+
+            <div class="slip-ai-summary">
+                <div class="slip-risk-heading">
+                    <strong>AI HEALTH RISK PREDICTION:</strong>
+                    <span class="slip-risk-pill" id="slip_risk_level">--</span>
+                    <span id="slip_risk_score">--</span>
+                </div>
+                <p id="slip_ai_rec" class="slip-rec-text">--</p>
+            </div>
+
+            <div class="slip-signatures">
+                <div class="sig-block">
+                    <div class="sig-line"></div>
+                    <small>Patient Signature</small>
+                </div>
+                <div class="sig-block">
+                    <div class="sig-line"></div>
+                    <small>Attending Clinic Nurse / Medical Officer</small>
+                </div>
+            </div>
+
+            <div class="slip-footer-note">
+                <small>Generated by FOVB-AIoT Kiosk System • Rizal Technological University Pasig Clinic • Non-transferable</small>
+            </div>
+        </div>
+
+        <div class="modal-footer no-print">
+            <button type="button" class="btn-secondary" onclick="closePrintModal()">Close</button>
+            <button type="button" class="btn-primary" onclick="window.print()">
+                <i class="fas fa-print"></i> Print Receipt / PDF
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL 3: UPDATE RFID CARD MODAL -->
+<div class="modal-overlay" id="rfidModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-wifi text-red"></i>
+                <h3>Update Your RFID Card UID</h3>
+            </div>
+            <button type="button" class="modal-close" onclick="closeRfidModal()">&times;</button>
+        </div>
+
+        <p class="modal-desc">
+            Got a new RTU RFID card or key fob? Update your 4-byte hexadecimal UID tag below so you can tap into the kiosk instantly.
+        </p>
+
+        <form action="{{ url_for('update_rfid') }}" method="POST">
+            <div class="form-group">
+                <label for="new_rfid_uid">RFID Card UID (Hexadecimal)</label>
+                <input type="text" id="new_rfid_uid" name="rfid_uid" value="{{ user['rfid_uid'] or '' }}" placeholder="e.g. 7A 3F B2 90" required class="code-font">
+                <small class="form-hint">Enter the 4 hex byte pairs separated by spaces.</small>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeRfidModal()">Cancel</button>
+                <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save RFID Tag</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Data passed from backend for Chart.js and Receipt viewing
+    const checkupLogs = [
+        {% for log in logs|reverse %}
+        {
+            date: "{{ log['checkup_date'][:10] }}",
+            full_date: "{{ log['checkup_date'] }}",
+            temp: {{ log['temperature'] }},
+            hr: {{ log['heart_rate'] }},
+            rr: {{ log['respiratory_rate'] }},
+            sys: {{ log['bp_systolic'] }},
+            dia: {{ log['bp_diastolic'] }},
+            bp_cat: "{{ log['bp_category'] }}",
+            spo2: {{ log['spo2'] }},
+            bmi: {{ log['bmi'] }},
+            bmi_cat: "{{ log['bmi_category'] }}",
+            height: {{ log['height_cm'] }},
+            weight: {{ log['weight_kg'] }},
+            risk_score: {{ log['risk_score'] }},
+            risk_level: "{{ log['risk_level'] }}",
+            ai_rec: "{{ log['ai_recommendation']|replace('"', '\\"') }}",
+            kiosk_id: "{{ log['kiosk_id'] }}"
+        },
+        {% endfor %}
+    ];
+
+    // Generate Digital RFID QR Code
+    document.addEventListener('DOMContentLoaded', () => {
+        const qrContainer = document.getElementById('rfidQrCode');
+        const rfidValue = "{{ user['rfid_uid'] or user['student_id'] }}";
+        if (qrContainer && rfidValue) {
+            new QRCode(qrContainer, {
+                text: "RTU-FOVB-AIoT:" + rfidValue,
+                width: 64,
+                height: 64,
+                colorDark : "#1e293b",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.M
+            });
+        }
+
+        initHealthChart();
+
+        // Default open print modal with latest log if exists
+        if (checkupLogs.length > 0) {
+            populateSlip(checkupLogs[checkupLogs.length - 1]);
+        }
+    });
+
+    // Chart.js Longitudinal Trend Handler
+    let trendChart = null;
+    let currentChartType = 'bp';
+
+    function initHealthChart() {
+        const ctx = document.getElementById('healthTrendChart');
+        if (!ctx || checkupLogs.length === 0) return;
+
+        const labels = checkupLogs.map(l => l.date);
+
+        const chartConfig = {
+            type: 'line',
+            data: getChartData(currentChartType, labels),
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { font: { family: 'Inter', size: 12 } }
+                    },
+                    tooltip: {
+                        padding: 10,
+                        titleFont: { family: 'Inter', weight: 'bold' },
+                        bodyFont: { family: 'Inter' }
+                    }
+                },
+                scales: {
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        ticks: { font: { family: 'Inter' } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { family: 'Inter' } }
+                    }
+                }
+            }
+        };
+
+        trendChart = new Chart(ctx, chartConfig);
+    }
+
+    function getChartData(type, labels) {
+        if (type === 'bp') {
+            return {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Systolic BP (Target < 120)',
+                        data: checkupLogs.map(l => l.sys),
+                        borderColor: '#d32f2f',
+                        backgroundColor: 'rgba(211, 47, 47, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'Diastolic BP (Target < 80)',
+                        data: checkupLogs.map(l => l.dia),
+                        borderColor: '#2563eb',
+                        backgroundColor: 'rgba(37, 99, 235, 0.05)',
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2.5
+                    }
+                ]
+            };
+        } else if (type === 'bmi') {
+            return {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'BMI (Asia-Pacific Normal: 18.5 - 22.9)',
+                        data: checkupLogs.map(l => l.bmi),
+                        borderColor: '#059669',
+                        backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'Weight (kg)',
+                        data: checkupLogs.map(l => l.weight),
+                        borderColor: '#d97706',
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.3,
+                        borderWidth: 2
+                    }
+                ]
+            };
+        } else if (type === 'hr') {
+            return {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Heart Rate (BPM)',
+                        data: checkupLogs.map(l => l.hr),
+                        borderColor: '#e11d48',
+                        backgroundColor: 'rgba(225, 29, 72, 0.1)',
+                        fill: true,
+                        tension: 0.3,
+                        borderWidth: 2.5
+                    },
+                    {
+                        label: 'SpO2 Oxygen (%)',
+                        data: checkupLogs.map(l => l.spo2),
+                        borderColor: '#0284c7',
+                        fill: false,
+                        tension: 0.3,
+                        borderWidth: 2
+                    }
+                ]
+            };
+        }
+    }
+
+    function switchChart(type) {
+        currentChartType = type;
+        document.querySelectorAll('.chart-tab-controls .tab-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+
+        if (trendChart) {
+            const labels = checkupLogs.map(l => l.date);
+            trendChart.data = getChartData(type, labels);
+            trendChart.update();
+        }
+    }
+
+    // Modal Handlers
+    const simModal = document.getElementById('simulateModal');
+    const slipModal = document.getElementById('printSlipModal');
+    const rfidModal = document.getElementById('rfidModal');
+
+    document.getElementById('btnOpenSimulate').addEventListener('click', () => {
+        simModal.classList.add('active');
+    });
+
+    function closeSimulateModal() {
+        simModal.classList.remove('active');
+    }
+
+    function openPrintModal() {
+        slipModal.classList.add('active');
+    }
+
+    function closePrintModal() {
+        slipModal.classList.remove('active');
+    }
+
+    function openRfidModal() {
+        rfidModal.classList.add('active');
+    }
+
+    function closeRfidModal() {
+        rfidModal.classList.remove('active');
+    }
+
+    // Preset values for testing
+    function applyPreset(preset) {
+        if (preset === 'healthy') {
+            document.getElementById('sim_height').value = 172.0;
+            document.getElementById('sim_weight').value = 65.0;
+            document.getElementById('sim_temp').value = 36.6;
+            document.getElementById('sim_hr').value = 72;
+            document.getElementById('sim_rr').value = 16;
+            document.getElementById('sim_sys').value = 118;
+            document.getElementById('sim_dia').value = 76;
+            document.getElementById('sim_spo2').value = 99;
+        } else if (preset === 'fever') {
+            document.getElementById('sim_height').value = 172.0;
+            document.getElementById('sim_weight').value = 65.0;
+            document.getElementById('sim_temp').value = 38.4;
+            document.getElementById('sim_hr').value = 104;
+            document.getElementById('sim_rr').value = 22;
+            document.getElementById('sim_sys').value = 126;
+            document.getElementById('sim_dia').value = 82;
+            document.getElementById('sim_spo2').value = 96;
+        } else if (preset === 'hypertension') {
+            document.getElementById('sim_height').value = 168.0;
+            document.getElementById('sim_weight').value = 84.0;
+            document.getElementById('sim_temp').value = 36.8;
+            document.getElementById('sim_hr').value = 92;
+            document.getElementById('sim_rr').value = 19;
+            document.getElementById('sim_sys').value = 148;
+            document.getElementById('sim_dia').value = 94;
+            document.getElementById('sim_spo2').value = 97;
+        }
+    }
+
+    // Populate Printable Receipt Slip
+    function populateSlip(log) {
+        document.getElementById('slip_date').textContent = log.full_date;
+        document.getElementById('slip_temp').textContent = log.temp;
+        document.getElementById('slip_temp_rem').textContent = log.temp > 37.5 ? 'Febrile / Fever' : 'Normal';
+        document.getElementById('slip_bp').textContent = `${log.sys}/${log.dia}`;
+        document.getElementById('slip_bp_rem').textContent = log.bp_cat;
+        document.getElementById('slip_hr').textContent = log.hr;
+        document.getElementById('slip_hr_rem').textContent = log.hr > 100 ? 'Tachycardia' : (log.hr < 60 ? 'Bradycardia' : 'Normal');
+        document.getElementById('slip_rr').textContent = log.rr;
+        document.getElementById('slip_rr_rem').textContent = log.rr > 20 ? 'Tachypnea' : 'Normal';
+        document.getElementById('slip_spo2').textContent = log.spo2;
+        document.getElementById('slip_spo2_rem').textContent = log.spo2 >= 95 ? 'Normal (Adequate)' : 'Low (Hypoxemia)';
+        document.getElementById('slip_bmi').textContent = `${log.bmi} (${log.weight}kg / ${log.height}cm)`;
+        document.getElementById('slip_bmi_rem').textContent = log.bmi_cat;
+        document.getElementById('slip_risk_level').textContent = log.risk_level;
+        document.getElementById('slip_risk_score').textContent = `(${log.risk_score}%)`;
+        document.getElementById('slip_ai_rec').textContent = log.ai_rec;
+        document.getElementById('slip_kiosk_id').textContent = log.kiosk_id || 'RTU-PASIG-KIOSK-01';
+    }
+
+    function viewLogReceipt(indexReversed) {
+        // Find correct record in reversed array
+        const log = checkupLogs[checkupLogs.length - 1 - indexReversed];
+        if (log) {
+            populateSlip(log);
+            openPrintModal();
+        }
+    }
+</script>
+{% endblock %}

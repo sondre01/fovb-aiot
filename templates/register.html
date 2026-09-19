@@ -1,0 +1,161 @@
+{% extends "base.html" %}
+
+{% block title %}Online Registration &amp; RFID Linking | FOVB-AIoT{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <div class="auth-logo-badge">
+                    <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="FOVB-AIoT Logo">
+                </div>
+                <h2>Create Your Health Account</h2>
+                <p>Register online to link your RTU Student/Employee ID &amp; RFID card for fast kiosk screening.</p>
+            </div>
+
+            <!-- Demo helper bar -->
+            <div class="demo-helper-bar">
+                <span><i class="fas fa-magic"></i> Testing for thesis demo?</span>
+                <button type="button" class="btn-demo-pill" id="btnFillDemo">
+                    <i class="fas fa-wand-magic-sparkles"></i> Auto-fill Sample Student
+                </button>
+            </div>
+
+            <form action="{{ url_for('register') }}" method="POST" class="auth-form" id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="full_name"><i class="fas fa-user"></i> Full Name <span class="req">*</span></label>
+                        <input type="text" id="full_name" name="full_name" placeholder="e.g. Juan C. Dela Cruz" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="student_id"><i class="fas fa-id-badge"></i> RTU Student / Faculty ID <span class="req">*</span></label>
+                        <input type="text" id="student_id" name="student_id" placeholder="e.g. 2023-102934" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope"></i> Email Address <span class="req">*</span></label>
+                        <input type="email" id="email" name="email" placeholder="juan.delacruz@rtu.edu.ph" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone"><i class="fas fa-phone"></i> Mobile Phone</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="age"><i class="fas fa-calendar-day"></i> Age <span class="req">*</span></label>
+                        <input type="number" id="age" name="age" min="15" max="100" placeholder="20" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sex"><i class="fas fa-venus-mars"></i> Biological Sex <span class="req">*</span></label>
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled selected>Select Sex...</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="department"><i class="fas fa-building-columns"></i> College / Academic Program <span class="req">*</span></label>
+                    <select id="department" name="department" required>
+                        <option value="" disabled selected>Select your College / Department...</option>
+                        <option value="College of Engineering - Computer Engineering">College of Engineering - Computer Engineering (CpE)</option>
+                        <option value="College of Engineering - Electronics Engineering">College of Engineering - Electronics Engineering (ECE)</option>
+                        <option value="College of Engineering - Electrical Engineering">College of Engineering - Electrical Engineering (EE)</option>
+                        <option value="College of Engineering - Civil Engineering">College of Engineering - Civil Engineering (CE)</option>
+                        <option value="College of Business &amp; Accountancy">College of Business &amp; Accountancy</option>
+                        <option value="College of Education">College of Education</option>
+                        <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                        <option value="Faculty &amp; University Staff">RTU Faculty &amp; Administrative Staff</option>
+                    </select>
+                </div>
+
+                <!-- RFID Card Link section -->
+                <div class="rfid-input-box">
+                    <div class="rfid-box-header">
+                        <label for="rfid_uid">
+                            <i class="fas fa-wifi text-red"></i> <strong>RFID Card Tag UID</strong> 
+                            <span class="optional-tag">(Fast Kiosk Tap)</span>
+                        </label>
+                        <button type="button" class="btn-gen-rfid" id="btnGenRfid">
+                            <i class="fas fa-arrows-rotate"></i> Auto-Generate RFID UID
+                        </button>
+                    </div>
+                    <input type="text" id="rfid_uid" name="rfid_uid" placeholder="e.g. 7A 3F B2 90 (or leave blank to auto-assign)" class="code-font">
+                    <small class="form-hint">
+                        If you have your physical RTU RFID card, type its 4-byte hexadecimal UID. If you don't know it, click <em>Auto-Generate</em>.
+                    </small>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-lock"></i> Password <span class="req">*</span></label>
+                        <input type="password" id="password" name="password" placeholder="At least 6 characters" minlength="6" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password"><i class="fas fa-shield-halved"></i> Confirm Password <span class="req">*</span></label>
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Re-type your password" minlength="6" required>
+                    </div>
+                </div>
+
+                <div class="privacy-agreement">
+                    <label class="checkbox-label">
+                        <input type="checkbox" required checked>
+                        <span>I consent to RTU Pasig Clinic collecting and processing my vital signs &amp; health telemetry in accordance with RA 10173 (Data Privacy Act).</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-primary btn-submit-full mt-3">
+                    <i class="fas fa-user-plus"></i> Complete Online Registration
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Already have an account? <a href="{{ url_for('login') }}">Sign In to Your Health Dashboard &rarr;</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Generate Random 4-byte RFID Hex
+    function generateHexRfid() {
+        const bytes = [];
+        for (let i = 0; i < 4; i++) {
+            const hex = Math.floor(Math.random() * 256).toString(16).toUpperCase().padStart(2, '0');
+            bytes.push(hex);
+        }
+        return bytes.join(' ');
+    }
+
+    document.getElementById('btnGenRfid').addEventListener('click', () => {
+        document.getElementById('rfid_uid').value = generateHexRfid();
+    });
+
+    // Quick demo autofill for testing
+    document.getElementById('btnFillDemo').addEventListener('click', () => {
+        const randNum = Math.floor(1000 + Math.random() * 9000);
+        document.getElementById('full_name').value = 'Maria Cristina Santos';
+        document.getElementById('student_id').value = `2023-${randNum}`;
+        document.getElementById('email').value = `santos.cristina${randNum}@rtu.edu.ph`;
+        document.getElementById('phone').value = '+63 928 456 7890';
+        document.getElementById('age').value = '21';
+        document.getElementById('sex').value = 'Female';
+        document.getElementById('department').value = 'College of Engineering - Computer Engineering';
+        document.getElementById('rfid_uid').value = generateHexRfid();
+        document.getElementById('password').value = 'password123';
+        document.getElementById('confirm_password').value = 'password123';
+    });
+</script>
+{% endblock %}

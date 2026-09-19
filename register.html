@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Registration &amp; RFID Linking | FOVB-AIoT</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" type="image/png" href="pictures/logo.png">
+</head>
+<body>
+    <div class="pinoy-accent-bar"><span class="bar-blue"></span><span class="bar-yellow"></span><span class="bar-red"></span></div>
+
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="index.html" class="brand-link">
+                <img class="logo-img" src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk &amp; Web Portal</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="instructions.html">Kiosk Guide</a></li>
+                <li><a href="contact.html">Clinic &amp; Contact</a></li>
+                <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;">
+                    <li><a href="login.html">Sign In</a></li>
+                    <li><a href="register.html" class="btn-nav-cta active"><i class="fas fa-user-plus"></i> Register</a></li>
+                </span>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo-badge">
+                            <img src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                        </div>
+                        <h2>Create Your Health Account</h2>
+                        <p>Register online to link your RTU Student/Employee ID &amp; RFID card for fast kiosk screening.</p>
+                    </div>
+
+                    <div class="demo-helper-bar">
+                        <span><i class="fas fa-magic"></i> Testing for thesis demo?</span>
+                        <button type="button" class="btn-demo-pill" id="btnFillDemo">
+                            <i class="fas fa-wand-magic-sparkles"></i> Auto-fill Sample Student
+                        </button>
+                    </div>
+
+                    <form id="standaloneRegisterForm" class="auth-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="full_name"><i class="fas fa-user"></i> Full Name <span class="req">*</span></label>
+                                <input type="text" id="full_name" placeholder="e.g. Juan C. Dela Cruz" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="student_id"><i class="fas fa-id-badge"></i> RTU Student / Faculty ID <span class="req">*</span></label>
+                                <input type="text" id="student_id" placeholder="e.g. 2023-102934" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email"><i class="fas fa-envelope"></i> Email Address <span class="req">*</span></label>
+                                <input type="email" id="email" placeholder="juan.delacruz@rtu.edu.ph" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone"><i class="fas fa-phone"></i> Mobile Phone</label>
+                                <input type="tel" id="phone" placeholder="+63 912 345 6789">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="age"><i class="fas fa-calendar-day"></i> Age <span class="req">*</span></label>
+                                <input type="number" id="age" min="15" max="100" placeholder="20" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="sex"><i class="fas fa-venus-mars"></i> Biological Sex <span class="req">*</span></label>
+                                <select id="sex" required>
+                                    <option value="" disabled selected>Select Sex...</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="department"><i class="fas fa-building-columns"></i> College / Academic Program <span class="req">*</span></label>
+                            <select id="department" required>
+                                <option value="" disabled selected>Select your College / Department...</option>
+                                <option value="College of Engineering - Computer Engineering">College of Engineering - Computer Engineering (CpE)</option>
+                                <option value="College of Engineering - Electronics Engineering">College of Engineering - Electronics Engineering (ECE)</option>
+                                <option value="College of Engineering - Electrical Engineering">College of Engineering - Electrical Engineering (EE)</option>
+                                <option value="College of Engineering - Civil Engineering">College of Engineering - Civil Engineering (CE)</option>
+                                <option value="College of Business &amp; Accountancy">College of Business &amp; Accountancy</option>
+                                <option value="College of Education">College of Education</option>
+                                <option value="College of Arts and Sciences">College of Arts and Sciences</option>
+                                <option value="Faculty &amp; University Staff">RTU Faculty &amp; Administrative Staff</option>
+                            </select>
+                        </div>
+
+                        <div class="rfid-input-box">
+                            <div class="rfid-box-header">
+                                <label for="rfid_uid">
+                                    <i class="fas fa-wifi text-red"></i> <strong>RFID Card Tag UID</strong> 
+                                    <span class="optional-tag">(Fast Kiosk Tap)</span>
+                                </label>
+                                <button type="button" class="btn-gen-rfid" id="btnGenRfid">
+                                    <i class="fas fa-arrows-rotate"></i> Auto-Generate RFID UID
+                                </button>
+                            </div>
+                            <input type="text" id="rfid_uid" placeholder="e.g. 7A 3F B2 90" class="code-font">
+                            <small class="form-hint">
+                                If you have your physical RTU RFID card, type its 4-byte hexadecimal UID. If you don't know it, click <em>Auto-Generate</em>.
+                            </small>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password"><i class="fas fa-lock"></i> Password <span class="req">*</span></label>
+                                <input type="password" id="password" placeholder="At least 6 characters" minlength="6" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm_password"><i class="fas fa-shield-halved"></i> Confirm Password <span class="req">*</span></label>
+                                <input type="password" id="confirm_password" placeholder="Re-type password" minlength="6" required>
+                            </div>
+                        </div>
+
+                        <div class="privacy-agreement">
+                            <label class="checkbox-label">
+                                <input type="checkbox" required checked>
+                                <span>I consent to RTU Pasig Clinic collecting and processing my vital signs in accordance with RA 10173 (Data Privacy Act).</span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-submit-full mt-3">
+                            <i class="fas fa-user-plus"></i> Complete Online Registration
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="login.html">Sign In to Your Health Dashboard &rarr;</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 FOVB-AIoT Research Group • College of Engineering, Rizal Technological University.</p>
+                <p class="pinoy-quote">ᜃᜎᜓᜐᜓ4ᜈ᜔ • Mabuhay ang Kalusugang Rizalian!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/app.js"></script>
+    <script>
+        function generateHexRfid() {
+            const bytes = [];
+            for (let i = 0; i < 4; i++) {
+                bytes.push(Math.floor(Math.random() * 256).toString(16).toUpperCase().padStart(2, '0'));
+            }
+            return bytes.join(' ');
+        }
+
+        document.getElementById('btnGenRfid').addEventListener('click', () => {
+            document.getElementById('rfid_uid').value = generateHexRfid();
+        });
+
+        document.getElementById('btnFillDemo').addEventListener('click', () => {
+            const randNum = Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('full_name').value = 'Maria Cristina Santos';
+            document.getElementById('student_id').value = `2023-${randNum}`;
+            document.getElementById('email').value = `santos.cristina${randNum}@rtu.edu.ph`;
+            document.getElementById('phone').value = '+63 928 456 7890';
+            document.getElementById('age').value = '21';
+            document.getElementById('sex').value = 'Female';
+            document.getElementById('department').value = 'College of Engineering - Computer Engineering';
+            document.getElementById('rfid_uid').value = generateHexRfid();
+            document.getElementById('password').value = 'password123';
+            document.getElementById('confirm_password').value = 'password123';
+        });
+
+        document.getElementById('standaloneRegisterForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pw = document.getElementById('password').value;
+            const cpw = document.getElementById('confirm_password').value;
+            if (pw !== cpw) {
+                alert('Passwords do not match. Please re-enter.');
+                return;
+            }
+
+            let rfid = document.getElementById('rfid_uid').value.trim();
+            if (!rfid) rfid = generateHexRfid();
+
+            const newUser = {
+                id: Date.now(),
+                student_id: document.getElementById('student_id').value.trim().toUpperCase(),
+                full_name: document.getElementById('full_name').value.trim(),
+                email: document.getElementById('email').value.trim().toLowerCase(),
+                age: parseInt(document.getElementById('age').value),
+                sex: document.getElementById('sex').value,
+                department: document.getElementById('department').value,
+                phone: document.getElementById('phone').value.trim(),
+                rfid_uid: rfid
+            };
+
+            initStorage();
+            const users = JSON.parse(localStorage.getItem('fovb_users') || '[]');
+            users.push(newUser);
+            localStorage.setItem('fovb_users', JSON.stringify(users));
+            localStorage.setItem('fovb_current_user', JSON.stringify(newUser));
+
+            alert(`Mabuhay, ${newUser.full_name}! Registration successful. Your RFID UID is ${newUser.rfid_uid}.`);
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>

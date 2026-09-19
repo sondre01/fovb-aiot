@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Kiosk Instructions &amp; Guide | FOVB-AIoT - RTU Pasig Clinic{% endblock %}
+
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <span class="page-tag"><i class="fas fa-book-medical"></i> Patient &amp; User Manual</span>
+        <h1 class="page-title">How to Use the FOVB-AIoT Kiosk</h1>
+        <p class="page-subtitle">
+            Follow this quick step-by-step guide for a safe, hygienic, and precise vital signs screening at RTU Pasig Clinic.
+        </p>
+    </div>
+</section>
+
+<section class="section-instructions">
+    <div class="container">
+        <!-- Pre-screening Checklist -->
+        <div class="guide-banner">
+            <div class="banner-icon"><i class="fas fa-circle-info"></i></div>
+            <div class="banner-content">
+                <h3>Before You Begin Your Screening</h3>
+                <p>
+                    For the most accurate physiological readings, please rest for 3–5 minutes if you just walked up the stairs. 
+                    Avoid heavy exercise or consuming high-caffeine energy drinks immediately prior to taking your Blood Pressure and Heart Rate tests.
+                </p>
+            </div>
+        </div>
+
+        <!-- Visual Step-by-Step Cards -->
+        <div class="guide-steps-list">
+            <!-- Step 1 -->
+            <div class="guide-step-row">
+                <div class="step-badge-col">
+                    <div class="step-circle">1</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-detail-card">
+                    <div class="step-card-header">
+                        <span class="step-tag"><i class="fas fa-id-card"></i> Phase 1: Authentication</span>
+                        <h3>Tap Your RTU RFID Card</h3>
+                    </div>
+                    <p>
+                        Approach the FOVB-AIoT kiosk and hold your RTU Student ID / Employee RFID card against the labeled 
+                        <strong>RFID Reader zone (RC522)</strong> on the front console.
+                    </p>
+                    <ul class="step-checklist">
+                        <li><i class="fas fa-check"></i> If already registered, your name, student number, and previous records will appear on screen.</li>
+                        <li><i class="fas fa-check"></i> If you haven't linked your RFID card yet, <a href="{{ url_for('register') }}">sign up online first</a> or input your Student ID.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="guide-step-row">
+                <div class="step-badge-col">
+                    <div class="step-circle">2</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-detail-card">
+                    <div class="step-card-header">
+                        <span class="step-tag"><i class="fas fa-weight-scale"></i> Phase 2: Anthropometrics</span>
+                        <h3>Stand Upright for Height, Weight &amp; BMI</h3>
+                    </div>
+                    <p>
+                        Step onto the center of the base weight scale platform. Stand upright with your head level and back straight.
+                    </p>
+                    <ul class="step-checklist">
+                        <li><i class="fas fa-check"></i> The overhead <strong>TF-Luna LiDAR laser sensor</strong> will measure your height in seconds.</li>
+                        <li><i class="fas fa-check"></i> The four precision <strong>load cells</strong> determine your weight and auto-compute your Asia-Pacific BMI.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="guide-step-row">
+                <div class="step-badge-col">
+                    <div class="step-circle">3</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-detail-card">
+                    <div class="step-card-header">
+                        <span class="step-tag"><i class="fas fa-temperature-high"></i> Phase 3: Thermometry</span>
+                        <h3>Non-Contact Body Temperature</h3>
+                    </div>
+                    <p>
+                        Align your forehead 2 to 4 centimeters in front of the <strong>MLX90614 infrared optical sensor</strong>.
+                    </p>
+                    <ul class="step-checklist">
+                        <li><i class="fas fa-check"></i> No physical touching is required, ensuring 100% clinic hygiene.</li>
+                        <li><i class="fas fa-check"></i> The kiosk will emit an audio confirmation once your core temperature is locked in.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="guide-step-row">
+                <div class="step-badge-col">
+                    <div class="step-circle">4</div>
+                    <div class="step-connector"></div>
+                </div>
+                <div class="step-detail-card">
+                    <div class="step-card-header">
+                        <span class="step-tag"><i class="fas fa-fingerprint"></i> Phase 4: Pulse &amp; Oxygen</span>
+                        <h3>Insert Index Finger in Pulse Oximeter</h3>
+                    </div>
+                    <p>
+                        Gently place your index finger onto the <strong>MAX30102 optical PPG sensor</strong> inside the finger cradle.
+                    </p>
+                    <ul class="step-checklist">
+                        <li><i class="fas fa-check"></i> Breathe normally and remain still for 10–15 seconds while the photoplethysmogram tracks your arterial pulse.</li>
+                        <li><i class="fas fa-check"></i> Heart Rate (BPM), SpO2 Oxygen Saturation (%), and Respiratory Rhythm will be recorded.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="guide-step-row">
+                <div class="step-badge-col">
+                    <div class="step-circle">5</div>
+                </div>
+                <div class="step-detail-card">
+                    <div class="step-card-header">
+                        <span class="step-tag"><i class="fas fa-heart-pulse"></i> Phase 5: Cardiovascular</span>
+                        <h3>Blood Pressure with AI Camera Reading</h3>
+                    </div>
+                    <p>
+                        Rest your left arm comfortably in the blood pressure cuff at heart level. Press the green start button on the BP module.
+                    </p>
+                    <ul class="step-checklist">
+                        <li><i class="fas fa-check"></i> Relax your muscles, do not speak or clench your fist during the cuff inflation.</li>
+                        <li><i class="fas fa-check"></i> The integrated <strong>HD Camera + YOLO AI Vision model</strong> will automatically detect and extract the Systolic and Diastolic values from the digital display.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post-Checkup Output Section -->
+        <div class="post-checkup-box">
+            <div class="post-checkup-header">
+                <i class="fas fa-receipt text-red"></i>
+                <div>
+                    <h3>Session Completion &amp; Your Results</h3>
+                    <p>What happens right after your screening:</p>
+                </div>
+            </div>
+            <div class="post-checkup-grid">
+                <div class="post-card">
+                    <h4><i class="fas fa-print"></i> Thermal Printed Slip</h4>
+                    <p>The kiosk prints a pocket-sized health receipt containing all your vital readings, BMI, and date stamp for your personal records or clinic visit.</p>
+                </div>
+                <div class="post-card">
+                    <h4><i class="fas fa-cloud-arrow-up"></i> Real-time Cloud Sync</h4>
+                    <p>Your session is immediately synced to your online account on this website. You can view longitudinal health trends and download official slips.</p>
+                </div>
+                <div class="post-card">
+                    <h4><i class="fas fa-stethoscope"></i> RTU Clinic Consultation</h4>
+                    <p>If your AI Risk Score is Moderate or High, present your slip or digital pass to the registered nurse on duty at RTU Pasig Clinic for medical advice.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Frequently Asked Questions -->
+        <div class="section-faq mt-5">
+            <div class="section-header text-center">
+                <span class="section-tag"><i class="fas fa-circle-question"></i> Help &amp; Support</span>
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-accordion">
+                <details class="faq-item" open>
+                    <summary><strong>How do I register my RFID card if I don't have an account yet?</strong></summary>
+                    <p>You can create an account in 1 minute using the <a href="{{ url_for('register') }}">Online Sign Up page</a>. You can enter your RFID card UID directly, or click "Auto-Assign RFID UID" to test. You can also ask the RTU Pasig Clinic staff to assist with linking your physical student ID tag.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>Can I still use the system if I forgot my physical RFID card?</strong></summary>
+                    <p>Yes! You can manually sign in on the touchscreen using your RTU Student/Employee ID or Email address. The RFID card is designed for maximum speed and zero-touch convenience.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>How does the AI Comprehensive Risk Score work?</strong></summary>
+                    <p>The FOVB-AIoT AI risk engine evaluates all 6 parameters (Temperature, Blood Pressure, Heart Rate, Respiratory Rate, Oxygen Saturation, and BMI) simultaneously against established World Health Organization (WHO) and DOH clinical benchmarks to detect anomalies and categorize overall risk into Low, Moderate, or High.</p>
+                </details>
+
+                <details class="faq-item">
+                    <summary><strong>Is my personal health data kept safe and confidential?</strong></summary>
+                    <p>Yes. All patient records in the FOVB-AIoT system are encrypted and accessible exclusively by the student/faculty account owner and authorized RTU Pasig Clinic medical staff in compliance with the Philippine Data Privacy Act of 2012 (RA 10173).</p>
+                </details>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,106 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Contact All in Juan Vital Sign for inquiries, support, and partnership opportunities.">
-    <title>Contact Us | All in Juan Vital Sign</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
+{% block title %}RTU Pasig Clinic &amp; Contact | FOVB-AIoT{% endblock %}
 
-<body>
-    <header>
-        <nav class="navbar">
-            <img class="logo" src="/pictures/logo.png" alt="All in Juan Vital Sign Logo">
-            <div class="title">All in Juan Vital Sign</div>
-            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+{% block content %}
+<!-- Page Hero -->
+<section class="page-hero">
+    <div class="container">
+        <span class="page-tag"><i class="fas fa-hospital-user"></i> Clinic &amp; Research Inquiries</span>
+        <h1 class="page-title">RTU Pasig Health Clinic</h1>
+        <p class="page-subtitle">
+            Need assistance with your RFID health pass, kiosk checkups, or capstone research inquiries? We're here to help.
+        </p>
+    </div>
+</section>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" style="background-image: url('/pictures/contact-hero.jpg');">
-            <div class="hero-content">
-                <h1>Contact Us</h1>
-                <p>We'd love to hear from you. Get in touch!</p>
-            </div>
-        </section>
+<section class="section-contact-layout">
+    <div class="container">
+        <div class="contact-grid-wrapper">
+            <!-- Clinic Info Cards -->
+            <div class="clinic-info-sidebar">
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+                    <div>
+                        <h3>Campus Clinic Location</h3>
+                        <p>
+                            <strong>Rizal Technological University (Pasig Campus)</strong><br>
+                            Ground Floor, Clinic &amp; Health Services Unit<br>
+                            M. Eusebio Avenue, Barangay Maybunga, Pasig City, Metro Manila, Philippines
+                        </p>
+                    </div>
+                </div>
 
-        <!-- Contact Form Section -->
-        <section class="section contact-form-section">
-            <h2>Send us a Message</h2>
-            <form class="contact-form" id="contactForm">
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" placeholder="Juan Dela Cruz" required>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h3>Operating Hours</h3>
+                        <p>
+                            <strong>Monday – Friday:</strong> 8:00 AM – 5:00 PM<br>
+                            <em>(Closed on weekends and official university holidays)</em>
+                        </p>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="juan@example.com" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <input type="tel" id="phone" name="phone" placeholder="+63 912 345 6789">
-                </div>
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <input type="text" id="subject" name="subject" placeholder="How can we help you?" required>
-                </div>
-                <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea id="message" name="message" placeholder="Tell us more about your inquiry..."
-                        required></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Send Message</button>
-            </form>
-        </section>
 
-        <!-- Additional Contact Info -->
-        <section class="section contact-info-section">
-            <h2>Other Ways to Reach Us</h2>
-            <div class="contact-info-grid">
-                <div class="contact-card">
-                    <h3>📧 Email</h3>
-                    <p>info@allinjuan.ph</p>
+                <div class="info-card">
+                    <div class="info-icon"><i class="fas fa-phone-volume"></i></div>
+                    <div>
+                        <h3>Contact &amp; Support</h3>
+                        <p>
+                            <strong>Email:</strong> clinic.pasig@rtu.edu.ph<br>
+                            <strong>Research Team:</strong> fovb.aiot@rtu.edu.ph<br>
+                            <strong>Trunkline:</strong> (02) 8643-2395
+                        </p>
+                    </div>
                 </div>
-                <div class="contact-card">
-                    <h3>📞 Phone</h3>
-                    <p>+63 912 345 6789</p>
-                </div>
-                <div class="contact-card">
-                    <h3>📍 Location</h3>
-                    <p>Manila, Philippines</p>
+
+                <div class="pinoy-quote-box">
+                    <span class="quote-symbol">🇵🇭</span>
+                    <p>“Ang kalusugan ng Rizalian ay lakas ng sambayanan. Magpa-checkup nang regular sa FOVB-AIoT kiosk!”</p>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.getElementById('nav-links');
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+            <!-- Contact / Inquiry Form -->
+            <div class="contact-form-container">
+                <div class="form-header">
+                    <h2>Send a Message to RTU Clinic &amp; Team</h2>
+                    <p>Have questions about the FOVB-AIoT kiosk, RFID registration, or want to report an issue?</p>
+                </div>
 
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('Thank you for your message! We will get back to you soon.');
-            contactForm.reset();
-        });
-    </script>
-</body>
+                <form action="{{ url_for('contact') }}" method="POST" class="styled-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name"><i class="fas fa-user"></i> Full Name <span class="req">*</span></label>
+                            <input type="text" id="name" name="name" placeholder="e.g. Juan Dela Cruz" required 
+                                value="{% if current_user %}{{ current_user['full_name'] }}{% endif %}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Email Address <span class="req">*</span></label>
+                            <input type="email" id="email" name="email" placeholder="name@rtu.edu.ph" required
+                                value="{% if current_user %}{{ current_user['email'] }}{% endif %}">
+                        </div>
+                    </div>
 
-</html>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone"><i class="fas fa-phone"></i> Contact Number</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+63 9XX XXX XXXX"
+                                value="{% if current_user and current_user['phone'] %}{{ current_user['phone'] }}{% endif %}">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject"><i class="fas fa-heading"></i> Subject <span class="req">*</span></label>
+                            <select id="subject" name="subject" required>
+                                <option value="" disabled selected>Select an inquiry topic...</option>
+                                <option value="RFID Card Registration / Loss">RFID Card Registration / Loss</option>
+                                <option value="Kiosk Reading Concern">Kiosk Reading / Calibration Concern</option>
+                                <option value="Clinic Medical Consultation">Clinic Medical Consultation Request</option>
+                                <option value="Thesis & Academic Inquiry">Thesis / Academic Collaboration Inquiry</option>
+                                <option value="General Feedback">General Feedback & Suggestions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment-dots"></i> Message Details <span class="req">*</span></label>
+                        <textarea id="message" name="message" rows="5" placeholder="Please describe your message or concern in detail..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-submit-full">
+                        <i class="fas fa-paper-plane"></i> Submit Inquiry to RTU Clinic
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

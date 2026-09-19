@@ -10,4 +10,15 @@ desktop.ini
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+*.db
+
+# Large Documents (Exceeds GitHub 100MB file limit)
+documents/
+*.pdf

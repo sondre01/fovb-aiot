@@ -1,63 +1,349 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All in Juan Vital Sign | Home</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
+{% block title %}FOVB-AIoT | Health Prediction Kiosk & Web Portal - RTU Pasig Clinic{% endblock %}
 
-<body>
-    <header>
-        <nav class="navbar">
-            <img class="logo" src="/pictures/logo.png" alt="All in Juan Vital Sign Logo">
-            <div class="title">All in Juan Vital Sign</div>
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-container">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="pulse-dot"></span>
+                <span>RTU Pasig Clinic • Capstone Innovation 2026</span>
+            </div>
+            
+            <h1 class="hero-title">
+                Four-in-One Vital Sign Sensors & <span class="highlight-red">AI Health Prediction</span>
+            </h1>
+            
+            <p class="hero-subtitle">
+                <strong>FOVB-AIoT</strong> is a kiosk-based health monitoring platform integrating 
+                <strong>Body Temperature, Pulse Oximetry (Heart Rate & Respiratory Rate), Blood Pressure (AI OCR),</strong> and 
+                <strong>LiDAR & Load Cell BMI calculation</strong> with IoT cloud synchronization for the Rizal Technological University - Pasig Clinic.
+            </p>
 
-            <div class="menu-toggle" id="menu-toggle">
-                <i class="fas fa-bars"></i> &#9776;
+            <div class="hero-actions">
+                {% if current_user %}
+                    <a href="{{ url_for('dashboard') }}" class="btn-primary">
+                        <i class="fas fa-chart-line"></i> Open My Health Dashboard
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('register') }}" class="btn-primary">
+                        <i class="fas fa-id-card"></i> Sign Up Online & Link RFID
+                    </a>
+                    <a href="{{ url_for('login') }}" class="btn-secondary">
+                        <i class="fas fa-right-to-bracket"></i> Patient Sign In
+                    </a>
+                {% endif %}
+                <a href="#how-it-works" class="btn-outline">
+                    <i class="fas fa-play-circle"></i> How Kiosk Works
+                </a>
             </div>
 
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="about.html">About us</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+            <!-- Quick Live Stats -->
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div>
+                        <div class="stat-number">4-in-1</div>
+                        <div class="stat-label">Vital Signs + BMI</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
+                    <div>
+                        <div class="stat-number">&lt; 60s</div>
+                        <div class="stat-label">RFID Fast Checkup</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                    <div>
+                        <div class="stat-number">AI-Driven</div>
+                        <div class="stat-label">YOLO & Risk Score</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <main>
-        <section class="hero">
-            <div class="hero-content">
-                <h1 class="hero-title">Welcome to All in Juan Vital Sign</h1>
-                <p class="hero-text">
-                    <b>All in Juan Vital Sign</b> is a cutting-edge prototype designed with advanced sensors to monitor
-                    and
-                    collect vital health data. It helps predict potential diseases early, providing accessible and
-                    portable health checkups for every
-                    Juan in the Philippines.
+        <div class="hero-visual">
+            <div class="device-card">
+                <div class="device-glow"></div>
+                <img src="{{ url_for('static', filename='pictures/hero-image.png') }}" alt="FOVB-AIoT Health Kiosk" class="device-img">
+                <div class="kiosk-floating-badge badge-top">
+                    <i class="fas fa-satellite-dish"></i> <span>IoT Cloud Connected</span>
+                </div>
+                <div class="kiosk-floating-badge badge-bottom">
+                    <i class="fas fa-wifi"></i> <span>RFID Tap & Go</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pinoy Clinic Mission Banner -->
+<section class="pinoy-ribbon-section">
+    <div class="container ribbon-flex">
+        <div class="ribbon-text">
+            <span class="baybayin-tag">ᜃᜎᜓᜐᜓ4ᜈ᜔</span>
+            <h3>“Alamin at Bantayan ang Kalusugan, Ka-RTU!”</h3>
+            <p>Empowering Rizalian students, faculty, and personnel in Pasig with contactless, fast, and preventive vital signs assessment.</p>
+        </div>
+        <div class="ribbon-action">
+            <a href="{{ url_for('instructions') }}" class="btn-ribbon">
+                <i class="fas fa-book-medical"></i> View Kiosk Instructions
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Four-in-One Sensors & Technology Showcase -->
+<section class="section-tech" id="technology">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag"><i class="fas fa-microchip"></i> Integrated Hardware & Sensors</span>
+            <h2 class="section-title">The Four-in-One Vital Signs & AI Ecosystem</h2>
+            <p class="section-subtitle">
+                The FOVB-AIoT platform synchronizes medical-grade sensors, dual microcontrollers, and computer vision 
+                into an automated, high-precision health screening station.
+            </p>
+        </div>
+
+        <div class="sensors-grid">
+            <!-- Sensor 1: Body Temperature -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-red">
+                    <i class="fas fa-temperature-high"></i>
+                </div>
+                <span class="sensor-chip">Sensor 01</span>
+                <h3>Body Temperature</h3>
+                <h4 class="sensor-model">MLX90614 Infrared Sensor</h4>
+                <p>
+                    Non-contact medical infrared sensor providing hygienic, accurate measurement of core body temperature 
+                    without physical skin contact, preventing cross-contamination in the campus clinic.
                 </p>
-                <a href="about.html" class="btn">Learn More</a>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> Accuracy: ±0.2 °C</span>
+                    <span><i class="fas fa-check-circle"></i> Zero-touch safety</span>
+                </div>
             </div>
-            <div class="hero-image-container">
-                <img class="hero-image" src="/pictures/hero-image.png" alt="All in Juan Vital Sign Device">
+
+            <!-- Sensor 2: Pulse Oximeter -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-blue">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <span class="sensor-chip">Sensor 02</span>
+                <h3>Pulse & Respiratory Rate</h3>
+                <h4 class="sensor-model">MAX30102 PPG Sensor</h4>
+                <p>
+                    Utilizes photoplethysmography (PPG) to measure Heart Rate (BPM), blood Oxygen Saturation (SpO2 %), 
+                    and derived Respiratory Rate simultaneously through a comfortable finger cradle.
+                </p>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> SpO2 Range: 70% – 100%</span>
+                    <span><i class="fas fa-check-circle"></i> Real-time wave tracking</span>
+                </div>
             </div>
-        </section>
-    </main>
 
-    <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.getElementById('nav-links');
+            <!-- Sensor 3: AI Blood Pressure -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-red">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <span class="sensor-chip">Sensor 03</span>
+                <h3>Blood Pressure with AI</h3>
+                <h4 class="sensor-model">YOLO Computer Vision + HD Camera</h4>
+                <p>
+                    Digital cuff unit integrated with an HD camera running YOLO object detection on the Mini PC to accurately 
+                    read systolic, diastolic, and pulse values from the LCD while filtering optical noise.
+                </p>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> AI Automated Reading</span>
+                    <span><i class="fas fa-check-circle"></i> Eliminates manual logging</span>
+                </div>
+            </div>
 
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-    </script>
-</body>
+            <!-- Sensor 4: Height & Weight (BMI) -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-yellow">
+                    <i class="fas fa-ruler-combined"></i>
+                </div>
+                <span class="sensor-chip">Sensor 04</span>
+                <h3>LiDAR Height & Weight (BMI)</h3>
+                <h4 class="sensor-model">TF-Luna LiDAR + HX711 Load Cell</h4>
+                <p>
+                    Laser time-of-flight LiDAR sensor measures exact height overhead, while industrial load cells compute precise weight. 
+                    Calculates Body Mass Index (BMI) instantly according to WHO Asia-Pacific standards.
+                </p>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> Instant BMI calculation</span>
+                    <span><i class="fas fa-check-circle"></i> High-precision laser pulses</span>
+                </div>
+            </div>
 
-</html>
+            <!-- System 5: RFID Fast-Track -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-blue">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <span class="sensor-chip">Security & ID</span>
+                <h3>Fast-Track RFID Tap</h3>
+                <h4 class="sensor-model">RC522 RFID 13.56 MHz Reader</h4>
+                <p>
+                    Tap your RTU Student / Employee ID card or RFID tag to immediately pull up your patient profile. 
+                    No tedious manual keyboard typing or kiosk line delays.
+                </p>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> Instant identification</span>
+                    <span><i class="fas fa-check-circle"></i> Secure contactless token</span>
+                </div>
+            </div>
+
+            <!-- System 6: Mini PC & IoT Database -->
+            <div class="sensor-card">
+                <div class="sensor-icon-box icon-red">
+                    <i class="fas fa-server"></i>
+                </div>
+                <span class="sensor-chip">Central Hub</span>
+                <h3>Mini PC & Cloud IoT</h3>
+                <h4 class="sensor-model">Dell Mini PC + Arduino Mega & Nano</h4>
+                <p>
+                    Dual Arduino microcontrollers coordinate sensor telemetry and send it to the Intel Core i5 Mini PC. 
+                    Data is instantly stored in the clinic IoT web portal with thermal slip printing.
+                </p>
+                <div class="sensor-spec">
+                    <span><i class="fas fa-check-circle"></i> Thermal receipt printing</span>
+                    <span><i class="fas fa-check-circle"></i> Real-time cloud sync</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section-how" id="how-it-works">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag"><i class="fas fa-route"></i> Kiosk Workflow</span>
+            <h2 class="section-title">How the FOVB-AIoT Kiosk Works</h2>
+            <p class="section-subtitle">
+                From contactless RFID tap to AI health risk prediction in 4 seamless steps at the RTU Pasig Clinic.
+            </p>
+        </div>
+
+        <div class="steps-flow">
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon"><i class="fas fa-user-check"></i></div>
+                <h3>1. Register & Tap RFID</h3>
+                <p>Sign up online through this portal to register your RTU Student ID and RFID tag. Tap your card on the kiosk reader to begin your session.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon"><i class="fas fa-weight-scale"></i></div>
+                <h3>2. Stand for Height & Weight</h3>
+                <p>Step onto the platform. The TF-Luna LiDAR sensor measures height from above while the load cells weigh you to instantly calculate your BMI.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon"><i class="fas fa-heart-pulse"></i></div>
+                <h3>3. Scan Temperature & Vitals</h3>
+                <p>Place forehead near the MLX90614 infrared sensor, insert finger into the pulse oximeter, and place arm in the AI-monitored BP cuff.</p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <div class="step-icon"><i class="fas fa-receipt"></i></div>
+                <h3>4. AI Risk Score & Slip</h3>
+                <p>Receive your printed thermal slip, review your AI Comprehensive Health Risk Score, and access long-term trend charts on your online dashboard.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- WHO / DOH Vital Signs Reference Guide -->
+<section class="section-reference">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag"><i class="fas fa-clipboard-check"></i> Health Standards</span>
+            <h2 class="section-title">Clinical Normal Ranges & Reference Guide</h2>
+            <p class="section-subtitle">Based on Department of Health (DOH) Philippines & World Health Organization (WHO) medical guidelines.</p>
+        </div>
+
+        <div class="ref-grid">
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-temperature-three-quarters text-red"></i> Body Temperature</h4>
+                    <span class="status-pill status-normal">Target: 36.5 – 37.5 °C</span>
+                </div>
+                <p>Normal range indicates proper metabolic function and no acute infection or febrile illness.</p>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-heart text-red"></i> Heart Rate (Pulse)</h4>
+                    <span class="status-pill status-normal">Target: 60 – 100 BPM</span>
+                </div>
+                <p>Resting heart rate reflects cardiovascular efficiency. Elevated rates may indicate stress, fever, or tachycardia.</p>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-lungs text-blue"></i> Respiratory Rate</h4>
+                    <span class="status-pill status-normal">Target: 12 – 20 breaths/min</span>
+                </div>
+                <p>Monitors pulmonary ventilation. Rapid breathing can signify respiratory exertion or underlying conditions.</p>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-heart-pulse text-red"></i> Blood Pressure</h4>
+                    <span class="status-pill status-normal">Target: &lt; 120 / &lt; 80 mmHg</span>
+                </div>
+                <p>Systolic &amp; diastolic pressure against arterial walls. Critical for early screening of hypertension.</p>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-droplet text-blue"></i> Oxygen Saturation (SpO2)</h4>
+                    <span class="status-pill status-normal">Target: 95% – 100%</span>
+                </div>
+                <p>Percentage of oxygenated hemoglobin in arterial blood. Values below 95% warrant medical evaluation.</p>
+            </div>
+
+            <div class="ref-card">
+                <div class="ref-header">
+                    <h4><i class="fas fa-person text-yellow"></i> Body Mass Index (BMI)</h4>
+                    <span class="status-pill status-normal">Target: 18.5 – 22.9 kg/m²</span>
+                </div>
+                <p>Asia-Pacific WHO metric assessing healthy weight distribution for height to screen obesity and malnutrition.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Banner -->
+<section class="cta-banner">
+    <div class="container cta-container">
+        <div class="cta-text">
+            <h2>Ready to monitor your health at RTU Pasig Clinic?</h2>
+            <p>Sign up now to register your RFID card, skip checkup queues, and track your health risk prediction online.</p>
+        </div>
+        <div class="cta-buttons">
+            <a href="{{ url_for('register') }}" class="btn-cta-white">
+                <i class="fas fa-user-plus"></i> Create Free Account
+            </a>
+            <a href="{{ url_for('login') }}" class="btn-cta-trans">
+                <i class="fas fa-sign-in-alt"></i> Sign In to Portal
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

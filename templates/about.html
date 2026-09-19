@@ -1,93 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Learn about All in Juan Vital Sign's mission to provide affordable, portable healthcare monitoring across the Philippines.">
-    <title>About Us | All in Juan Vital Sign</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="/static/styles.css">
-</head>
+{% block title %}About the Thesis | FOVB-AIoT - RTU Pasig Clinic{% endblock %}
 
-<body>
-    <header>
-        <nav class="navbar">
-            <img class="logo" src="/pictures/logo.png" alt="All in Juan Vital Sign Logo">
-            <div class="title">All in Juan Vital Sign</div>
-            <div class="menu-toggle" id="menu-toggle">&#9776;</div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html" class="active">About Us</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
+{% block content %}
+<!-- About Hero -->
+<section class="page-hero">
+    <div class="container">
+        <span class="page-tag"><i class="fas fa-graduation-cap"></i> Undergraduate Capstone Thesis</span>
+        <h1 class="page-title">FOVB-AIoT Research &amp; Innovation</h1>
+        <p class="page-subtitle">
+            Four-in-One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Risk Prediction in RTU Pasig Clinic.
+        </p>
+    </div>
+</section>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero" style="background-image: url('/pictures/about-hero.jpg');">
-            <div class="hero-content">
-                <h1>About Us</h1>
-                <p>Revolutionizing Healthcare Accessibility in the Philippines</p>
+<!-- Thesis Overview & Abstract -->
+<section class="section-about-content">
+    <div class="container">
+        <div class="about-card abstract-card">
+            <div class="abstract-header">
+                <div class="abstract-badge"><i class="fas fa-file-medical"></i> Official Abstract</div>
+                <span class="univ-tag">Rizal Technological University • March 2026</span>
             </div>
-        </section>
-
-        <!-- Mission Section -->
-        <section class="section mission">
-            <h2>Our Mission</h2>
-            <p class="text-center">
-                We are committed to making healthcare accessible, affordable, and portable for every Filipino. Through
-                innovative technology and advanced sensors, we're bringing vital health monitoring directly to
-                communities across the Philippines.
+            <p class="abstract-text">
+                This study presents the development of the <strong>FOVB-AIoT</strong>, a kiosk-based health monitoring system that integrates a 
+                Four-in-One Vital Sign Sensor with Body Mass Index (BMI) calculation using Artificial Intelligence (AI) and the Internet of Things (IoT) 
+                for Health Risk Prediction. Designed to improve efficiency and accuracy over traditional manual screening methods in educational and institutional health clinics, 
+                the FOVB-AIoT platform measures key physiological parameters—including <strong>body temperature, heart rate, respiratory rate, oxygen saturation (SpO2), 
+                and blood pressure (via AI computer vision)</strong>—while simultaneously computing BMI using automated laser LiDAR height and digital load cell weight sensors.
             </p>
-        </section>
-
-        <!-- Features Grid -->
-        <section class="section features">
-            <h2>Why Choose Us</h2>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <h3>💓 Advanced Monitoring</h3>
-                    <p>Accurate real‑time tracking of heart rate, blood pressure, oxygen levels, and body temperature.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <h3>🔍 Early Detection</h3>
-                    <p>AI‑driven analytics predict potential health issues before they become serious.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>📱 Portable & Accessible</h3>
-                    <p>Compact, easy‑to‑use devices bring professional‑grade monitoring to remote areas.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>💰 Affordable Care</h3>
-                    <p>Medical‑grade monitoring at a fraction of traditional costs.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🌐 Connected Health</h3>
-                    <p>Seamless data sync with healthcare providers for continuous monitoring.</p>
-                </div>
-                <div class="feature-card">
-                    <h3>🇵🇭 For Every Juan</h3>
-                    <p>Designed specifically for Filipino communities, empowering millions across the archipelago.</p>
-                </div>
+            <p class="abstract-text">
+                An <strong>RFID-based fast-track system</strong> enables rapid authentication without repetitive manual data entry. Telemetry data are securely transmitted to an 
+                IoT web portal for real-time access by clinic personnel. The integrated AI engine analyzes vital sign patterns to detect anomalous physiological signs and calculate a 
+                <strong>Comprehensive Risk Score</strong>, providing actionable health recommendations and automated thermal slips to support proactive preventive care.
+            </p>
+            <div class="keywords-list">
+                <strong>Keywords:</strong>
+                <span class="kw-tag">FOVB-AIoT</span>
+                <span class="kw-tag">RTU Pasig Clinic</span>
+                <span class="kw-tag">AI Computer Vision (YOLO)</span>
+                <span class="kw-tag">Comprehensive Risk Score</span>
+                <span class="kw-tag">IoT Health Database</span>
+                <span class="kw-tag">RFID Authentication</span>
             </div>
-        </section>
-    </main>
+        </div>
 
-    <script>
-        const menuToggle = document.getElementById('menu-toggle');
-        const navLinks = document.getElementById('nav-links');
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
-    </script>
-</body>
+        <!-- System Architecture Breakdown -->
+        <div class="section-header text-center mt-5">
+            <span class="section-tag"><i class="fas fa-diagram-project"></i> System Architecture</span>
+            <h2 class="section-title">Hardware &amp; Software Integration</h2>
+            <p class="section-subtitle">A multi-tier architecture uniting sensor telemetry, dual microcontrollers, AI vision, and web-based IoT storage.</p>
+        </div>
 
-</html>
+        <div class="arch-grid">
+            <!-- Hardware Card -->
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-microchip"></i></div>
+                <h3>1. Hardware &amp; Microcontrollers</h3>
+                <ul class="arch-list">
+                    <li><strong>Dell Mini PC (Intel Core i5 10th Gen):</strong> Central processing unit managing real-time data processing, database sync, and AI risk prediction algorithms.</li>
+                    <li><strong>Arduino Mega 2560:</strong> Primary microcontroller managing data streams from the LiDAR, load cells, temperature, and pulse oximeter.</li>
+                    <li><strong>Arduino Nano:</strong> Secondary microcontroller dedicated to the custom blood pressure enclosure, controlling LCD feedback and LED indicators.</li>
+                    <li><strong>Fortress CF160TM 15.6" Touchscreen:</strong> High-definition capacitive interactive user interface for guided screening sessions.</li>
+                    <li><strong>Embedded Thermal Receipt Printer:</strong> Instantly issues printed clinical vital slips for patient records and physical clinic referrals.</li>
+                </ul>
+            </div>
+
+            <!-- Sensors Card -->
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-satellite-dish"></i></div>
+                <h3>2. Clinical Sensors &amp; Peripherals</h3>
+                <ul class="arch-list">
+                    <li><strong>MLX90614 Infrared Sensor:</strong> Non-contact radiometric temperature sensor ensuring medical hygiene and fast reading.</li>
+                    <li><strong>MAX30102 PPG Sensor:</strong> Photoplethysmography sensor extracting Heart Rate, SpO2 blood oxygen, and respiratory rhythm.</li>
+                    <li><strong>TF-Luna LiDAR Sensor:</strong> Laser time-of-flight sensor overhead for accurate, contactless height detection.</li>
+                    <li><strong>HX711 &amp; Load Cell Platform:</strong> Industrial analog-to-digital weight sensor converting mechanical force to accurate mass for BMI.</li>
+                    <li><strong>RC522 RFID 13.56 MHz Reader:</strong> Contactless smart card interface for 1-tap student/staff profile recognition.</li>
+                </ul>
+            </div>
+
+            <!-- AI & IoT Card -->
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-brain"></i></div>
+                <h3>3. AI Computer Vision &amp; Cloud IoT</h3>
+                <ul class="arch-list">
+                    <li><strong>YOLO Object Detection &amp; OCR:</strong> HD camera trained with YOLOv8 computer vision to recognize and read seven-segment digital blood pressure numbers while rejecting optical interference.</li>
+                    <li><strong>AI Comprehensive Risk Engine:</strong> Multi-vital inference engine weighting temperature, blood pressure, pulse, SpO2, and BMI into a 0-100% clinical risk index.</li>
+                    <li><strong>Flask IoT Cloud Server:</strong> Lightweight, RESTful backend exposing endpoints for kiosk telemetry sync and patient authentication.</li>
+                    <li><strong>Responsive Web Dashboard:</strong> Real-time patient analytics, longitudinal trend graphs (Chart.js), and printable RTU clinic slips.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Research Team -->
+        <div class="section-header text-center mt-5">
+            <span class="section-tag"><i class="fas fa-users"></i> Authors &amp; Researchers</span>
+            <h2 class="section-title">The FOVB-AIoT Research Group</h2>
+            <p class="section-subtitle">Bachelor of Science in Computer Engineering — College of Engineering, Rizal Technological University</p>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Mar Kevin P. Alcantara</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Hardware &amp; System Integration</span>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Bernie C. Berongoy</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Sensor Calibration &amp; Testing</span>
+            </div>
+
+            <div class="team-card team-card-lead">
+                <div class="team-avatar"><i class="fas fa-user-gear"></i></div>
+                <h4>Khin Andrei R. Gamboa</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Full-Stack IoT &amp; Software Dev</span>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Reymart G. Llona</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Firmware &amp; Arduino Control</span>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Erick John A. Oavenada</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">AI Vision &amp; OCR Development</span>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Paul Andrew A. Relevo</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Kiosk Enclosure &amp; Mechanics</span>
+            </div>
+
+            <div class="team-card">
+                <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                <h4>Yuri Lorenz C. Sagadraca</h4>
+                <p>BS Computer Engineering</p>
+                <span class="team-role">Clinical Validation &amp; Analysis</span>
+            </div>
+        </div>
+
+        <!-- Academic Affiliation -->
+        <div class="affiliation-box text-center mt-5">
+            <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="Logo" class="affil-logo">
+            <h3>Rizal Technological University</h3>
+            <p>M. Eusebio Avenue, Maybunga, Pasig City, Metro Manila, Philippines</p>
+            <p class="affil-details">College of Engineering • Department of Computer Engineering • Academic Year 2025–2026</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

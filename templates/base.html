@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FOVB-AIoT | Health Prediction & Kiosk Portal{% endblock %}</title>
+    
+    <!-- Meta tags for SEO & Academic showcase -->
+    <meta name="description" content="FOVB-AIoT: Four in One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Prediction in RTU Pasig Clinic. Fast RFID health kiosk and online patient dashboard.">
+    <meta name="keywords" content="FOVB-AIoT, RTU Pasig, Vital Signs, BMI, AI Health Prediction, RFID Kiosk, Computer Engineering Thesis">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='pictures/logo.png') }}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Subtle Filipino Cultural Tricolor Micro-Stripe -->
+    <div class="pinoy-accent-bar" title="Mabuhay! Rizal Technological University - Pasig Campus">
+        <span class="bar-blue"></span>
+        <span class="bar-yellow"></span>
+        <span class="bar-red"></span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="{{ url_for('index') }}" class="brand-link">
+                <img class="logo-img" src="{{ url_for('static', filename='pictures/logo.png') }}" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk & Web Portal</span>
+                </div>
+            </a>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About Thesis</a></li>
+                <li><a href="{{ url_for('instructions') }}" class="{% if request.endpoint == 'instructions' %}active{% endif %}">Kiosk Guide</a></li>
+                <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Clinic & Contact</a></li>
+                
+                {% if current_user %}
+                    <li class="nav-user-item">
+                        <a href="{{ url_for('dashboard') }}" class="nav-btn-dashboard {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                            <i class="fas fa-chart-line"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-user-profile">
+                        <span class="user-greeting">
+                            <i class="fas fa-id-card-clip"></i> {{ current_user['full_name'].split()[0] }}
+                        </span>
+                        <a href="{{ url_for('logout') }}" class="nav-btn-logout" title="Sign Out">
+                            <i class="fas fa-arrow-right-from-bracket"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="nav-link-login {% if request.endpoint == 'login' %}active{% endif %}">Sign In</a></li>
+                    <li><a href="{{ url_for('register') }}" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Flash Notification Messages -->
+    <div class="flash-container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-alert flash-{{ category }}">
+                        <div class="flash-content">
+                            {% if category == 'success' %}
+                                <i class="fas fa-circle-check"></i>
+                            {% elif category == 'error' %}
+                                <i class="fas fa-circle-exclamation"></i>
+                            {% elif category == 'warning' %}
+                                <i class="fas fa-triangle-exclamation"></i>
+                            {% else %}
+                                <i class="fas fa-circle-info"></i>
+                            {% endif %}
+                            <span>{{ message }}</span>
+                        </div>
+                        <button class="flash-close" onclick="this.parentElement.remove();">&times;</button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Dynamic Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <img src="{{ url_for('static', filename='pictures/logo.png') }}" alt="FOVB-AIoT Logo" class="footer-logo">
+                    <div>
+                        <h3>FOVB-AIoT</h3>
+                        <p class="pinoy-tagline">“Bantay-Kalusugan Para sa Bawat Rizalian at Pilipino”</p>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    Four-in-One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Risk Prediction.
+                    Developed for the RTU Pasig Clinic by BS Computer Engineering researchers, Rizal Technological University.
+                </p>
+                <div class="footer-badges">
+                    <span class="badge-pinoy"><i class="fas fa-heart-pulse"></i> RTU Pasig Clinic</span>
+                    <span class="badge-pinoy"><i class="fas fa-microchip"></i> AI & IoT Enabled</span>
+                </div>
+            </div>
+
+            <div class="footer-col links-col">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="{{ url_for('index') }}"><i class="fas fa-chevron-right"></i> Home Showcase</a></li>
+                    <li><a href="{{ url_for('about') }}"><i class="fas fa-chevron-right"></i> Thesis Documentation</a></li>
+                    <li><a href="{{ url_for('instructions') }}"><i class="fas fa-chevron-right"></i> Kiosk Step-by-Step Guide</a></li>
+                    <li><a href="{{ url_for('contact') }}"><i class="fas fa-chevron-right"></i> RTU Pasig Clinic Info</a></li>
+                    <li><a href="{{ url_for('register') }}"><i class="fas fa-chevron-right"></i> Student/Staff Online Sign Up</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col clinic-col">
+                <h4>RTU Pasig Clinic</h4>
+                <p><i class="fas fa-location-dot"></i> Rizal Technological University - Pasig Campus<br>M. Eusebio Avenue, Maybunga, Pasig City</p>
+                <p><i class="fas fa-clock"></i> Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p><i class="fas fa-envelope"></i> clinic.pasig@rtu.edu.ph</p>
+                <p><i class="fas fa-phone"></i> RTU Pasig Trunkline: (02) 8643-2395</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 FOVB-AIoT Research Group • College of Engineering, Rizal Technological University. All rights reserved.</p>
+                <p class="pinoy-quote">ᜃᜎᜓᜐᜓ4ᜈ᜔ • Mabuhay ang Kalusugang Rizalian!</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation Toggle Script -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        if (menuToggle && navLinks) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

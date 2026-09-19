@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Health Dashboard | FOVB-AIoT - RTU Pasig Clinic</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" type="image/png" href="pictures/logo.png">
+
+    <!-- Chart.js & QRCode.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="pinoy-accent-bar"><span class="bar-blue"></span><span class="bar-yellow"></span><span class="bar-red"></span></div>
+
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="index.html" class="brand-link">
+                <img class="logo-img" src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk &amp; Web Portal</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="instructions.html">Kiosk Guide</a></li>
+                <li><a href="contact.html">Clinic &amp; Contact</a></li>
+                <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;"></span>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="dashboard-wrapper">
+            <!-- Header Section -->
+            <section class="dashboard-header-section">
+                <div class="container">
+                    <div class="dash-welcome-flex">
+                        <div class="welcome-text">
+                            <span class="greeting-badge"><span class="pulse-dot"></span> Kumusta, Ka-RTU!</span>
+                            <h1 id="dashUserHeading">Khin Andrei Gamboa</h1>
+                            <p class="dash-meta">
+                                <span><i class="fas fa-id-badge"></i> Student ID: <strong id="dashStudentId">2022-104928</strong></span>
+                                <span><i class="fas fa-building-columns"></i> <span id="dashDept">College of Engineering</span></span>
+                                <span><i class="fas fa-venus-mars"></i> <span id="dashSexAge">Male, 21 yrs old</span></span>
+                            </p>
+                        </div>
+
+                        <div class="dash-actions">
+                            <button type="button" class="btn-primary" id="btnOpenSimulate">
+                                <i class="fas fa-play"></i> Simulate Kiosk Checkup
+                            </button>
+                            <button type="button" class="btn-outline" id="btnPrintSlip" onclick="openPrintModal()">
+                                <i class="fas fa-print"></i> Print Official Clinic Slip
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container dashboard-main-grid">
+                <!-- Sidebar -->
+                <aside class="dash-sidebar">
+                    <!-- Digital RFID Pass Card -->
+                    <div class="rfid-card-widget">
+                        <div class="rfid-card-front">
+                            <div class="rfid-top-row">
+                                <div class="rfid-chip-icon">
+                                    <i class="fas fa-microchip"></i>
+                                    <span>NFC / RFID 13.56 MHz</span>
+                                </div>
+                                <img src="pictures/logo.png" alt="Logo" class="rfid-logo-micro">
+                            </div>
+                            
+                            <div class="rfid-holder-name" id="cardHolderName">Khin Andrei Gamboa</div>
+                            <div class="rfid-holder-id" id="cardHolderId">ID: 2022-104928</div>
+                            
+                            <div class="rfid-bottom-row">
+                                <div class="rfid-uid-display">
+                                    <span class="uid-label">RFID UID TAG</span>
+                                    <span class="uid-value" id="cardUid">E2 80 68 31</span>
+                                </div>
+                                <div id="rfidQrCode" class="rfid-qr-box" title="Scan at RTU Kiosk"></div>
+                            </div>
+                        </div>
+                        <div class="rfid-card-footer">
+                            <button type="button" class="btn-link-edit" onclick="openRfidModal()">
+                                <i class="fas fa-pen-to-square"></i> Change / Re-link RFID Tag
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- AI Risk Widget -->
+                    <div class="dash-widget ai-risk-widget">
+                        <div class="widget-header">
+                            <div class="widget-title">
+                                <i class="fas fa-brain text-red"></i>
+                                <h3>AI Health Risk Prediction</h3>
+                            </div>
+                            <span class="risk-badge badge-low-risk" id="riskBadge">Low Risk</span>
+                        </div>
+
+                        <div class="risk-score-display">
+                            <div class="gauge-circle">
+                                <div class="score-value" id="riskScoreVal">10.5%</div>
+                                <div class="score-subtitle">Comprehensive Risk</div>
+                            </div>
+                            <div class="risk-bar-container">
+                                <div class="risk-bar-fill fill-low-risk" id="riskBarFill" style="width: 10.5%;"></div>
+                            </div>
+                            <div class="risk-scale-labels">
+                                <span>0% Low</span>
+                                <span>50% Moderate</span>
+                                <span>100% High</span>
+                            </div>
+                        </div>
+
+                        <div class="ai-recommendation-box">
+                            <h4><i class="fas fa-notes-medical"></i> Clinical AI Assessment:</h4>
+                            <p id="riskRecText">All monitored vital signs and BMI are within standard healthy limits. Keep up your active lifestyle, stay properly hydrated during campus hours, and maintain balanced nutrition.</p>
+                        </div>
+
+                        <div class="kiosk-stamp">
+                            <small><i class="fas fa-clock"></i> Evaluated: <span id="riskDateStamp">2026-09-19 08:45:00</span></small>
+                            <small><i class="fas fa-desktop"></i> Station: RTU-PASIG-KIOSK-01</small>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Right Column: Vitals, Charts, and Logs Table -->
+                <main class="dash-content-column">
+                    <!-- 6 Vital Metric Cards -->
+                    <div class="vitals-metric-grid" id="vitalsCardsGrid">
+                        <!-- Populated dynamically via JS -->
+                    </div>
+
+                    <!-- Longitudinal Charts Panel -->
+                    <div class="dash-widget mt-4">
+                        <div class="widget-header">
+                            <div class="widget-title">
+                                <i class="fas fa-chart-line text-red"></i>
+                                <h3>Longitudinal Health Trends</h3>
+                            </div>
+                            <div class="chart-tab-controls">
+                                <button type="button" class="tab-btn active" onclick="switchChart('bp')">Blood Pressure</button>
+                                <button type="button" class="tab-btn" onclick="switchChart('bmi')">BMI &amp; Weight</button>
+                                <button type="button" class="tab-btn" onclick="switchChart('hr')">Heart Rate &amp; SpO2</button>
+                            </div>
+                        </div>
+
+                        <div class="chart-container" style="position: relative; height: 320px; width: 100%;">
+                            <canvas id="healthTrendChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- History Logs Table -->
+                    <div class="dash-widget mt-4">
+                        <div class="widget-header">
+                            <div class="widget-title">
+                                <i class="fas fa-clock-rotate-left text-red"></i>
+                                <h3>Complete Screening History (<span id="sessionCount">5</span> Sessions)</h3>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="dash-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date &amp; Time</th>
+                                        <th>Blood Pressure</th>
+                                        <th>Heart Rate</th>
+                                        <th>Temp</th>
+                                        <th>SpO2</th>
+                                        <th>BMI</th>
+                                        <th>AI Risk</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL 1: KIOSK SIMULATION MODAL -->
+    <div class="modal-overlay" id="simulateModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-play-circle text-red"></i>
+                    <h3>FOVB-AIoT Kiosk Simulation</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="closeSimulateModal()">&times;</button>
+            </div>
+
+            <p class="modal-desc">
+                Simulate a patient screening at the <strong>RTU Pasig Clinic Kiosk</strong>. You can choose a quick preset or customize sensor values.
+            </p>
+
+            <form id="clientSimulateForm">
+                <div class="sim-controls-top">
+                    <button type="button" class="btn-sim-preset" onclick="applyPreset('healthy')">
+                        <i class="fas fa-heart text-green"></i> Healthy Profile
+                    </button>
+                    <button type="button" class="btn-sim-preset" onclick="applyPreset('fever')">
+                        <i class="fas fa-temperature-high text-yellow"></i> Fever Profile
+                    </button>
+                    <button type="button" class="btn-sim-preset" onclick="applyPreset('hypertension')">
+                        <i class="fas fa-gauge-high text-red"></i> High BP Profile
+                    </button>
+                </div>
+
+                <div class="form-row mt-3">
+                    <div class="form-group">
+                        <label>Height (cm) - TF-Luna LiDAR</label>
+                        <input type="number" step="0.5" id="sim_height" value="171.0" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Weight (kg) - HX711 Load Cell</label>
+                        <input type="number" step="0.5" id="sim_weight" value="65.0" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Body Temp (°C) - MLX90614</label>
+                        <input type="number" step="0.1" id="sim_temp" value="36.6" required>
+                    </div>
+                    <div class="form-group">
+                        <label>SpO2 (%) - MAX30102</label>
+                        <input type="number" id="sim_spo2" value="98" min="70" max="100" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Heart Rate (BPM)</label>
+                        <input type="number" id="sim_hr" value="74" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Respiratory Rate (br/min)</label>
+                        <input type="number" id="sim_rr" value="16" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Systolic BP (mmHg) - YOLO OCR</label>
+                        <input type="number" id="sim_sys" value="118" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Diastolic BP (mmHg) - YOLO OCR</label>
+                        <input type="number" id="sim_dia" value="78" required>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeSimulateModal()">Cancel</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-check"></i> Run Screening &amp; Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: PRINTABLE OFFICIAL RTU CLINIC HEALTH SLIP MODAL -->
+    <div class="modal-overlay" id="printSlipModal">
+        <div class="modal-box modal-slip-box">
+            <div class="modal-header no-print">
+                <div class="modal-title">
+                    <i class="fas fa-receipt text-red"></i>
+                    <h3>Official RTU Pasig Clinic Health Slip</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="closePrintModal()">&times;</button>
+            </div>
+
+            <div class="printable-clinic-slip" id="printableSlipArea">
+                <div class="slip-header">
+                    <img src="pictures/logo.png" alt="RTU Logo" class="slip-logo">
+                    <div class="slip-header-text">
+                        <h3>RIZAL TECHNOLOGICAL UNIVERSITY</h3>
+                        <h4>PASIG CAMPUS HEALTH CLINIC</h4>
+                        <p>M. Eusebio Avenue, Maybunga, Pasig City</p>
+                        <div class="slip-doc-title">FOVB-AIoT VITAL SIGNS &amp; RISK REPORT</div>
+                    </div>
+                </div>
+
+                <div class="slip-divider"></div>
+
+                <div class="slip-patient-info">
+                    <div class="info-line"><span>Patient Name:</span> <strong id="slip_patient_name">Khin Andrei Gamboa</strong></div>
+                    <div class="info-line"><span>Student/Staff ID:</span> <strong id="slip_patient_id">2022-104928</strong></div>
+                    <div class="info-line"><span>Department:</span> <strong id="slip_department">Computer Engineering</strong></div>
+                    <div class="info-line"><span>Date &amp; Time:</span> <span id="slip_date">--</span></div>
+                    <div class="info-line"><span>RFID Token UID:</span> <span id="slip_rfid">E2 80 68 31</span></div>
+                    <div class="info-line"><span>Station ID:</span> <span id="slip_kiosk_id">RTU-PASIG-KIOSK-01</span></div>
+                </div>
+
+                <div class="slip-divider"></div>
+
+                <table class="slip-vitals-table">
+                    <thead>
+                        <tr>
+                            <th>PHYSIOLOGICAL METRIC</th>
+                            <th>READING</th>
+                            <th>STANDARD BENCHMARK</th>
+                            <th>CLINICAL REMARKS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Body Temperature (MLX90614)</td>
+                            <td><strong id="slip_temp">--</strong> °C</td>
+                            <td>36.5 – 37.5 °C</td>
+                            <td id="slip_temp_rem">Normal</td>
+                        </tr>
+                        <tr>
+                            <td>Blood Pressure (YOLO OCR)</td>
+                            <td><strong id="slip_bp">--</strong> mmHg</td>
+                            <td>&lt; 120 / &lt; 80 mmHg</td>
+                            <td id="slip_bp_rem">--</td>
+                        </tr>
+                        <tr>
+                            <td>Heart Rate (MAX30102)</td>
+                            <td><strong id="slip_hr">--</strong> BPM</td>
+                            <td>60 – 100 BPM</td>
+                            <td id="slip_hr_rem">--</td>
+                        </tr>
+                        <tr>
+                            <td>Respiratory Rate</td>
+                            <td><strong id="slip_rr">--</strong> br/min</td>
+                            <td>12 – 20 br/min</td>
+                            <td id="slip_rr_rem">--</td>
+                        </tr>
+                        <tr>
+                            <td>Oxygen Saturation (SpO2)</td>
+                            <td><strong id="slip_spo2">--</strong>%</td>
+                            <td>95% – 100%</td>
+                            <td id="slip_spo2_rem">--</td>
+                        </tr>
+                        <tr>
+                            <td>Height &amp; Weight (BMI)</td>
+                            <td><strong id="slip_bmi">--</strong> kg/m²</td>
+                            <td>18.5 – 22.9 kg/m² (WHO Asia)</td>
+                            <td id="slip_bmi_rem">--</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="slip-divider"></div>
+
+                <div class="slip-ai-summary">
+                    <div class="slip-risk-heading">
+                        <strong>AI HEALTH RISK PREDICTION:</strong>
+                        <span class="slip-risk-pill" id="slip_risk_level">--</span>
+                        <span id="slip_risk_score">--</span>
+                    </div>
+                    <p id="slip_ai_rec" class="slip-rec-text">--</p>
+                </div>
+
+                <div class="slip-signatures">
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <small>Patient Signature</small>
+                    </div>
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <small>Attending Clinic Nurse / Medical Officer</small>
+                    </div>
+                </div>
+
+                <div class="slip-footer-note">
+                    <small>Generated by FOVB-AIoT Kiosk System • Rizal Technological University Pasig Clinic • Non-transferable</small>
+                </div>
+            </div>
+
+            <div class="modal-footer no-print">
+                <button type="button" class="btn-secondary" onclick="closePrintModal()">Close</button>
+                <button type="button" class="btn-primary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Receipt / PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: UPDATE RFID CARD MODAL -->
+    <div class="modal-overlay" id="rfidModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-wifi text-red"></i>
+                    <h3>Update Your RFID Card UID</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="closeRfidModal()">&times;</button>
+            </div>
+
+            <p class="modal-desc">
+                Got a new RTU RFID card or key fob? Update your 4-byte hexadecimal UID tag below so you can tap into the kiosk instantly.
+            </p>
+
+            <form id="updateRfidForm">
+                <div class="form-group">
+                    <label for="new_rfid_uid">RFID Card UID (Hexadecimal)</label>
+                    <input type="text" id="new_rfid_uid" placeholder="e.g. 7A 3F B2 90" required class="code-font">
+                    <small class="form-hint">Enter the 4 hex byte pairs separated by spaces.</small>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeRfidModal()">Cancel</button>
+                    <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save RFID Tag</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/app.js"></script>
+    <script>
+        let trendChart = null;
+        let currentChartType = 'bp';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDashboard();
+        });
+
+        function renderDashboard() {
+            const user = getCurrentUser();
+            const logs = getLogs();
+            const latest = logs[logs.length - 1];
+
+            // Render User Header
+            document.getElementById('dashUserHeading').textContent = user.full_name;
+            document.getElementById('dashStudentId').textContent = user.student_id;
+            document.getElementById('dashDept').textContent = user.department || 'College of Engineering';
+            document.getElementById('dashSexAge').textContent = `${user.sex || 'N/A'}, ${user.age || 'N/A'} yrs old`;
+
+            // Render RFID Card
+            document.getElementById('cardHolderName').textContent = user.full_name;
+            document.getElementById('cardHolderId').textContent = `ID: ${user.student_id}`;
+            document.getElementById('cardUid').textContent = user.rfid_uid || 'NOT LINKED';
+            document.getElementById('new_rfid_uid').value = user.rfid_uid || '';
+
+            // QR Code
+            const qrBox = document.getElementById('rfidQrCode');
+            qrBox.innerHTML = '';
+            new QRCode(qrBox, {
+                text: "RTU-FOVB-AIoT:" + (user.rfid_uid || user.student_id),
+                width: 64,
+                height: 64,
+                colorDark: "#1e293b",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.M
+            });
+
+            if (latest) {
+                // AI Risk Widget
+                const badge = document.getElementById('riskBadge');
+                badge.className = `risk-badge badge-${latest.risk_level.toLowerCase().replace(' ', '-')}`;
+                badge.textContent = latest.risk_level;
+
+                document.getElementById('riskScoreVal').textContent = `${latest.risk_score}%`;
+                const bar = document.getElementById('riskBarFill');
+                bar.className = `risk-bar-fill fill-${latest.risk_level.toLowerCase().replace(' ', '-')}`;
+                bar.style.width = `${latest.risk_score}%`;
+
+                document.getElementById('riskRecText').textContent = latest.ai_rec;
+                document.getElementById('riskDateStamp').textContent = latest.full_date;
+
+                // 6 Vital Metric Cards
+                renderVitalsGrid(latest);
+
+                // Populate Print Slip
+                populateSlip(latest, user);
+            }
+
+            // History Table
+            renderHistoryTable(logs);
+            document.getElementById('sessionCount').textContent = logs.length;
+
+            // Trend Chart
+            renderChart(logs);
+        }
+
+        function renderVitalsGrid(l) {
+            const grid = document.getElementById('vitalsCardsGrid');
+            grid.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-temp"><i class="fas fa-temperature-three-quarters"></i></span>
+                        <span class="sensor-mini-badge">MLX90614</span>
+                    </div>
+                    <div class="metric-value">${l.temp} <span class="metric-unit">°C</span></div>
+                    <div class="metric-label">Body Temperature</div>
+                    <div class="metric-status">
+                        ${l.temp >= 37.6 ? '<span class="pill pill-warning"><i class="fas fa-triangle-exclamation"></i> Low Fever</span>' : 
+                          l.temp < 36.0 ? '<span class="pill pill-info"><i class="fas fa-snowflake"></i> Subnormal</span>' :
+                          '<span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (36.5–37.5)</span>'}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-bp"><i class="fas fa-heart-pulse"></i></span>
+                        <span class="sensor-mini-badge">YOLO AI Vision</span>
+                    </div>
+                    <div class="metric-value">${l.sys}/${l.dia} <span class="metric-unit">mmHg</span></div>
+                    <div class="metric-label">Blood Pressure (Sys / Dia)</div>
+                    <div class="metric-status">
+                        ${l.bp_cat.includes('Stage') || l.bp_cat.includes('Crisis') ? `<span class="pill pill-danger"><i class="fas fa-circle-exclamation"></i> ${l.bp_cat}</span>` :
+                          l.bp_cat.includes('Elevated') ? `<span class="pill pill-warning"><i class="fas fa-triangle-exclamation"></i> Elevated</span>` :
+                          `<span class="pill pill-success"><i class="fas fa-circle-check"></i> ${l.bp_cat} (&lt;120/&lt;80)</span>`}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-hr"><i class="fas fa-heartbeat pulse-anim"></i></span>
+                        <span class="sensor-mini-badge">MAX30102</span>
+                    </div>
+                    <div class="metric-value">${l.hr} <span class="metric-unit">BPM</span></div>
+                    <div class="metric-label">Heart Rate (Pulse)</div>
+                    <div class="metric-status">
+                        ${l.hr > 100 ? '<span class="pill pill-warning">Tachycardia (>100)</span>' :
+                          l.hr < 60 ? '<span class="pill pill-info">Bradycardia (<60)</span>' :
+                          '<span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (60–100)</span>'}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-rr"><i class="fas fa-lungs"></i></span>
+                        <span class="sensor-mini-badge">MAX30102 PPG</span>
+                    </div>
+                    <div class="metric-value">${l.rr} <span class="metric-unit">br/min</span></div>
+                    <div class="metric-label">Respiratory Rate</div>
+                    <div class="metric-status">
+                        ${l.rr > 20 ? '<span class="pill pill-warning">Tachypnea (>20)</span>' :
+                          '<span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (12–20)</span>'}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-spo2"><i class="fas fa-droplet"></i></span>
+                        <span class="sensor-mini-badge">MAX30102</span>
+                    </div>
+                    <div class="metric-value">${l.spo2} <span class="metric-unit">%</span></div>
+                    <div class="metric-label">Oxygen Saturation (SpO2)</div>
+                    <div class="metric-status">
+                        ${l.spo2 < 95 ? '<span class="pill pill-danger"><i class="fas fa-triangle-exclamation"></i> Low (&lt;95%)</span>' :
+                          '<span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal (95–100%)</span>'}
+                    </div>
+                </div>
+
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <span class="metric-icon icon-bmi"><i class="fas fa-person"></i></span>
+                        <span class="sensor-mini-badge">LiDAR + Load Cell</span>
+                    </div>
+                    <div class="metric-value">${l.bmi} <span class="metric-unit">kg/m²</span></div>
+                    <div class="metric-label">BMI (${l.height}cm • ${l.weight}kg)</div>
+                    <div class="metric-status">
+                        ${l.bmi_cat === 'Normal' ? '<span class="pill pill-success"><i class="fas fa-circle-check"></i> Normal Weight</span>' :
+                          l.bmi_cat === 'Underweight' ? '<span class="pill pill-warning"><i class="fas fa-arrow-down"></i> Underweight</span>' :
+                          `<span class="pill pill-danger"><i class="fas fa-arrow-up"></i> ${l.bmi_cat}</span>`}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderHistoryTable(logs) {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            const reversed = [...logs].reverse();
+            reversed.forEach((log, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${log.full_date}</strong></td>
+                    <td>
+                        <span class="font-semibold">${log.sys}/${log.dia}</span> mmHg
+                        <small class="block text-muted">${log.bp_cat}</small>
+                    </td>
+                    <td>${log.hr} bpm</td>
+                    <td>${log.temp} °C</td>
+                    <td>${log.spo2}%</td>
+                    <td>${log.bmi} <small class="block text-muted">(${log.bmi_cat})</small></td>
+                    <td>
+                        <span class="table-badge badge-${log.risk_level.toLowerCase().replace(' ', '-')}">
+                            ${log.risk_level} (${log.risk_score}%)
+                        </span>
+                    </td>
+                    <td>
+                        <button type="button" class="btn-table-action" onclick="viewLogReceipt(${logs.length - 1 - index})">
+                            <i class="fas fa-receipt"></i> Slip
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderChart(logs) {
+            const ctx = document.getElementById('healthTrendChart');
+            if (!ctx) return;
+            const labels = logs.map(l => l.date);
+
+            if (trendChart) trendChart.destroy();
+
+            trendChart = new Chart(ctx, {
+                type: 'line',
+                data: getChartData(currentChartType, logs, labels),
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { position: 'top', labels: { font: { family: 'Inter', size: 12 } } }
+                    },
+                    scales: {
+                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter' } } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Inter' } } }
+                    }
+                }
+            });
+        }
+
+        function getChartData(type, logs, labels) {
+            if (type === 'bp') {
+                return {
+                    labels,
+                    datasets: [
+                        { label: 'Systolic BP (Target < 120)', data: logs.map(l => l.sys), borderColor: '#d32f2f', backgroundColor: 'rgba(211, 47, 47, 0.1)', fill: true, tension: 0.3, borderWidth: 2.5 },
+                        { label: 'Diastolic BP (Target < 80)', data: logs.map(l => l.dia), borderColor: '#2563eb', backgroundColor: 'rgba(37, 99, 235, 0.05)', fill: true, tension: 0.3, borderWidth: 2.5 }
+                    ]
+                };
+            } else if (type === 'bmi') {
+                return {
+                    labels,
+                    datasets: [
+                        { label: 'BMI (Target: 18.5 - 22.9)', data: logs.map(l => l.bmi), borderColor: '#059669', backgroundColor: 'rgba(5, 150, 105, 0.1)', fill: true, tension: 0.3, borderWidth: 2.5 },
+                        { label: 'Weight (kg)', data: logs.map(l => l.weight), borderColor: '#d97706', borderDash: [5, 5], fill: false, tension: 0.3, borderWidth: 2 }
+                    ]
+                };
+            } else if (type === 'hr') {
+                return {
+                    labels,
+                    datasets: [
+                        { label: 'Heart Rate (BPM)', data: logs.map(l => l.hr), borderColor: '#e11d48', backgroundColor: 'rgba(225, 29, 72, 0.1)', fill: true, tension: 0.3, borderWidth: 2.5 },
+                        { label: 'SpO2 Oxygen (%)', data: logs.map(l => l.spo2), borderColor: '#0284c7', fill: false, tension: 0.3, borderWidth: 2 }
+                    ]
+                };
+            }
+        }
+
+        function switchChart(type) {
+            currentChartType = type;
+            document.querySelectorAll('.chart-tab-controls .tab-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const logs = getLogs();
+            renderChart(logs);
+        }
+
+        function populateSlip(log, user) {
+            user = user || getCurrentUser();
+            document.getElementById('slip_patient_name').textContent = user.full_name;
+            document.getElementById('slip_patient_id').textContent = user.student_id;
+            document.getElementById('slip_department').textContent = user.department || 'Engineering';
+            document.getElementById('slip_rfid').textContent = user.rfid_uid || 'E2 80 68 31';
+            document.getElementById('slip_date').textContent = log.full_date;
+            document.getElementById('slip_temp').textContent = log.temp;
+            document.getElementById('slip_temp_rem').textContent = log.temp > 37.5 ? 'Febrile / Fever' : 'Normal';
+            document.getElementById('slip_bp').textContent = `${log.sys}/${log.dia}`;
+            document.getElementById('slip_bp_rem').textContent = log.bp_cat;
+            document.getElementById('slip_hr').textContent = log.hr;
+            document.getElementById('slip_hr_rem').textContent = log.hr > 100 ? 'Tachycardia' : (log.hr < 60 ? 'Bradycardia' : 'Normal');
+            document.getElementById('slip_rr').textContent = log.rr;
+            document.getElementById('slip_rr_rem').textContent = log.rr > 20 ? 'Tachypnea' : 'Normal';
+            document.getElementById('slip_spo2').textContent = log.spo2;
+            document.getElementById('slip_spo2_rem').textContent = log.spo2 >= 95 ? 'Normal (Adequate)' : 'Low (Hypoxemia)';
+            document.getElementById('slip_bmi').textContent = `${log.bmi} (${log.weight}kg / ${log.height}cm)`;
+            document.getElementById('slip_bmi_rem').textContent = log.bmi_cat;
+            document.getElementById('slip_risk_level').textContent = log.risk_level;
+            document.getElementById('slip_risk_score').textContent = `(${log.risk_score}%)`;
+            document.getElementById('slip_ai_rec').textContent = log.ai_rec;
+        }
+
+        function viewLogReceipt(index) {
+            const logs = getLogs();
+            if (logs[index]) {
+                populateSlip(logs[index]);
+                openPrintModal();
+            }
+        }
+
+        // Modals
+        const simModal = document.getElementById('simulateModal');
+        const slipModal = document.getElementById('printSlipModal');
+        const rfidModal = document.getElementById('rfidModal');
+
+        document.getElementById('btnOpenSimulate').addEventListener('click', () => simModal.classList.add('active'));
+        function closeSimulateModal() { simModal.classList.remove('active'); }
+        function openPrintModal() { slipModal.classList.add('active'); }
+        function closePrintModal() { slipModal.classList.remove('active'); }
+        function openRfidModal() { rfidModal.classList.add('active'); }
+        function closeRfidModal() { rfidModal.classList.remove('active'); }
+
+        function applyPreset(preset) {
+            if (preset === 'healthy') {
+                document.getElementById('sim_height').value = 172.0;
+                document.getElementById('sim_weight').value = 65.0;
+                document.getElementById('sim_temp').value = 36.6;
+                document.getElementById('sim_hr').value = 72;
+                document.getElementById('sim_rr').value = 16;
+                document.getElementById('sim_sys').value = 118;
+                document.getElementById('sim_dia').value = 76;
+                document.getElementById('sim_spo2').value = 99;
+            } else if (preset === 'fever') {
+                document.getElementById('sim_height').value = 172.0;
+                document.getElementById('sim_weight').value = 65.0;
+                document.getElementById('sim_temp').value = 38.4;
+                document.getElementById('sim_hr').value = 104;
+                document.getElementById('sim_rr').value = 22;
+                document.getElementById('sim_sys').value = 126;
+                document.getElementById('sim_dia').value = 82;
+                document.getElementById('sim_spo2').value = 96;
+            } else if (preset === 'hypertension') {
+                document.getElementById('sim_height').value = 168.0;
+                document.getElementById('sim_weight').value = 84.0;
+                document.getElementById('sim_temp').value = 36.8;
+                document.getElementById('sim_hr').value = 92;
+                document.getElementById('sim_rr').value = 19;
+                document.getElementById('sim_sys').value = 148;
+                document.getElementById('sim_dia').value = 94;
+                document.getElementById('sim_spo2').value = 97;
+            }
+        }
+
+        // Simulate Checkup Form Submission (Client-Side)
+        document.getElementById('clientSimulateForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const height = parseFloat(document.getElementById('sim_height').value);
+            const weight = parseFloat(document.getElementById('sim_weight').value);
+            const temp = parseFloat(document.getElementById('sim_temp').value);
+            const hr = parseInt(document.getElementById('sim_hr').value);
+            const rr = parseInt(document.getElementById('sim_rr').value);
+            const sys = parseInt(document.getElementById('sim_sys').value);
+            const dia = parseInt(document.getElementById('sim_dia').value);
+            const spo2 = parseInt(document.getElementById('sim_spo2').value);
+
+            const { bmi, cat: bmiCat } = calculateBmi(height, weight);
+            const bpCat = classifyBp(sys, dia);
+            const { riskScore, riskLevel, rec } = calculateAiRisk(temp, hr, rr, sys, dia, spo2, bmi);
+
+            const now = new Date();
+            const dateStr = now.toISOString().slice(0, 10);
+            const fullDateStr = now.toLocaleString();
+
+            const newLog = {
+                id: Date.now(),
+                date: dateStr,
+                full_date: fullDateStr,
+                height,
+                weight,
+                bmi,
+                bmi_cat: bmiCat,
+                temp,
+                hr,
+                rr,
+                sys,
+                dia,
+                bp_cat: bpCat,
+                spo2,
+                risk_score: riskScore,
+                risk_level: riskLevel,
+                ai_rec: rec,
+                kiosk_id: 'RTU-PASIG-KIOSK-01'
+            };
+
+            saveLog(newLog);
+            closeSimulateModal();
+            renderDashboard();
+            alert('Kiosk checkup completed! New vital signs & AI Risk Prediction recorded.');
+        });
+
+        // Update RFID
+        document.getElementById('updateRfidForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newUid = document.getElementById('new_rfid_uid').value.trim().toUpperCase();
+            if (!newUid) return;
+
+            const user = getCurrentUser();
+            user.rfid_uid = newUid;
+            localStorage.setItem('fovb_current_user', JSON.stringify(user));
+
+            const users = JSON.parse(localStorage.getItem('fovb_users') || '[]');
+            const idx = users.findIndex(u => u.student_id === user.student_id);
+            if (idx !== -1) {
+                users[idx].rfid_uid = newUid;
+                localStorage.setItem('fovb_users', JSON.stringify(users));
+            }
+
+            closeRfidModal();
+            renderDashboard();
+            alert(`RFID tag successfully updated to ${newUid}!`);
+        });
+    </script>
+</body>
+</html>
