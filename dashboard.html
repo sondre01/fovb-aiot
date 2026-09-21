@@ -47,11 +47,11 @@
                     <div class="dash-welcome-flex">
                         <div class="welcome-text">
                             <span class="greeting-badge"><span class="pulse-dot"></span> Kumusta, Ka-RTU!</span>
-                            <h1 id="dashUserHeading">Khin Andrei Gamboa</h1>
+                            <h1 id="dashUserHeading">My Health Dashboard</h1>
                             <p class="dash-meta">
-                                <span><i class="fas fa-id-badge"></i> Student ID: <strong id="dashStudentId">2022-104928</strong></span>
+                                <span><i class="fas fa-id-badge"></i> Student ID: <strong id="dashStudentId">--</strong></span>
                                 <span><i class="fas fa-building-columns"></i> <span id="dashDept">College of Engineering</span></span>
-                                <span><i class="fas fa-venus-mars"></i> <span id="dashSexAge">Male, 21 yrs old</span></span>
+                                <span><i class="fas fa-venus-mars"></i> <span id="dashSexAge">--</span></span>
                             </p>
                         </div>
 
@@ -59,7 +59,10 @@
                             <button type="button" class="btn-primary" id="btnOpenSimulate">
                                 <i class="fas fa-play"></i> Simulate Kiosk Checkup
                             </button>
-                            <button type="button" class="btn-outline" id="btnPrintSlip" onclick="openPrintModal()">
+                            <button type="button" class="btn-outline" id="btnOpenProfile" onclick="openProfileModal()">
+                                <i class="fas fa-id-badge"></i> My Profile
+                            </button>
+                            <button type="button" class="btn-outline" id="btnPrintSlip" onclick="openPrintModal()" style="display: none;">
                                 <i class="fas fa-print"></i> Print Official Clinic Slip
                             </button>
                         </div>
@@ -81,13 +84,13 @@
                                 <img src="pictures/logo.png" alt="Logo" class="rfid-logo-micro">
                             </div>
                             
-                            <div class="rfid-holder-name" id="cardHolderName">Khin Andrei Gamboa</div>
-                            <div class="rfid-holder-id" id="cardHolderId">ID: 2022-104928</div>
+                            <div class="rfid-holder-name" id="cardHolderName">--</div>
+                            <div class="rfid-holder-id" id="cardHolderId">ID: --</div>
                             
                             <div class="rfid-bottom-row">
                                 <div class="rfid-uid-display">
                                     <span class="uid-label">RFID UID TAG</span>
-                                    <span class="uid-value" id="cardUid">E2 80 68 31</span>
+                                    <span class="uid-value" id="cardUid">--</span>
                                 </div>
                                 <div id="rfidQrCode" class="rfid-qr-box" title="Scan at RTU Kiosk"></div>
                             </div>
@@ -301,11 +304,11 @@
                 <div class="slip-divider"></div>
 
                 <div class="slip-patient-info">
-                    <div class="info-line"><span>Patient Name:</span> <strong id="slip_patient_name">Khin Andrei Gamboa</strong></div>
-                    <div class="info-line"><span>Student/Staff ID:</span> <strong id="slip_patient_id">2022-104928</strong></div>
-                    <div class="info-line"><span>Department:</span> <strong id="slip_department">Computer Engineering</strong></div>
+                    <div class="info-line"><span>Patient Name:</span> <strong id="slip_patient_name">--</strong></div>
+                    <div class="info-line"><span>Student/Staff ID:</span> <strong id="slip_patient_id">--</strong></div>
+                    <div class="info-line"><span>Department:</span> <strong id="slip_department">--</strong></div>
                     <div class="info-line"><span>Date &amp; Time:</span> <span id="slip_date">--</span></div>
-                    <div class="info-line"><span>RFID Token UID:</span> <span id="slip_rfid">E2 80 68 31</span></div>
+                    <div class="info-line"><span>RFID Token UID:</span> <span id="slip_rfid">--</span></div>
                     <div class="info-line"><span>Station ID:</span> <span id="slip_kiosk_id">RTU-PASIG-KIOSK-01</span></div>
                 </div>
 
@@ -415,7 +418,7 @@
                 <div class="form-group">
                     <label for="new_rfid_uid">RFID Card UID (Hexadecimal)</label>
                     <input type="text" id="new_rfid_uid" placeholder="e.g. 7A 3F B2 90" required class="code-font">
-                    <small class="form-hint">Enter the 4 hex byte pairs separated by spaces.</small>
+                    <small class="form-hint">Tap your card on your USB RFID pad scanner, or type the 4 hex byte pairs manually.</small>
                 </div>
 
                 <div class="modal-footer">
@@ -423,6 +426,66 @@
                     <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save RFID Tag</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- MODAL 4: USER PROFILE VIEW MODAL -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-id-card text-red"></i>
+                    <h3>My Patient Profile</h3>
+                </div>
+                <button type="button" class="modal-close" onclick="closeProfileModal()">&times;</button>
+            </div>
+
+            <p class="modal-desc">
+                Your registered health record and student identification for RTU Pasig Clinic.
+            </p>
+
+            <div class="profile-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; background: var(--bg-main); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Full Name</span>
+                    <strong id="prof_name" style="font-size: 1.05rem; color: var(--text-heading);">--</strong>
+                </div>
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Student / Staff ID</span>
+                    <strong id="prof_id" style="font-size: 1.05rem; color: var(--primary-red);">--</strong>
+                </div>
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Institutional Email</span>
+                    <span id="prof_email" style="font-size: 0.95rem; color: var(--text-body);">--</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Department / Program</span>
+                    <span id="prof_dept" style="font-size: 0.95rem; color: var(--text-body);">--</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Sex &amp; Age</span>
+                    <span id="prof_sex_age" style="font-size: 0.95rem; color: var(--text-body);">--</span>
+                </div>
+                <div>
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Contact Number</span>
+                    <span id="prof_phone" style="font-size: 0.95rem; color: var(--text-body);">--</span>
+                </div>
+                <div style="grid-column: 1 / -1; border-top: 1px dashed var(--border-light); padding-top: 1rem;">
+                    <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Linked RFID Card UID (USB Scanner Ready)</span>
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                        <code id="prof_rfid" class="code-font" style="font-size: 1.1rem; background: #ffffff; padding: 0.3rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-weight: 700; color: var(--primary-red);">--</code>
+                        <button type="button" class="btn-link-edit" onclick="closeProfileModal(); openRfidModal();" style="font-size: 0.85rem;">
+                            <i class="fas fa-pen-to-square"></i> Change Card
+                        </button>
+                    </div>
+                    <small style="display: block; color: var(--text-muted); margin-top: 0.4rem; font-size: 0.78rem;">
+                        <i class="fas fa-info-circle"></i> Compatible with any plug-and-play USB portable RFID pad reader.
+                    </small>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn-primary" onclick="closeProfileModal()">Done</button>
+            </div>
         </div>
     </div>
 
@@ -437,8 +500,14 @@
 
         function renderDashboard() {
             const user = getCurrentUser();
-            const logs = getLogs();
-            const latest = logs[logs.length - 1];
+            if (!user) {
+                alert('Please sign in or register to access your personal health dashboard.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const logs = getLogs(user.id);
+            const latest = logs.length > 0 ? logs[logs.length - 1] : null;
 
             // Render User Header
             document.getElementById('dashUserHeading').textContent = user.full_name;
@@ -464,7 +533,10 @@
                 correctLevel: QRCode.CorrectLevel.M
             });
 
+            const printBtn = document.getElementById('btnPrintSlip');
+
             if (latest) {
+                if (printBtn) printBtn.style.display = 'inline-flex';
                 // AI Risk Widget
                 const badge = document.getElementById('riskBadge');
                 badge.className = `risk-badge badge-${latest.risk_level.toLowerCase().replace(' ', '-')}`;
@@ -483,6 +555,33 @@
 
                 // Populate Print Slip
                 populateSlip(latest, user);
+            } else {
+                if (printBtn) printBtn.style.display = 'none';
+                const badge = document.getElementById('riskBadge');
+                badge.className = 'risk-badge';
+                badge.style.background = '#e2e8f0';
+                badge.style.color = '#475569';
+                badge.textContent = 'No Sessions Yet';
+
+                document.getElementById('riskScoreVal').textContent = '0%';
+                const bar = document.getElementById('riskBarFill');
+                bar.className = 'risk-bar-fill';
+                bar.style.width = '0%';
+
+                document.getElementById('riskRecText').textContent = 'No screening sessions logged for this account yet. Perform a checkup at the physical kiosk in RTU Pasig Clinic or click "Simulate Kiosk Checkup" above to test your first vital signs reading!';
+                document.getElementById('riskDateStamp').textContent = 'Awaiting first screening';
+
+                const grid = document.getElementById('vitalsCardsGrid');
+                grid.innerHTML = `
+                    <div class="dashboard-empty-card" style="grid-column: 1 / -1;">
+                        <i class="fas fa-heart-pulse empty-icon text-red"></i>
+                        <h3>Welcome to Your Health Portal, ${user.full_name.split(' ')[0]}!</h3>
+                        <p>You haven't recorded any kiosk checkup sessions yet. You can visit the physical FOVB-AIoT Kiosk at RTU Pasig Clinic or test the system right now by simulating a checkup.</p>
+                        <button type="button" class="btn-primary" onclick="document.getElementById('simulateModal').classList.add('active')">
+                            <i class="fas fa-play"></i> Simulate Your First Checkup
+                        </button>
+                    </div>
+                `;
             }
 
             // History Table
@@ -583,6 +682,17 @@
         function renderHistoryTable(logs) {
             const tbody = document.getElementById('historyTableBody');
             tbody.innerHTML = '';
+            if (logs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; padding: 2.5rem; color: var(--text-muted);">
+                            <i class="fas fa-folder-open" style="font-size: 2rem; opacity: 0.4; margin-bottom: 0.5rem; display: block;"></i>
+                            No checkup history records yet. Perform a checkup at the kiosk or click "Simulate Kiosk Checkup" above!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
             const reversed = [...logs].reverse();
             reversed.forEach((log, index) => {
                 const tr = document.createElement('tr');
@@ -614,9 +724,16 @@
         function renderChart(logs) {
             const ctx = document.getElementById('healthTrendChart');
             if (!ctx) return;
-            const labels = logs.map(l => l.date);
+            if (trendChart) {
+                trendChart.destroy();
+                trendChart = null;
+            }
 
-            if (trendChart) trendChart.destroy();
+            if (logs.length === 0) {
+                return;
+            }
+
+            const labels = logs.map(l => l.date);
 
             trendChart = new Chart(ctx, {
                 type: 'line',
@@ -668,16 +785,18 @@
             currentChartType = type;
             document.querySelectorAll('.chart-tab-controls .tab-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
-            const logs = getLogs();
+            const user = getCurrentUser();
+            const logs = getLogs(user ? user.id : null);
             renderChart(logs);
         }
 
         function populateSlip(log, user) {
             user = user || getCurrentUser();
+            if (!user || !log) return;
             document.getElementById('slip_patient_name').textContent = user.full_name;
             document.getElementById('slip_patient_id').textContent = user.student_id;
-            document.getElementById('slip_department').textContent = user.department || 'Engineering';
-            document.getElementById('slip_rfid').textContent = user.rfid_uid || 'E2 80 68 31';
+            document.getElementById('slip_department').textContent = user.department || 'College of Engineering';
+            document.getElementById('slip_rfid').textContent = user.rfid_uid || 'NOT LINKED';
             document.getElementById('slip_date').textContent = log.full_date;
             document.getElementById('slip_temp').textContent = log.temp;
             document.getElementById('slip_temp_rem').textContent = log.temp > 37.5 ? 'Febrile / Fever' : 'Normal';
@@ -697,9 +816,10 @@
         }
 
         function viewLogReceipt(index) {
-            const logs = getLogs();
+            const user = getCurrentUser();
+            const logs = getLogs(user ? user.id : null);
             if (logs[index]) {
-                populateSlip(logs[index]);
+                populateSlip(logs[index], user);
                 openPrintModal();
             }
         }
@@ -708,6 +828,7 @@
         const simModal = document.getElementById('simulateModal');
         const slipModal = document.getElementById('printSlipModal');
         const rfidModal = document.getElementById('rfidModal');
+        const profileModal = document.getElementById('profileModal');
 
         document.getElementById('btnOpenSimulate').addEventListener('click', () => simModal.classList.add('active'));
         function closeSimulateModal() { simModal.classList.remove('active'); }
@@ -715,6 +836,22 @@
         function closePrintModal() { slipModal.classList.remove('active'); }
         function openRfidModal() { rfidModal.classList.add('active'); }
         function closeRfidModal() { rfidModal.classList.remove('active'); }
+
+        function openProfileModal() {
+            const user = getCurrentUser();
+            if (!user) return;
+            document.getElementById('prof_name').textContent = user.full_name || '--';
+            document.getElementById('prof_id').textContent = user.student_id || '--';
+            document.getElementById('prof_email').textContent = user.email || '--';
+            document.getElementById('prof_dept').textContent = user.department || 'College of Engineering';
+            document.getElementById('prof_sex_age').textContent = `${user.sex || 'N/A'}, ${user.age || 'N/A'} yrs old`;
+            document.getElementById('prof_phone').textContent = user.phone || 'None provided';
+            document.getElementById('prof_rfid').textContent = user.rfid_uid || 'NOT LINKED';
+            profileModal.classList.add('active');
+        }
+        function closeProfileModal() {
+            profileModal.classList.remove('active');
+        }
 
         function applyPreset(preset) {
             if (preset === 'healthy') {
@@ -788,10 +925,13 @@
                 kiosk_id: 'RTU-PASIG-KIOSK-01'
             };
 
-            saveLog(newLog);
+            const user = getCurrentUser();
+            if (user) {
+                saveLog(newLog, user.id);
+            }
             closeSimulateModal();
             renderDashboard();
-            alert('Kiosk checkup completed! New vital signs & AI Risk Prediction recorded.');
+            alert('Kiosk checkup completed! New vital signs & AI Risk Prediction recorded for your account.');
         });
 
         // Update RFID

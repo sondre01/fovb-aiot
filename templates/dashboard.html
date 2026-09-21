@@ -30,6 +30,9 @@
                     <button type="button" class="btn-primary" id="btnOpenSimulate">
                         <i class="fas fa-play"></i> Simulate Kiosk Checkup
                     </button>
+                    <button type="button" class="btn-outline" id="btnOpenProfile" onclick="openProfileModal()">
+                        <i class="fas fa-id-badge"></i> My Profile
+                    </button>
                     {% if latest %}
                         <button type="button" class="btn-outline" id="btnPrintSlip" onclick="openPrintModal()">
                             <i class="fas fa-print"></i> Print Official Clinic Slip
@@ -549,7 +552,7 @@
             <div class="form-group">
                 <label for="new_rfid_uid">RFID Card UID (Hexadecimal)</label>
                 <input type="text" id="new_rfid_uid" name="rfid_uid" value="{{ user['rfid_uid'] or '' }}" placeholder="e.g. 7A 3F B2 90" required class="code-font">
-                <small class="form-hint">Enter the 4 hex byte pairs separated by spaces.</small>
+                <small class="form-hint">Tap your card on your USB RFID pad scanner, or enter the 4 hex byte pairs separated by spaces.</small>
             </div>
 
             <div class="modal-footer">
@@ -557,6 +560,66 @@
                 <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save RFID Tag</button>
             </div>
         </form>
+    </div>
+</div>
+
+<!-- MODAL 4: USER PROFILE VIEW MODAL -->
+<div class="modal-overlay" id="profileModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-id-card text-red"></i>
+                <h3>My Patient Profile</h3>
+            </div>
+            <button type="button" class="modal-close" onclick="closeProfileModal()">&times;</button>
+        </div>
+
+        <p class="modal-desc">
+            Your registered health record and student identification for RTU Pasig Clinic.
+        </p>
+
+        <div class="profile-details-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; background: var(--bg-main); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-light);">
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Full Name</span>
+                <strong style="font-size: 1.05rem; color: var(--text-heading);">{{ user['full_name'] }}</strong>
+            </div>
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Student / Staff ID</span>
+                <strong style="font-size: 1.05rem; color: var(--primary-red);">{{ user['student_id'] }}</strong>
+            </div>
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Institutional Email</span>
+                <span style="font-size: 0.95rem; color: var(--text-body);">{{ user['email'] }}</span>
+            </div>
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Department / Program</span>
+                <span style="font-size: 0.95rem; color: var(--text-body);">{{ user['department'] or 'College of Engineering' }}</span>
+            </div>
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Sex &amp; Age</span>
+                <span style="font-size: 0.95rem; color: var(--text-body);">{{ user['sex'] or 'N/A' }}, {{ user['age'] or 'N/A' }} yrs old</span>
+            </div>
+            <div>
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Contact Number</span>
+                <span style="font-size: 0.95rem; color: var(--text-body);">{{ user['phone'] or 'None provided' }}</span>
+            </div>
+            <div style="grid-column: 1 / -1; border-top: 1px dashed var(--border-light); padding-top: 1rem;">
+                <span style="font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Linked RFID Card UID (USB Scanner Ready)</span>
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;">
+                    <code class="code-font" style="font-size: 1.1rem; background: #ffffff; padding: 0.3rem 0.75rem; border-radius: var(--radius-sm); border: 1px solid var(--border-light); font-weight: 700; color: var(--primary-red);">{{ user['rfid_uid'] or 'NOT LINKED' }}</code>
+                    <button type="button" class="btn-link-edit" onclick="closeProfileModal(); openRfidModal();" style="font-size: 0.85rem;">
+                        <i class="fas fa-pen-to-square"></i> Change Card
+                    </button>
+                </div>
+                <small style="display: block; color: var(--text-muted); margin-top: 0.4rem; font-size: 0.78rem;">
+                    <i class="fas fa-info-circle"></i> Compatible with any plug-and-play USB portable RFID pad reader.
+                </small>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-primary" onclick="closeProfileModal()">Done</button>
+        </div>
     </div>
 </div>
 
@@ -750,6 +813,7 @@
     const simModal = document.getElementById('simulateModal');
     const slipModal = document.getElementById('printSlipModal');
     const rfidModal = document.getElementById('rfidModal');
+    const profileModal = document.getElementById('profileModal');
 
     document.getElementById('btnOpenSimulate').addEventListener('click', () => {
         simModal.classList.add('active');
@@ -773,6 +837,14 @@
 
     function closeRfidModal() {
         rfidModal.classList.remove('active');
+    }
+
+    function openProfileModal() {
+        profileModal.classList.add('active');
+    }
+
+    function closeProfileModal() {
+        profileModal.classList.remove('active');
     }
 
     // Preset values for testing

@@ -3,18 +3,20 @@
  * Handles LocalStorage Database, Authentication, Live Chart.js, Kiosk Simulation & Slip Printing
  */
 
-// Default Seed Data
-const DEFAULT_USER = {
+// Pre-configured Demo Student (for Thesis Evaluation / Testing only)
+const DEMO_USER = {
     id: 1,
-    student_id: '2022-104928',
-    full_name: 'Khin Andrei Gamboa',
-    email: 'gamboa.khinandrei@rtu.edu.ph',
+    student_id: 'DEMO-2026-01',
+    full_name: 'Demo Student',
+    email: 'demo.student@rtu.edu.ph',
     age: 21,
     sex: 'Male',
     department: 'College of Engineering - Computer Engineering',
     phone: '+63 917 824 5612',
     rfid_uid: 'E2 80 68 31'
 };
+
+const DEFAULT_USER = DEMO_USER;
 
 const DEFAULT_LOGS = [
     {
@@ -122,32 +124,57 @@ const DEFAULT_LOGS = [
 // Database helpers
 function initStorage() {
     if (!localStorage.getItem('fovb_users')) {
-        localStorage.setItem('fovb_users', JSON.stringify([DEFAULT_USER]));
+        localStorage.setItem('fovb_users', JSON.stringify([DEMO_USER]));
     }
-    if (!localStorage.getItem('fovb_logs')) {
-        localStorage.setItem('fovb_logs', JSON.stringify(DEFAULT_LOGS));
+    const demoLogsKey = `fovb_logs_user_${DEMO_USER.id}`;
+    if (!localStorage.getItem(demoLogsKey)) {
+        localStorage.setItem(demoLogsKey, JSON.stringify(DEFAULT_LOGS));
     }
-    if (!localStorage.getItem('fovb_current_user')) {
-        localStorage.setItem('fovb_current_user', JSON.stringify(DEFAULT_USER));
+    // Clean up old default forced login if present
+    const oldCurrent = localStorage.getItem('fovb_current_user');
+    if (oldCurrent) {
+        try {
+            const parsed = JSON.parse(oldCurrent);
+            if (parsed.full_name === 'Khin Andrei Gamboa' && parsed.student_id === '2022-104928') {
+                localStorage.removeItem('fovb_current_user');
+            }
+        } catch (e) {}
     }
 }
 
 function getCurrentUser() {
     initStorage();
     const data = localStorage.getItem('fovb_current_user');
-    return data ? JSON.parse(data) : DEFAULT_USER;
+    return data ? JSON.parse(data) : null;
 }
 
-function getLogs() {
+function getLogs(userId) {
     initStorage();
-    const data = localStorage.getItem('fovb_logs');
-    return data ? JSON.parse(data) : DEFAULT_LOGS;
+    const currentUser = getCurrentUser();
+    const uid = userId || (currentUser ? currentUser.id : null);
+    if (!uid) return [];
+
+    const key = `fovb_logs_user_${uid}`;
+    const data = localStorage.getItem(key);
+    if (data) {
+        return JSON.parse(data);
+    }
+    if (currentUser && currentUser.id === DEMO_USER.id) {
+        localStorage.setItem(key, JSON.stringify(DEFAULT_LOGS));
+        return DEFAULT_LOGS;
+    }
+    return [];
 }
 
-function saveLog(log) {
-    const logs = getLogs();
+function saveLog(log, userId) {
+    const currentUser = getCurrentUser();
+    const uid = userId || (currentUser ? currentUser.id : null);
+    if (!uid) return;
+
+    const key = `fovb_logs_user_${uid}`;
+    const logs = getLogs(uid);
     logs.push(log);
-    localStorage.setItem('fovb_logs', JSON.stringify(logs));
+    localStorage.setItem(key, JSON.stringify(logs));
 }
 
 // Clinical Calculations

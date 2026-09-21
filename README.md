@@ -73,22 +73,24 @@ Visit:
 http://127.0.0.1:5000
 ```
 
-### 4. Pre-configured Demo Accounts for Testing
-- **Demo Student:**
-  - **Identifier:** `2022-104928` (or `gamboa.khinandrei@rtu.edu.ph` or RFID: `E2 80 68 31`)
+### 4. Testing & Account Access
+- **Public Access & Open Documentation:** Visitors can freely explore the system documentation, engineering journey, and download the full research paper PDF without logging in.
+- **Personal Accounts:** Visitors can click **Register** to create their own personal account, receive a unique RFID token, and record/view their own checkup history.
+- **Pre-configured Demo Student (for Thesis Evaluation):**
+  - **Identifier:** `DEMO-2026-01` (or `demo.student@rtu.edu.ph` or RFID: `E2 80 68 31`)
   - **Password:** `password123`
-  - *(Alternatively, simply click the **1-Click Demo Student Login** button on the Login page)*
+  - *(Alternatively, click the **1-Click Demo Student Login** button on the Sign In page to evaluate sample multi-month clinical trend data)*
 
 ---
 
 ## 👥 Authors & Researchers
-- **Mar Kevin P. Alcantara** — Hardware & System Integration
-- **Bernie C. Berongoy** — Sensor Calibration & Testing
-- **Khin Andrei R. Gamboa** — Full-Stack IoT & Software Development
-- **Reymart G. Llona** — Firmware & Arduino Control
-- **Erick John A. Oavenada** — AI Vision & OCR Development
-- **Paul Andrew A. Relevo** — Kiosk Enclosure & Mechanics
-- **Yuri Lorenz C. Sagadraca** — Clinical Validation & Analysis
+- **Mar Kevin P. Alcantara** — Full-Stack IoT & Software Development, System Integration
+- **Bernie C. Berongoy** — Sensor Calibration & Testing, Research, Hardware
+- **Khin Andrei R. Gamboa** — Software Development, Research & Data Management, Clinical Validation & Analysis
+- **Reymart G. Llona** — Firmware & Arduino Control, Sensor Calibration & Testing, Hardware
+- **Erick John A. Oavenada** — AI Vision Development, Hardware
+- **Paul Andrew A. Relevo** — Sensor Calibration & Testing, Hardware
+- **Yuri Lorenz C. Sagadraca** — Software Development, Sensor Calibration & Testing
 
 **Rizal Technological University — Pasig Campus**  
 *College of Engineering • Computer Engineering Department*

@@ -104,28 +104,32 @@
     <script>
         document.getElementById('btn1ClickDemo').addEventListener('click', () => {
             initStorage();
-            localStorage.setItem('fovb_current_user', JSON.stringify(DEFAULT_USER));
+            localStorage.setItem('fovb_current_user', JSON.stringify(DEMO_USER));
             window.location.href = 'dashboard.html';
         });
 
         document.getElementById('standaloneLoginForm').addEventListener('submit', (e) => {
             e.preventDefault();
-            const identifier = document.getElementById('identifier').value.trim().toUpperCase();
+            const rawId = document.getElementById('identifier').value.trim();
+            const identifier = rawId.toUpperCase();
+            const cleanId = identifier.replace(/[\s-]/g, '');
             initStorage();
             const users = JSON.parse(localStorage.getItem('fovb_users') || '[]');
-            const found = users.find(u => 
-                u.student_id.toUpperCase() === identifier || 
-                u.email.toUpperCase() === identifier || 
-                (u.rfid_uid && u.rfid_uid.toUpperCase() === identifier)
-            );
+            const found = users.find(u => {
+                const uStudent = (u.student_id || '').toUpperCase().replace(/[\s-]/g, '');
+                const uEmail = (u.email || '').toUpperCase();
+                const uRfid = (u.rfid_uid || '').toUpperCase().replace(/[\s-]/g, '');
+                return uStudent === cleanId || 
+                       uEmail === identifier || 
+                       (uRfid && (uRfid === cleanId || (u.rfid_uid && u.rfid_uid.toUpperCase() === identifier)));
+            });
 
             if (found) {
                 localStorage.setItem('fovb_current_user', JSON.stringify(found));
+                window.location.href = 'dashboard.html';
             } else {
-                // If not found in custom registered users, log in as Demo user
-                localStorage.setItem('fovb_current_user', JSON.stringify(DEFAULT_USER));
+                alert('No account found for "' + rawId + '". If using a USB RFID scanner, make sure your tag is registered to your account.');
             }
-            window.location.href = 'dashboard.html';
         });
     </script>
 </body>

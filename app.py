@@ -17,6 +17,12 @@ def serve_pictures(filename):
     pictures_dir = os.path.join(os.path.dirname(__file__), 'pictures')
     return send_from_directory(pictures_dir, filename)
 
+# Route to serve documents folder (e.g. final research paper PDF) directly
+@app.route('/documents/<path:filename>')
+def serve_documents(filename):
+    docs_dir = os.path.join(os.path.dirname(__file__), 'documents')
+    return send_from_directory(docs_dir, filename)
+
 def get_db():
     conn = sqlite3.connect(DB_PATH)
     conn.row_factory = sqlite3.Row
@@ -99,9 +105,9 @@ def seed_demo_data(conn):
         INSERT INTO users (student_id, full_name, email, password_hash, age, sex, department, phone, rfid_uid, role)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
-        '2022-104928',
-        'Khin Andrei Gamboa',
-        'gamboa.khinandrei@rtu.edu.ph',
+        'DEMO-2026-01',
+        'Demo Student',
+        'demo.student@rtu.edu.ph',
         demo_pw,
         21,
         'Male',

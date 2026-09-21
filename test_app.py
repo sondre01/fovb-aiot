@@ -38,7 +38,7 @@ class TestFovbAiot(unittest.TestCase):
     def test_demo_login_and_dashboard(self):
         response = self.client.get('/demo-login', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Khin Andrei Gamboa', response.data)
+        self.assertIn(b'Demo Student', response.data)
         self.assertIn(b'AI Health Risk Prediction', response.data)
         self.assertIn(b'E2 80 68 31', response.data)
         print("[PASS] Demo login & Dashboard test passed")
@@ -48,7 +48,7 @@ class TestFovbAiot(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         data = response.get_json()
         self.assertTrue(data['found'])
-        self.assertEqual(data['user']['student_id'], '2022-104928')
+        self.assertEqual(data['user']['student_id'], 'DEMO-2026-01')
         print("[PASS] Kiosk RFID lookup API passed")
 
     def test_kiosk_api_checkup_submission(self):

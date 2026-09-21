@@ -227,6 +227,7 @@
             users.push(newUser);
             localStorage.setItem('fovb_users', JSON.stringify(users));
             localStorage.setItem('fovb_current_user', JSON.stringify(newUser));
+            localStorage.setItem(`fovb_logs_user_${newUser.id}`, JSON.stringify([]));
 
             alert(`Mabuhay, ${newUser.full_name}! Registration successful. Your RFID UID is ${newUser.rfid_uid}.`);
             window.location.href = 'dashboard.html';
