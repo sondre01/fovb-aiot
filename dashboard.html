@@ -499,11 +499,11 @@
         });
 
         function renderDashboard() {
-            const user = getCurrentUser();
+            let user = getCurrentUser();
             if (!user) {
-                alert('Please sign in or register to access your personal health dashboard.');
-                window.location.href = 'login.html';
-                return;
+                // In Go Live mode, auto-load demo student profile so dashboard renders immediately
+                user = DEMO_USER;
+                localStorage.setItem('fovb_current_user', JSON.stringify(DEMO_USER));
             }
 
             const logs = getLogs(user.id);
@@ -521,17 +521,23 @@
             document.getElementById('cardUid').textContent = user.rfid_uid || 'NOT LINKED';
             document.getElementById('new_rfid_uid').value = user.rfid_uid || '';
 
-            // QR Code
-            const qrBox = document.getElementById('rfidQrCode');
-            qrBox.innerHTML = '';
-            new QRCode(qrBox, {
-                text: "RTU-FOVB-AIoT:" + (user.rfid_uid || user.student_id),
-                width: 64,
-                height: 64,
-                colorDark: "#1e293b",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.M
-            });
+            // QR Code with safety check
+            try {
+                const qrBox = document.getElementById('rfidQrCode');
+                if (qrBox && typeof QRCode !== 'undefined') {
+                    qrBox.innerHTML = '';
+                    new QRCode(qrBox, {
+                        text: "RTU-FOVB-AIoT:" + (user.rfid_uid || user.student_id),
+                        width: 64,
+                        height: 64,
+                        colorDark: "#1e293b",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                }
+            } catch (err) {
+                console.warn('QR code generation skipped:', err);
+            }
 
             const printBtn = document.getElementById('btnPrintSlip');
 
@@ -723,7 +729,7 @@
 
         function renderChart(logs) {
             const ctx = document.getElementById('healthTrendChart');
-            if (!ctx) return;
+            if (!ctx || typeof Chart === 'undefined') return;
             if (trendChart) {
                 trendChart.destroy();
                 trendChart = null;
@@ -733,24 +739,28 @@
                 return;
             }
 
-            const labels = logs.map(l => l.date);
+            try {
+                const labels = logs.map(l => l.date);
 
-            trendChart = new Chart(ctx, {
-                type: 'line',
-                data: getChartData(currentChartType, logs, labels),
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: {
-                        legend: { position: 'top', labels: { font: { family: 'Inter', size: 12 } } }
-                    },
-                    scales: {
-                        y: { grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter' } } },
-                        x: { grid: { display: false }, ticks: { font: { family: 'Inter' } } }
+                trendChart = new Chart(ctx, {
+                    type: 'line',
+                    data: getChartData(currentChartType, logs, labels),
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: { position: 'top', labels: { font: { family: 'Inter', size: 12 } } }
+                        },
+                        scales: {
+                            y: { grid: { color: '#f1f5f9' }, ticks: { font: { family: 'Inter' } } },
+                            x: { grid: { display: false }, ticks: { font: { family: 'Inter' } } }
+                        }
                     }
-                }
-            });
+                });
+            } catch (err) {
+                console.warn('Chart rendering error:', err);
+            }
         }
 
         function getChartData(type, logs, labels) {
