@@ -93,12 +93,12 @@ class TestFovbAiot(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         response.close()
 
-        # Test standalone preview serving
-        response = self.client.get('/standalone/index.html')
+        # Test index.html endpoint
+        response = self.client.get('/index.html')
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'FOVB-AIoT', response.data)
         response.close()
-        print("[PASS] File serving routes (pictures, docs, standalone) passed")
+        print("[PASS] File serving routes (pictures, docs, index.html) passed")
 
 if __name__ == '__main__':
     unittest.main()

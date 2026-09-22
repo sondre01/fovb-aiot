@@ -70,17 +70,8 @@ FOVB-AIoT/
 │   ├── Concept of Operation.pdf
 │   ├── FOVB-AIOT BROCHURE.pdf
 │   └── README.md
-├── standalone/                # Zero-server client-side edition (VS Code Live Server)
-│   ├── index.html
-│   ├── about.html
-│   ├── dashboard.html
-│   ├── instructions.html
-│   ├── contact.html
-│   ├── login.html
-│   ├── register.html
-│   └── README.md
 ├── static/                    # Frontend assets & styles
-│   ├── app.js                 # Standalone client-side mock database & logic
+│   ├── app.js                 # Client-side mock database & Go Live logic
 │   ├── styles.css             # Main stylesheet (white health theme & Pinoy red accents)
 │   └── pictures/              # Project branding, kiosk photos, and team pictures
 │       ├── hero-image.png
@@ -102,8 +93,15 @@ FOVB-AIoT/
 │   ├── __init__.py
 │   └── test_app.py
 ├── .gitignore                 # Standard git ignore definitions
+├── about.html                 # Direct browser / Live Server edition
 ├── app.py                     # Flask application server & REST APIs
+├── contact.html               # Direct browser / Live Server edition
+├── dashboard.html             # Direct browser / Live Server edition
 ├── fovb_aiot.db               # SQLite persistent database
+├── index.html                 # Direct browser / Live Server edition
+├── instructions.html          # Direct browser / Live Server edition
+├── login.html                 # Direct browser / Live Server edition
+├── register.html              # Direct browser / Live Server edition
 ├── requirements.txt           # Python package dependencies
 ├── run.bat                    # 1-Click Windows execution launcher
 └── README.md                  # Project documentation & guide
@@ -127,10 +125,9 @@ FOVB-AIoT/
 
 ### Option B: VS Code Live Server ("Go Live", Port 5500)
 If you prefer running without Python/Flask:
-1. In VS Code, navigate to the `standalone/` directory.
-2. Right-click on `standalone/index.html`.
-3. Click **"Open with Live Server"** (runs on port 5500).
-4. The application runs client-side using browser `localStorage` and demo mock data, with zero infinite redirect loops.
+1. In VS Code, right-click `index.html`.
+2. Click **"Open with Live Server"** (runs on port 5500).
+3. The application runs client-side using browser `localStorage` and demo mock data, with zero infinite redirect loops.
 
 ### Automated Testing
 To run the automated test suite across all web routes and API endpoints:

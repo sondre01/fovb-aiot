@@ -28,12 +28,6 @@ def serve_documents(filename):
         docs_dir = os.path.join(os.path.dirname(__file__), 'documents')
     return send_from_directory(docs_dir, filename)
 
-# Route to serve standalone client-side preview pages directly
-@app.route('/standalone/')
-@app.route('/standalone/<path:filename>')
-def serve_standalone(filename='index.html'):
-    standalone_dir = os.path.join(os.path.dirname(__file__), 'standalone')
-    return send_from_directory(standalone_dir, filename)
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)
