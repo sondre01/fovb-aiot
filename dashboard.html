@@ -46,7 +46,7 @@
                 <div class="container">
                     <div class="dash-welcome-flex">
                         <div class="welcome-text">
-                            <span class="greeting-badge"><span class="pulse-dot"></span> Kumusta, Ka-RTU!</span>
+                            <span class="greeting-badge"><span class="pulse-dot"></span> Kumusta, Ka-RTU! • Kiosk Health History</span>
                             <h1 id="dashUserHeading">My Health Dashboard</h1>
                             <p class="dash-meta">
                                 <span><i class="fas fa-id-badge"></i> Student ID: <strong id="dashStudentId">--</strong></span>
@@ -57,7 +57,7 @@
 
                         <div class="dash-actions">
                             <button type="button" class="btn-primary" id="btnOpenSimulate">
-                                <i class="fas fa-play"></i> Simulate Kiosk Checkup
+                                <i class="fas fa-file-medical"></i> Add Sample Kiosk Record
                             </button>
                             <button type="button" class="btn-outline" id="btnOpenProfile" onclick="openProfileModal()">
                                 <i class="fas fa-id-badge"></i> My Profile
@@ -204,14 +204,14 @@
         <div class="modal-box">
             <div class="modal-header">
                 <div class="modal-title">
-                    <i class="fas fa-play-circle text-red"></i>
-                    <h3>FOVB-AIoT Kiosk Simulation</h3>
+                    <i class="fas fa-file-medical text-red"></i>
+                    <h3>Sample Kiosk Record Sync (Demo Preview)</h3>
                 </div>
                 <button type="button" class="modal-close" onclick="closeSimulateModal()">&times;</button>
             </div>
 
             <p class="modal-desc">
-                Simulate a patient screening at the <strong>RTU Pasig Clinic Kiosk</strong>. You can choose a quick preset or customize sensor values.
+                Preview how screening logs from the physical <strong>RTU Pasig Clinic Kiosk</strong> synchronize and appear in this web portal. You can select sample health presets or customize parameters to test the AI Risk Prediction model.
             </p>
 
             <form id="clientSimulateForm">

@@ -40,7 +40,7 @@
                 <img class="logo-img" src="{{ url_for('static', filename='pictures/logo.png') }}" alt="FOVB-AIoT Logo">
                 <div class="brand-text">
                     <span class="brand-title">FOVB-AIoT</span>
-                    <span class="brand-sub">RTU Pasig Clinic • Kiosk & Web Portal</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Thesis Archive &amp; Health Portal</span>
                 </div>
             </a>
 
@@ -52,9 +52,9 @@
             <!-- Navigation Links -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
-                <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About Thesis</a></li>
+                <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About &amp; Memories</a></li>
                 <li><a href="{{ url_for('instructions') }}" class="{% if request.endpoint == 'instructions' %}active{% endif %}">Kiosk Guide</a></li>
-                <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Clinic & Contact</a></li>
+                <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Clinic &amp; Contact</a></li>
                 
                 {% if current_user %}
                     <li class="nav-user-item">
@@ -120,12 +120,11 @@
                     </div>
                 </div>
                 <p class="footer-desc">
-                    Four-in-One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Risk Prediction.
-                    Developed for the RTU Pasig Clinic by BS Computer Engineering researchers, Rizal Technological University.
+                    Capstone thesis documentation, memory tribute, and student health history portal for the FOVB-AIoT project, College of Engineering, Rizal Technological University - Pasig Campus.
                 </p>
                 <div class="footer-badges">
-                    <span class="badge-pinoy"><i class="fas fa-heart-pulse"></i> RTU Pasig Clinic</span>
-                    <span class="badge-pinoy"><i class="fas fa-microchip"></i> AI & IoT Enabled</span>
+                    <span class="badge-pinoy"><i class="fas fa-graduation-cap"></i> Thesis Memories &amp; History</span>
+                    <span class="badge-pinoy"><i class="fas fa-id-badge"></i> USB RFID Registration</span>
                 </div>
             </div>
 

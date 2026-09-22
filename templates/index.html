@@ -9,17 +9,16 @@
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="pulse-dot"></span>
-                <span>RTU Pasig Clinic • Capstone Innovation 2026</span>
+                <span>RTU Pasig Clinic • Capstone Thesis &amp; Memory Archive</span>
             </div>
             
             <h1 class="hero-title">
-                Four-in-One Vital Sign Sensors & <span class="highlight-red">AI Health Prediction</span>
+                Thesis Documentation, Memories &amp; <span class="highlight-red">Student Health Portal</span>
             </h1>
             
             <p class="hero-subtitle">
-                <strong>FOVB-AIoT</strong> is a kiosk-based health monitoring platform integrating 
-                <strong>Body Temperature, Pulse Oximetry (Heart Rate & Respiratory Rate), Blood Pressure (AI OCR),</strong> and 
-                <strong>LiDAR & Load Cell BMI calculation</strong> with IoT cloud synchronization for the Rizal Technological University - Pasig Clinic.
+                <strong>FOVB-AIoT</strong> is the official capstone thesis archive and student health records portal for the Rizal Technological University - Pasig Clinic. 
+                Revisit our engineering journey, download our complete research paper, or register your RFID card to access your historical vital signs and AI health records captured at the campus kiosk.
             </p>
 
             <div class="hero-actions">
@@ -28,17 +27,17 @@
                         <i class="fas fa-chart-line"></i> Open My Health Dashboard
                     </a>
                     <a href="{{ url_for('about') }}" class="btn-outline">
-                        <i class="fas fa-book-open"></i> Thesis Documentation
+                        <i class="fas fa-book-open"></i> Thesis Documentation &amp; Memories
                     </a>
                 {% else %}
                     <a href="{{ url_for('about') }}" class="btn-primary">
                         <i class="fas fa-book-open"></i> Explore Documentation &amp; Memories
                     </a>
                     <a href="{{ url_for('register') }}" class="btn-secondary">
-                        <i class="fas fa-user-plus"></i> Create Personal Account
+                        <i class="fas fa-user-plus"></i> Register Student Account
                     </a>
                     <a href="{{ url_for('login') }}" class="btn-outline">
-                        <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Dashboard
+                        <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Records
                     </a>
                 {% endif %}
             </div>
@@ -46,24 +45,24 @@
             <!-- Quick Live Stats -->
             <div class="hero-stats">
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
                     <div>
-                        <div class="stat-number">4-in-1</div>
-                        <div class="stat-label">Vital Signs + BMI</div>
+                        <div class="stat-number">Capstone</div>
+                        <div class="stat-label">Thesis &amp; Memories</div>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
                     <div>
-                        <div class="stat-number">&lt; 60s</div>
-                        <div class="stat-label">RFID Fast Checkup</div>
+                        <div class="stat-number">USB RFID</div>
+                        <div class="stat-label">Quick Card Registration</div>
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                    <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
                     <div>
-                        <div class="stat-number">AI-Driven</div>
-                        <div class="stat-label">YOLO & Risk Score</div>
+                        <div class="stat-number">Online</div>
+                        <div class="stat-label">Checkup History &amp; Trends</div>
                     </div>
                 </div>
             </div>
@@ -74,10 +73,10 @@
                 <div class="device-glow"></div>
                 <img src="{{ url_for('static', filename='pictures/hero-image.png') }}" alt="FOVB-AIoT Health Kiosk" class="device-img">
                 <div class="kiosk-floating-badge badge-top">
-                    <i class="fas fa-satellite-dish"></i> <span>IoT Cloud Connected</span>
+                    <i class="fas fa-hospital"></i> <span>RTU Pasig Clinic Kiosk</span>
                 </div>
                 <div class="kiosk-floating-badge badge-bottom">
-                    <i class="fas fa-wifi"></i> <span>RFID Tap & Go</span>
+                    <i class="fas fa-usb"></i> <span>USB RFID Scanner Ready</span>
                 </div>
             </div>
         </div>
@@ -153,11 +152,10 @@
 <section class="section-tech" id="technology">
     <div class="container">
         <div class="section-header text-center">
-            <span class="section-tag"><i class="fas fa-microchip"></i> Integrated Hardware & Sensors</span>
-            <h2 class="section-title">The Four-in-One Vital Signs & AI Ecosystem</h2>
+            <span class="section-tag"><i class="fas fa-microchip"></i> Physical Kiosk Technology</span>
+            <h2 class="section-title">The Physical FOVB-AIoT Kiosk Architecture</h2>
             <p class="section-subtitle">
-                The FOVB-AIoT platform synchronizes medical-grade sensors, dual microcontrollers, and computer vision 
-                into an automated, high-precision health screening station.
+                The hardware sensors, dual microcontrollers, and computer vision are integrated into the physical standalone kiosk station deployed at the RTU Pasig Clinic. This website serves as the online documentation archive, USB RFID registration portal, and historical records dashboard.
             </p>
         </div>
 
@@ -277,10 +275,10 @@
 <section class="section-how" id="how-it-works">
     <div class="container">
         <div class="section-header text-center">
-            <span class="section-tag"><i class="fas fa-route"></i> Kiosk Workflow</span>
-            <h2 class="section-title">How the FOVB-AIoT Kiosk Works</h2>
+            <span class="section-tag"><i class="fas fa-route"></i> Kiosk &amp; Web Workflow</span>
+            <h2 class="section-title">How the FOVB-AIoT System Works</h2>
             <p class="section-subtitle">
-                From contactless RFID tap to AI health risk prediction in 4 seamless steps at the RTU Pasig Clinic.
+                From contactless screening at the campus clinic station to viewing your complete health history and digital slips on this portal.
             </p>
         </div>
 
@@ -288,9 +286,9 @@
             <!-- Step 1 -->
             <div class="step-card">
                 <div class="step-number">1</div>
-                <div class="step-icon"><i class="fas fa-user-check"></i></div>
-                <h3>1. Register & Tap RFID</h3>
-                <p>Sign up online through this portal to register your RTU Student ID and RFID tag. Tap your card on the kiosk reader to begin your session.</p>
+                <div class="step-icon"><i class="fas fa-id-badge"></i></div>
+                <h3>1. Register with USB RFID</h3>
+                <p>Register online through this portal using your laptop and USB RFID scanner (or manual entry). Your profile is securely linked to your RTU ID.</p>
             </div>
 
             <!-- Step 2 -->
@@ -312,9 +310,9 @@
             <!-- Step 4 -->
             <div class="step-card">
                 <div class="step-number">4</div>
-                <div class="step-icon"><i class="fas fa-receipt"></i></div>
-                <h3>4. AI Risk Score & Slip</h3>
-                <p>Receive your printed thermal slip, review your AI Comprehensive Health Risk Score, and access long-term trend charts on your online dashboard.</p>
+                <div class="step-icon"><i class="fas fa-chart-line"></i></div>
+                <h3>4. Access History Online</h3>
+                <p>Receive your printed slip at the clinic, then log in to this portal anytime to review your long-term health trends and past screening history.</p>
             </div>
         </div>
     </div>
