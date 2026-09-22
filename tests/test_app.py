@@ -1,4 +1,8 @@
+import os
+import sys
 import unittest
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from app import app, get_db
 
 class TestFovbAiot(unittest.TestCase):
@@ -77,6 +81,24 @@ class TestFovbAiot(unittest.TestCase):
         self.assertGreaterEqual(data['total_users'], 1)
         self.assertGreaterEqual(data['total_checkups'], 1)
         print("[PASS] Public stats API passed")
+
+    def test_file_serving_routes(self):
+        # Test picture serving from static/pictures
+        response = self.client.get('/pictures/logo.png')
+        self.assertEqual(response.status_code, 200)
+        response.close()
+
+        # Test docs serving
+        response = self.client.get('/docs/README.md')
+        self.assertEqual(response.status_code, 200)
+        response.close()
+
+        # Test standalone preview serving
+        response = self.client.get('/standalone/index.html')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'FOVB-AIoT', response.data)
+        response.close()
+        print("[PASS] File serving routes (pictures, docs, standalone) passed")
 
 if __name__ == '__main__':
     unittest.main()

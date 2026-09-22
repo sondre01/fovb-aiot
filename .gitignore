@@ -20,5 +20,6 @@ env/
 *.db
 
 # Large Documents (Exceeds GitHub 100MB file limit)
-documents/
 *.pdf
+docs/*.pdf
+documents/

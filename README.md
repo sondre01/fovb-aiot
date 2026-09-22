@@ -58,13 +58,66 @@ An undergraduate capstone thesis project presented to the Faculty of the **Colle
 
 ---
 
+## 📁 Repository Structure
+
+The codebase is organized according to standard web engineering and Flask conventions:
+
+```text
+FOVB-AIoT/
+├── docs/                      # Thesis paper, hardware manuals, and brochures (PDFs)
+│   ├── FOVB-AIoT (Final Research Paper).pdf
+│   ├── 4in1 Vital Signs Manual.pdf
+│   ├── Concept of Operation.pdf
+│   ├── FOVB-AIOT BROCHURE.pdf
+│   └── README.md
+├── standalone/                # Zero-server client-side edition (VS Code Live Server)
+│   ├── index.html
+│   ├── about.html
+│   ├── dashboard.html
+│   ├── instructions.html
+│   ├── contact.html
+│   ├── login.html
+│   ├── register.html
+│   └── README.md
+├── static/                    # Frontend assets & styles
+│   ├── app.js                 # Standalone client-side mock database & logic
+│   ├── styles.css             # Main stylesheet (white health theme & Pinoy red accents)
+│   └── pictures/              # Project branding, kiosk photos, and team pictures
+│       ├── hero-image.png
+│       ├── logo.png
+│       ├── fovb-aiot-team/
+│       ├── solo-member-pictures/
+│       ├── 4in1 Vital Signs Manual/
+│       └── FOVB-AIOT BROCHURE/
+├── templates/                 # Production Flask Jinja2 dynamic templates
+│   ├── base.html              # Core layout, persistent header, and footer
+│   ├── index.html             # Homepage & thesis showcase
+│   ├── about.html             # Research documentation & team profiles
+│   ├── dashboard.html         # Longitudinal health analytics & digital RFID pass
+│   ├── instructions.html      # Physical kiosk screening instructions
+│   ├── contact.html           # Campus clinic location & inquiry form
+│   ├── login.html             # Authentication portal
+│   └── register.html          # Student registration & USB RFID scanning
+├── tests/                     # Automated unit and API test suite
+│   ├── __init__.py
+│   └── test_app.py
+├── .gitignore                 # Standard git ignore definitions
+├── app.py                     # Flask application server & REST APIs
+├── fovb_aiot.db               # SQLite persistent database
+├── requirements.txt           # Python package dependencies
+├── run.bat                    # 1-Click Windows execution launcher
+└── README.md                  # Project documentation & guide
+```
+
+---
+
 ## 🚀 How to Run the Web Application
 
 ### Option A: Python Flask Server (Recommended, Port 5000)
 1. **One-Click Run (Windows):** Simply double-click `run.bat` in the project root directory.
 2. **Or via Terminal:**
    ```bash
-   pip install flask
+   pip install -r requirements.txt
    python app.py
    ```
 3. Open your browser and navigate to:
@@ -74,11 +127,18 @@ An undergraduate capstone thesis project presented to the Faculty of the **Colle
 
 ### Option B: VS Code Live Server ("Go Live", Port 5500)
 If you prefer running without Python/Flask:
-1. In VS Code, right-click `index.html`.
-2. Click **"Open with Live Server"** (runs on port 5500).
-3. The application runs client-side using browser `localStorage` and demo mock data, with zero infinite redirect loops.
+1. In VS Code, navigate to the `standalone/` directory.
+2. Right-click on `standalone/index.html`.
+3. Click **"Open with Live Server"** (runs on port 5500).
+4. The application runs client-side using browser `localStorage` and demo mock data, with zero infinite redirect loops.
 
-### 4. Testing & Account Access
+### Automated Testing
+To run the automated test suite across all web routes and API endpoints:
+```bash
+python -m unittest discover tests
+```
+
+### Account Access & Evaluation
 - **Public Access & Open Documentation:** Visitors can freely explore the system documentation, engineering journey, and download the full research paper PDF without logging in.
 - **Personal Accounts:** Visitors can click **Register** to create their own personal account, receive a unique RFID token, and record/view their own checkup history.
 - **Pre-configured Demo Student (for Thesis Evaluation):**
