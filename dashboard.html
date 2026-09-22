@@ -574,7 +574,7 @@
                 bar.className = 'risk-bar-fill';
                 bar.style.width = '0%';
 
-                document.getElementById('riskRecText').textContent = 'No screening sessions logged for this account yet. Perform a checkup at the physical kiosk in RTU Pasig Clinic or click "Simulate Kiosk Checkup" above to test your first vital signs reading!';
+                document.getElementById('riskRecText').textContent = 'No screening sessions logged for this account yet. Perform a checkup at the physical kiosk in RTU Pasig Clinic or click "Add Sample Kiosk Record" above to preview sample vital signs!';
                 document.getElementById('riskDateStamp').textContent = 'Awaiting first screening';
 
                 const grid = document.getElementById('vitalsCardsGrid');
@@ -582,9 +582,9 @@
                     <div class="dashboard-empty-card" style="grid-column: 1 / -1;">
                         <i class="fas fa-heart-pulse empty-icon text-red"></i>
                         <h3>Welcome to Your Health Portal, ${user.full_name.split(' ')[0]}!</h3>
-                        <p>You haven't recorded any kiosk checkup sessions yet. You can visit the physical FOVB-AIoT Kiosk at RTU Pasig Clinic or test the system right now by simulating a checkup.</p>
+                        <p>You haven't recorded any kiosk checkup sessions yet. You can visit the physical FOVB-AIoT Kiosk at RTU Pasig Clinic or preview sample records right now by adding a sample record.</p>
                         <button type="button" class="btn-primary" onclick="document.getElementById('simulateModal').classList.add('active')">
-                            <i class="fas fa-play"></i> Simulate Your First Checkup
+                            <i class="fas fa-plus-circle"></i> Add Sample Kiosk Record
                         </button>
                     </div>
                 `;
