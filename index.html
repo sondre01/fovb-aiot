@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOVB-AIoT | Health Prediction Kiosk &amp; Web Portal - RTU Pasig Clinic</title>
+    
+    <!-- Meta tags -->
+    <meta name="description" content="FOVB-AIoT: Four in One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Prediction in RTU Pasig Clinic.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" type="image/png" href="pictures/logo.png">
+</head>
+<body>
+    <!-- Subtle Filipino Cultural Tricolor Micro-Stripe -->
+    <div class="pinoy-accent-bar" title="Mabuhay! Rizal Technological University - Pasig Campus">
+        <span class="bar-blue"></span>
+        <span class="bar-yellow"></span>
+        <span class="bar-red"></span>
+    </div>
+
+    <!-- Main Navigation Bar -->
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="index.html" class="brand-link">
+                <img class="logo-img" src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk &amp; Web Portal</span>
+                </div>
+            </a>
+
+            <!-- Mobile Toggle -->
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="instructions.html">Kiosk Guide</a></li>
+                <li><a href="contact.html">Clinic &amp; Contact</a></li>
+                <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;">
+                    <li><a href="login.html" class="nav-link-login">Sign In</a></li>
+                    <li><a href="register.html" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+                </span>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="pulse-dot"></span>
+                        <span>RTU Pasig Clinic • Capstone Innovation 2026</span>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Four-in-One Vital Sign Sensors &amp; <span class="highlight-red">AI Health Prediction</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        <strong>FOVB-AIoT</strong> is a kiosk-based health monitoring platform integrating 
+                        <strong>Body Temperature, Pulse Oximetry (Heart Rate &amp; Respiratory Rate), Blood Pressure (AI OCR),</strong> and 
+                        <strong>LiDAR &amp; Load Cell BMI calculation</strong> with IoT cloud synchronization for the Rizal Technological University - Pasig Clinic.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a href="about.html" class="btn-primary">
+                            <i class="fas fa-book-open"></i> Explore Documentation &amp; Memories
+                        </a>
+                        <a href="register.html" class="btn-secondary">
+                            <i class="fas fa-user-plus"></i> Create Personal Account
+                        </a>
+                        <a href="login.html" class="btn-outline">
+                            <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Dashboard
+                        </a>
+                    </div>
+
+                    <!-- Quick Live Stats -->
+                    <div class="hero-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-heartbeat"></i></div>
+                            <div>
+                                <div class="stat-number">4-in-1</div>
+                                <div class="stat-label">Vital Signs + BMI</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-id-badge"></i></div>
+                            <div>
+                                <div class="stat-number">&lt; 60s</div>
+                                <div class="stat-label">RFID Fast Checkup</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                            <div>
+                                <div class="stat-number">AI-Driven</div>
+                                <div class="stat-label">YOLO &amp; Risk Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hero-visual">
+                    <div class="device-card">
+                        <div class="device-glow"></div>
+                        <img src="pictures/hero-image.png" alt="FOVB-AIoT Health Kiosk" class="device-img">
+                        <div class="kiosk-floating-badge badge-top">
+                            <i class="fas fa-satellite-dish"></i> <span>IoT Cloud Connected</span>
+                        </div>
+                        <div class="kiosk-floating-badge badge-bottom">
+                            <i class="fas fa-wifi"></i> <span>RFID Tap &amp; Go</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pinoy Clinic Mission Banner -->
+        <section class="pinoy-ribbon-section">
+            <div class="container ribbon-flex">
+                <div class="ribbon-text">
+                    <span class="baybayin-tag">ᜃᜎᜓᜐᜓ4ᜈ᜔</span>
+                    <h3>“Alamin at Bantayan ang Kalusugan, Ka-RTU!”</h3>
+                    <p>Empowering Rizalian students, faculty, and personnel in Pasig with contactless, fast, and preventive vital signs assessment.</p>
+                </div>
+                <div class="ribbon-action">
+                    <a href="instructions.html" class="btn-ribbon">
+                        <i class="fas fa-book-medical"></i> View Kiosk Instructions
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Public Documentation & Research Memories Showcase Section -->
+        <section class="section-documentation-showcase" id="open-archive" style="background: var(--bg-white); padding: 4.5rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag"><i class="fas fa-graduation-cap"></i> Open Thesis Archive</span>
+                    <h2 class="section-title">Explore Our Innovations, Research &amp; Saved Memories</h2>
+                    <p class="section-subtitle">
+                        FOVB-AIoT was developed as an undergraduate capstone research thesis at Rizal Technological University. 
+                        Our complete development documentation, system architecture, and final research paper are openly accessible to everyone.
+                    </p>
+                </div>
+
+                <div class="arch-grid" style="margin-top: 2.5rem;">
+                    <div class="arch-card">
+                        <div class="arch-icon"><i class="fas fa-file-pdf"></i></div>
+                        <h3>Full Research Paper</h3>
+                        <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                            Download the comprehensive 194 MB thesis manuscript containing all clinical trials, statistical validations, circuit schematics, and sensor calibration blueprints.
+                        </p>
+                        <a href="about.html" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            <i class="fas fa-arrow-right"></i> View &amp; Download Paper
+                        </a>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-icon"><i class="fas fa-compass-drafting"></i></div>
+                        <h3>The Innovation Journey</h3>
+                        <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                            Explore our 5-stage engineering timeline: from identifying RTU Pasig Clinic queue friction, to training custom YOLOv8 OCR on 7-segment displays and field testing.
+                        </p>
+                        <a href="about.html" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            <i class="fas fa-history"></i> Read the Story
+                        </a>
+                    </div>
+
+                    <div class="arch-card">
+                        <div class="arch-icon"><i class="fas fa-user-plus"></i></div>
+                        <h3>Create Your Personal Account</h3>
+                        <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                            Register for your own personal portal to link your RFID card, track your individual health checkup history, and simulate kiosk screenings.
+                        </p>
+                        <a href="register.html" class="btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            <i class="fas fa-user-plus"></i> Register Free
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Four-in-One Sensors & Technology Showcase -->
+        <section class="section-tech" id="technology">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag"><i class="fas fa-microchip"></i> Integrated Hardware &amp; Sensors</span>
+                    <h2 class="section-title">The Four-in-One Vital Signs &amp; AI Ecosystem</h2>
+                    <p class="section-subtitle">
+                        The FOVB-AIoT platform synchronizes medical-grade sensors, dual microcontrollers, and computer vision 
+                        into an automated, high-precision health screening station.
+                    </p>
+                </div>
+
+                <div class="sensors-grid">
+                    <!-- Sensor 1 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-red"><i class="fas fa-temperature-high"></i></div>
+                        <span class="sensor-chip">Sensor 01</span>
+                        <h3>Body Temperature</h3>
+                        <h4 class="sensor-model">MLX90614 Infrared Sensor</h4>
+                        <p>Non-contact medical infrared sensor providing hygienic, accurate measurement of core body temperature without physical skin contact, preventing cross-contamination.</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> Accuracy: ±0.2 °C</span>
+                            <span><i class="fas fa-check-circle"></i> Zero-touch safety</span>
+                        </div>
+                    </div>
+
+                    <!-- Sensor 2 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-blue"><i class="fas fa-fingerprint"></i></div>
+                        <span class="sensor-chip">Sensor 02</span>
+                        <h3>Pulse &amp; Respiratory Rate</h3>
+                        <h4 class="sensor-model">MAX30102 PPG Sensor</h4>
+                        <p>Utilizes photoplethysmography (PPG) to measure Heart Rate (BPM), blood Oxygen Saturation (SpO2 %), and derived Respiratory Rate simultaneously.</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> SpO2 Range: 70% – 100%</span>
+                            <span><i class="fas fa-check-circle"></i> Real-time wave tracking</span>
+                        </div>
+                    </div>
+
+                    <!-- Sensor 3 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-red"><i class="fas fa-camera"></i></div>
+                        <span class="sensor-chip">Sensor 03</span>
+                        <h3>Blood Pressure with AI</h3>
+                        <h4 class="sensor-model">YOLO Computer Vision + HD Camera</h4>
+                        <p>Digital cuff unit integrated with an HD camera running YOLO object detection on the Mini PC to accurately read systolic and diastolic values from the LCD display.</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> AI Automated Reading</span>
+                            <span><i class="fas fa-check-circle"></i> Eliminates manual logging</span>
+                        </div>
+                    </div>
+
+                    <!-- Sensor 4 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-yellow"><i class="fas fa-ruler-combined"></i></div>
+                        <span class="sensor-chip">Sensor 04</span>
+                        <h3>LiDAR Height &amp; Weight (BMI)</h3>
+                        <h4 class="sensor-model">TF-Luna LiDAR + HX711 Load Cell</h4>
+                        <p>Laser time-of-flight LiDAR sensor measures exact height overhead, while industrial load cells compute precise weight. Calculates BMI instantly (WHO Asia-Pacific).</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> Instant BMI calculation</span>
+                            <span><i class="fas fa-check-circle"></i> High-precision laser pulses</span>
+                        </div>
+                    </div>
+
+                    <!-- System 5 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-blue"><i class="fas fa-id-card"></i></div>
+                        <span class="sensor-chip">Security &amp; ID</span>
+                        <h3>Fast-Track RFID Tap</h3>
+                        <h4 class="sensor-model">RC522 RFID 13.56 MHz Reader</h4>
+                        <p>Tap your RTU Student / Employee ID card or RFID tag to immediately pull up your patient profile without tedious keyboard typing or line delays.</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> Instant identification</span>
+                            <span><i class="fas fa-check-circle"></i> Secure contactless token</span>
+                        </div>
+                    </div>
+
+                    <!-- System 6 -->
+                    <div class="sensor-card">
+                        <div class="sensor-icon-box icon-red"><i class="fas fa-server"></i></div>
+                        <span class="sensor-chip">Central Hub</span>
+                        <h3>Mini PC &amp; Cloud IoT</h3>
+                        <h4 class="sensor-model">Dell Mini PC + Arduino Mega &amp; Nano</h4>
+                        <p>Dual Arduino microcontrollers coordinate sensor telemetry and transmit it to the Intel Core i5 Mini PC for real-time cloud sync and thermal slip printing.</p>
+                        <div class="sensor-spec">
+                            <span><i class="fas fa-check-circle"></i> Thermal receipt printing</span>
+                            <span><i class="fas fa-check-circle"></i> Real-time cloud sync</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="section-how" id="how-it-works">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag"><i class="fas fa-route"></i> Kiosk Workflow</span>
+                    <h2 class="section-title">How the FOVB-AIoT Kiosk Works</h2>
+                    <p class="section-subtitle">
+                        From contactless RFID tap to AI health risk prediction in 4 seamless steps at the RTU Pasig Clinic.
+                    </p>
+                </div>
+
+                <div class="steps-flow">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-icon"><i class="fas fa-user-check"></i></div>
+                        <h3>1. Register &amp; Tap RFID</h3>
+                        <p>Sign up online through this portal to register your RTU Student ID and RFID tag. Tap your card on the kiosk reader to begin your session.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-icon"><i class="fas fa-weight-scale"></i></div>
+                        <h3>2. Stand for Height &amp; Weight</h3>
+                        <p>Step onto the platform. The TF-Luna LiDAR sensor measures height from above while the load cells weigh you to instantly calculate your BMI.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-icon"><i class="fas fa-heart-pulse"></i></div>
+                        <h3>3. Scan Temperature &amp; Vitals</h3>
+                        <p>Place forehead near the MLX90614 infrared sensor, insert finger into the pulse oximeter, and place arm in the AI-monitored BP cuff.</p>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <div class="step-icon"><i class="fas fa-receipt"></i></div>
+                        <h3>4. AI Risk Score &amp; Slip</h3>
+                        <p>Receive your printed thermal slip, review your AI Comprehensive Health Risk Score, and access long-term trend charts on your online dashboard.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- WHO / DOH Vital Signs Reference Guide -->
+        <section class="section-reference">
+            <div class="container">
+                <div class="section-header text-center">
+                    <span class="section-tag"><i class="fas fa-clipboard-check"></i> Health Standards</span>
+                    <h2 class="section-title">Clinical Normal Ranges &amp; Reference Guide</h2>
+                    <p class="section-subtitle">Based on Department of Health (DOH) Philippines &amp; World Health Organization (WHO) medical guidelines.</p>
+                </div>
+
+                <div class="ref-grid">
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-temperature-three-quarters text-red"></i> Body Temperature</h4>
+                            <span class="status-pill status-normal">Target: 36.5 – 37.5 °C</span>
+                        </div>
+                        <p>Normal range indicates proper metabolic function and no acute infection or febrile illness.</p>
+                    </div>
+
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-heart text-red"></i> Heart Rate (Pulse)</h4>
+                            <span class="status-pill status-normal">Target: 60 – 100 BPM</span>
+                        </div>
+                        <p>Resting heart rate reflects cardiovascular efficiency. Elevated rates may indicate stress, fever, or tachycardia.</p>
+                    </div>
+
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-lungs text-blue"></i> Respiratory Rate</h4>
+                            <span class="status-pill status-normal">Target: 12 – 20 breaths/min</span>
+                        </div>
+                        <p>Monitors pulmonary ventilation. Rapid breathing can signify respiratory exertion or underlying conditions.</p>
+                    </div>
+
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-heart-pulse text-red"></i> Blood Pressure</h4>
+                            <span class="status-pill status-normal">Target: &lt; 120 / &lt; 80 mmHg</span>
+                        </div>
+                        <p>Systolic &amp; diastolic pressure against arterial walls. Critical for early screening of hypertension.</p>
+                    </div>
+
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-droplet text-blue"></i> Oxygen Saturation (SpO2)</h4>
+                            <span class="status-pill status-normal">Target: 95% – 100%</span>
+                        </div>
+                        <p>Percentage of oxygenated hemoglobin in arterial blood. Values below 95% warrant medical evaluation.</p>
+                    </div>
+
+                    <div class="ref-card">
+                        <div class="ref-header">
+                            <h4><i class="fas fa-person text-yellow"></i> Body Mass Index (BMI)</h4>
+                            <span class="status-pill status-normal">Target: 18.5 – 22.9 kg/m²</span>
+                        </div>
+                        <p>Asia-Pacific WHO metric assessing healthy weight distribution for height to screen obesity and malnutrition.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Banner -->
+        <section class="cta-banner">
+            <div class="container cta-container">
+                <div class="cta-text">
+                    <h2>Ready to monitor your health at RTU Pasig Clinic?</h2>
+                    <p>Sign up now to register your RFID card, skip checkup queues, and track your health risk prediction online.</p>
+                </div>
+                <div class="cta-buttons">
+                    <a href="register.html" class="btn-cta-white">
+                        <i class="fas fa-user-plus"></i> Create Free Account
+                    </a>
+                    <a href="login.html" class="btn-cta-trans">
+                        <i class="fas fa-sign-in-alt"></i> Sign In to Portal
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <img src="pictures/logo.png" alt="FOVB-AIoT Logo" class="footer-logo">
+                    <div>
+                        <h3>FOVB-AIoT</h3>
+                        <p class="pinoy-tagline">“Bantay-Kalusugan Para sa Bawat Rizalian at Pilipino”</p>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    Four-in-One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Risk Prediction.
+                    Developed for the RTU Pasig Clinic by BS Computer Engineering researchers, Rizal Technological University.
+                </p>
+                <div class="footer-badges">
+                    <span class="badge-pinoy"><i class="fas fa-heart-pulse"></i> RTU Pasig Clinic</span>
+                    <span class="badge-pinoy"><i class="fas fa-microchip"></i> AI &amp; IoT Enabled</span>
+                </div>
+            </div>
+
+            <div class="footer-col links-col">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home Showcase</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> Thesis Documentation</a></li>
+                    <li><a href="instructions.html"><i class="fas fa-chevron-right"></i> Kiosk Step-by-Step Guide</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> RTU Pasig Clinic Info</a></li>
+                    <li><a href="register.html"><i class="fas fa-chevron-right"></i> Student/Staff Online Sign Up</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col clinic-col">
+                <h4>RTU Pasig Clinic</h4>
+                <p><i class="fas fa-location-dot"></i> Rizal Technological University - Pasig Campus<br>M. Eusebio Avenue, Maybunga, Pasig City</p>
+                <p><i class="fas fa-clock"></i> Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p><i class="fas fa-envelope"></i> clinic.pasig@rtu.edu.ph</p>
+                <p><i class="fas fa-phone"></i> RTU Pasig Trunkline: (02) 8643-2395</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 FOVB-AIoT Research Group • College of Engineering, Rizal Technological University. All rights reserved.</p>
+                <p class="pinoy-quote">ᜃᜎᜓᜐᜓ4ᜈ᜔ • Mabuhay ang Kalusugang Rizalian!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/app.js"></script>
+</body>
+</html>

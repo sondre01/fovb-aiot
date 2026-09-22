@@ -15,11 +15,6 @@ DB_PATH = os.path.join(os.path.dirname(__file__), 'fovb_aiot.db')
 @app.route('/pictures/<path:filename>')
 def serve_pictures(filename):
     pictures_dir = os.path.join(os.path.dirname(__file__), 'pictures')
-    if os.path.exists(os.path.join(pictures_dir, filename)):
-        return send_from_directory(pictures_dir, filename)
-    static_pics = os.path.join(os.path.dirname(__file__), 'static', 'pictures')
-    if os.path.exists(os.path.join(static_pics, filename)):
-        return send_from_directory(static_pics, filename)
     return send_from_directory(pictures_dir, filename)
 
 # Route to serve documents folder (e.g. final research paper PDF) directly

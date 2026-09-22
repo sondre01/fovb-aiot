@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | FOVB-AIoT - RTU Pasig Clinic</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" type="image/png" href="pictures/logo.png">
+</head>
+<body>
+    <div class="pinoy-accent-bar"><span class="bar-blue"></span><span class="bar-yellow"></span><span class="bar-red"></span></div>
+
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="index.html" class="brand-link">
+                <img class="logo-img" src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk &amp; Web Portal</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="instructions.html">Kiosk Guide</a></li>
+                <li><a href="contact.html">Clinic &amp; Contact</a></li>
+                <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;">
+                    <li><a href="login.html" class="active">Sign In</a></li>
+                    <li><a href="register.html" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+                </span>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="auth-section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo-badge">
+                            <img src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                        </div>
+                        <h2>Welcome Back, Ka-RTU!</h2>
+                        <p>Sign in to view your FOVB-AIoT vital signs history, BMI trends, and AI health prediction.</p>
+                    </div>
+
+                    <!-- Instant One-Click Demo Access for Thesis Evaluation -->
+                    <div class="demo-login-box">
+                        <div class="demo-box-icon"><i class="fas fa-sparkles text-red"></i></div>
+                        <div class="demo-box-text">
+                            <strong>Thesis Defense / Rapid Testing Mode:</strong>
+                            <p>Click below to immediately log in with the pre-configured student profile and checkup logs.</p>
+                        </div>
+                        <button type="button" class="btn-demo-login" id="btn1ClickDemo">
+                            <i class="fas fa-arrow-right-to-bracket"></i> 1-Click Demo Student Login
+                        </button>
+                    </div>
+
+                    <div class="or-divider"><span>or sign in with your credentials</span></div>
+
+                    <form id="standaloneLoginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="identifier"><i class="fas fa-id-card"></i> Student ID, Email, or RFID UID <span class="req">*</span></label>
+                            <input type="text" id="identifier" placeholder="e.g. 2022-104928 or user@rtu.edu.ph" required autofocus>
+                            <small class="form-hint">You can also type your 4-byte RFID UID (e.g. E2 80 68 31).</small>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="label-flex">
+                                <label for="password"><i class="fas fa-lock"></i> Password <span class="req">*</span></label>
+                            </div>
+                            <input type="password" id="password" placeholder="Enter your password" required>
+                        </div>
+
+                        <button type="submit" class="btn-primary btn-submit-full mt-3">
+                            <i class="fas fa-right-to-bracket"></i> Sign In to Health Dashboard
+                        </button>
+                    </form>
+
+                    <div class="auth-footer">
+                        <p>New to RTU Pasig Clinic Kiosk? <a href="register.html">Register online now &rarr;</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 FOVB-AIoT Research Group • College of Engineering, Rizal Technological University.</p>
+                <p class="pinoy-quote">ᜃᜎᜓᜐᜓ4ᜈ᜔ • Mabuhay ang Kalusugang Rizalian!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/app.js"></script>
+    <script>
+        document.getElementById('btn1ClickDemo').addEventListener('click', () => {
+            initStorage();
+            localStorage.setItem('fovb_current_user', JSON.stringify(DEMO_USER));
+            window.location.href = 'dashboard.html';
+        });
+
+        document.getElementById('standaloneLoginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const rawId = document.getElementById('identifier').value.trim();
+            const identifier = rawId.toUpperCase();
+            const cleanId = identifier.replace(/[\s-]/g, '');
+            initStorage();
+            const users = JSON.parse(localStorage.getItem('fovb_users') || '[]');
+            const found = users.find(u => {
+                const uStudent = (u.student_id || '').toUpperCase().replace(/[\s-]/g, '');
+                const uEmail = (u.email || '').toUpperCase();
+                const uRfid = (u.rfid_uid || '').toUpperCase().replace(/[\s-]/g, '');
+                return uStudent === cleanId || 
+                       uEmail === identifier || 
+                       (uRfid && (uRfid === cleanId || (u.rfid_uid && u.rfid_uid.toUpperCase() === identifier)));
+            });
+
+            if (found) {
+                localStorage.setItem('fovb_current_user', JSON.stringify(found));
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('No account found for "' + rawId + '". If using a USB RFID scanner, make sure your tag is registered to your account.');
+            }
+        });
+    </script>
+</body>
+</html>

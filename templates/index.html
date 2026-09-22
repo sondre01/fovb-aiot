@@ -31,11 +31,14 @@
                         <i class="fas fa-book-open"></i> Thesis Documentation
                     </a>
                 {% else %}
-                    <a href="{{ url_for('register') }}" class="btn-primary">
+                    <a href="{{ url_for('about') }}" class="btn-primary">
+                        <i class="fas fa-book-open"></i> Explore Documentation &amp; Memories
+                    </a>
+                    <a href="{{ url_for('register') }}" class="btn-secondary">
                         <i class="fas fa-user-plus"></i> Create Personal Account
                     </a>
-                    <a href="{{ url_for('about') }}" class="btn-outline">
-                        <i class="fas fa-book-open"></i> Thesis Documentation
+                    <a href="{{ url_for('login') }}" class="btn-outline">
+                        <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Dashboard
                     </a>
                 {% endif %}
             </div>
@@ -93,6 +96,55 @@
             <a href="{{ url_for('instructions') }}" class="btn-ribbon">
                 <i class="fas fa-book-medical"></i> View Kiosk Instructions
             </a>
+        </div>
+    </div>
+</section>
+
+<!-- Public Documentation & Research Memories Showcase Section -->
+<section class="section-documentation-showcase" id="open-archive" style="background: var(--bg-white); padding: 4.5rem 0; border-top: 1px solid var(--border-light); border-bottom: 1px solid var(--border-light);">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-tag"><i class="fas fa-graduation-cap"></i> Open Thesis Archive</span>
+            <h2 class="section-title">Explore Our Innovations, Research &amp; Saved Memories</h2>
+            <p class="section-subtitle">
+                FOVB-AIoT was developed as an undergraduate capstone research thesis at Rizal Technological University. 
+                Our complete development documentation, system architecture, and final research paper are openly accessible to everyone.
+            </p>
+        </div>
+
+        <div class="arch-grid" style="margin-top: 2.5rem;">
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-file-pdf"></i></div>
+                <h3>Full Research Paper</h3>
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                    Download the comprehensive 194 MB thesis manuscript containing all clinical trials, statistical validations, circuit schematics, and sensor calibration blueprints.
+                </p>
+                <a href="{{ url_for('about') }}" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <i class="fas fa-arrow-right"></i> View &amp; Download Paper
+                </a>
+            </div>
+
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-compass-drafting"></i></div>
+                <h3>The Innovation Journey</h3>
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                    Explore our 5-stage engineering timeline: from identifying RTU Pasig Clinic queue friction, to training custom YOLOv8 OCR on 7-segment displays and field testing.
+                </p>
+                <a href="{{ url_for('about') }}" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <i class="fas fa-history"></i> Read the Story
+                </a>
+            </div>
+
+            <div class="arch-card">
+                <div class="arch-icon"><i class="fas fa-user-plus"></i></div>
+                <h3>Create Your Personal Account</h3>
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                    Register for your own personal portal to link your RFID card, track your individual health checkup history, and simulate kiosk screenings.
+                </p>
+                <a href="{{ url_for('register') }}" class="btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <i class="fas fa-user-plus"></i> Register Free
+                </a>
+            </div>
         </div>
     </div>
 </section>
@@ -264,12 +316,6 @@
                 <h3>4. AI Risk Score & Slip</h3>
                 <p>Receive your printed thermal slip, review your AI Comprehensive Health Risk Score, and access long-term trend charts on your online dashboard.</p>
             </div>
-        </div>
-
-        <div style="text-align: center; margin-top: 2.5rem;">
-            <a href="{{ url_for('instructions') }}" class="btn-primary">
-                <i class="fas fa-book-medical"></i> View Complete Step-by-Step Guide &amp; Checklist
-            </a>
         </div>
     </div>
 </section>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTU Pasig Clinic &amp; Contact | FOVB-AIoT</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Poppins:wght@500;600;700;800&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <link rel="icon" type="image/png" href="pictures/logo.png">
+</head>
+<body>
+    <div class="pinoy-accent-bar"><span class="bar-blue"></span><span class="bar-yellow"></span><span class="bar-red"></span></div>
+
+    <header class="header">
+        <nav class="navbar" id="mainNavbar">
+            <a href="index.html" class="brand-link">
+                <img class="logo-img" src="pictures/logo.png" alt="FOVB-AIoT Logo">
+                <div class="brand-text">
+                    <span class="brand-title">FOVB-AIoT</span>
+                    <span class="brand-sub">RTU Pasig Clinic • Kiosk &amp; Web Portal</span>
+                </div>
+            </a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="instructions.html">Kiosk Guide</a></li>
+                <li><a href="contact.html" class="active">Clinic &amp; Contact</a></li>
+                <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;">
+                    <li><a href="login.html" class="nav-link-login">Sign In</a></li>
+                    <li><a href="register.html" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+                </span>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section class="page-hero">
+            <div class="container">
+                <span class="page-tag"><i class="fas fa-hospital-user"></i> Clinic &amp; Research Inquiries</span>
+                <h1 class="page-title">RTU Pasig Health Clinic</h1>
+                <p class="page-subtitle">
+                    Need assistance with your RFID health pass, kiosk checkups, or capstone research inquiries? We're here to help.
+                </p>
+            </div>
+        </section>
+
+        <section class="section-contact-layout">
+            <div class="container">
+                <div class="contact-grid-wrapper">
+                    <div class="clinic-info-sidebar">
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-location-dot"></i></div>
+                            <div>
+                                <h3>Campus Clinic Location</h3>
+                                <p>
+                                    <strong>Rizal Technological University (Pasig Campus)</strong><br>
+                                    Ground Floor, Clinic &amp; Health Services Unit<br>
+                                    M. Eusebio Avenue, Barangay Maybunga, Pasig City, Metro Manila, Philippines
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-clock"></i></div>
+                            <div>
+                                <h3>Operating Hours</h3>
+                                <p>
+                                    <strong>Monday – Friday:</strong> 8:00 AM – 5:00 PM<br>
+                                    <em>(Closed on weekends and official university holidays)</em>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="info-card">
+                            <div class="info-icon"><i class="fas fa-phone-volume"></i></div>
+                            <div>
+                                <h3>Contact &amp; Support</h3>
+                                <p>
+                                    <strong>Email:</strong> clinic.pasig@rtu.edu.ph<br>
+                                    <strong>Research Team:</strong> fovb.aiot@rtu.edu.ph<br>
+                                    <strong>Trunkline:</strong> (02) 8643-2395
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="pinoy-quote-box">
+                            <span class="quote-symbol">🇵🇭</span>
+                            <p>“Ang kalusugan ng Rizalian ay lakas ng sambayanan. Magpa-checkup nang regular sa FOVB-AIoT kiosk!”</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form-container">
+                        <div class="form-header">
+                            <h2>Send a Message to RTU Clinic &amp; Team</h2>
+                            <p>Have questions about the FOVB-AIoT kiosk, RFID registration, or want to report an issue?</p>
+                        </div>
+
+                        <form id="standaloneContactForm" class="styled-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="name"><i class="fas fa-user"></i> Full Name <span class="req">*</span></label>
+                                    <input type="text" id="name" name="name" placeholder="e.g. Juan Dela Cruz" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email"><i class="fas fa-envelope"></i> Email Address <span class="req">*</span></label>
+                                    <input type="email" id="email" name="email" placeholder="name@rtu.edu.ph" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone"><i class="fas fa-phone"></i> Contact Number</label>
+                                    <input type="tel" id="phone" name="phone" placeholder="+63 9XX XXX XXXX">
+                                </div>
+                                <div class="form-group">
+                                    <label for="subject"><i class="fas fa-heading"></i> Subject <span class="req">*</span></label>
+                                    <select id="subject" name="subject" required>
+                                        <option value="" disabled selected>Select an inquiry topic...</option>
+                                        <option value="RFID Card Registration / Loss">RFID Card Registration / Loss</option>
+                                        <option value="Kiosk Reading Concern">Kiosk Reading / Calibration Concern</option>
+                                        <option value="Clinic Medical Consultation">Clinic Medical Consultation Request</option>
+                                        <option value="Thesis &amp; Academic Inquiry">Thesis / Academic Collaboration Inquiry</option>
+                                        <option value="General Feedback">General Feedback &amp; Suggestions</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message"><i class="fas fa-comment-dots"></i> Message Details <span class="req">*</span></label>
+                                <textarea id="message" name="message" rows="5" placeholder="Please describe your message or concern in detail..." required></textarea>
+                            </div>
+
+                            <button type="submit" class="btn-primary btn-submit-full">
+                                <i class="fas fa-paper-plane"></i> Submit Inquiry to RTU Clinic
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col brand-col">
+                <div class="footer-brand">
+                    <img src="pictures/logo.png" alt="FOVB-AIoT Logo" class="footer-logo">
+                    <div>
+                        <h3>FOVB-AIoT</h3>
+                        <p class="pinoy-tagline">“Bantay-Kalusugan Para sa Bawat Rizalian at Pilipino”</p>
+                    </div>
+                </div>
+                <p class="footer-desc">
+                    Four-in-One Vital Sign Sensors with BMI Calculation using AI and IoT for Health Risk Prediction.
+                    Developed for the RTU Pasig Clinic by BS Computer Engineering researchers, Rizal Technological University.
+                </p>
+                <div class="footer-badges">
+                    <span class="badge-pinoy"><i class="fas fa-heart-pulse"></i> RTU Pasig Clinic</span>
+                    <span class="badge-pinoy"><i class="fas fa-microchip"></i> AI &amp; IoT Enabled</span>
+                </div>
+            </div>
+
+            <div class="footer-col links-col">
+                <h4>Quick Navigation</h4>
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home Showcase</a></li>
+                    <li><a href="about.html"><i class="fas fa-chevron-right"></i> Thesis Documentation</a></li>
+                    <li><a href="instructions.html"><i class="fas fa-chevron-right"></i> Kiosk Step-by-Step Guide</a></li>
+                    <li><a href="contact.html"><i class="fas fa-chevron-right"></i> RTU Pasig Clinic Info</a></li>
+                    <li><a href="register.html"><i class="fas fa-chevron-right"></i> Student/Staff Online Sign Up</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col clinic-col">
+                <h4>RTU Pasig Clinic</h4>
+                <p><i class="fas fa-location-dot"></i> Rizal Technological University - Pasig Campus<br>M. Eusebio Avenue, Maybunga, Pasig City</p>
+                <p><i class="fas fa-clock"></i> Monday – Friday: 8:00 AM – 5:00 PM</p>
+                <p><i class="fas fa-envelope"></i> clinic.pasig@rtu.edu.ph</p>
+                <p><i class="fas fa-phone"></i> RTU Pasig Trunkline: (02) 8643-2395</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-bottom-inner">
+                <p>&copy; 2026 FOVB-AIoT Research Group • College of Engineering, Rizal Technological University. All rights reserved.</p>
+                <p class="pinoy-quote">ᜃᜎᜓᜐᜓ4ᜈ᜔ • Mabuhay ang Kalusugang Rizalian!</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="static/app.js"></script>
+    <script>
+        document.getElementById('standaloneContactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Salamat! Your message has been received by RTU Pasig Clinic and the FOVB-AIoT team. We will get back to you shortly.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
