@@ -21,27 +21,6 @@
                 Revisit our engineering journey, download our complete research paper, or register your RFID card to access your historical vital signs and AI health records captured at the campus kiosk.
             </p>
 
-            <div class="hero-actions">
-                {% if current_user %}
-                    <a href="{{ url_for('dashboard') }}" class="btn-primary">
-                        <i class="fas fa-chart-line"></i> Open My Health Dashboard
-                    </a>
-                    <a href="{{ url_for('about') }}" class="btn-outline">
-                        <i class="fas fa-book-open"></i> Thesis Documentation &amp; Memories
-                    </a>
-                {% else %}
-                    <a href="{{ url_for('about') }}" class="btn-primary">
-                        <i class="fas fa-book-open"></i> Explore Documentation &amp; Memories
-                    </a>
-                    <a href="{{ url_for('register') }}" class="btn-secondary">
-                        <i class="fas fa-user-plus"></i> Register Student Account
-                    </a>
-                    <a href="{{ url_for('login') }}" class="btn-outline">
-                        <i class="fas fa-arrow-right-to-bracket"></i> Sign In to Records
-                    </a>
-                {% endif %}
-            </div>
-
             <!-- Quick Live Stats -->
             <div class="hero-stats">
                 <div class="stat-card">
@@ -91,11 +70,6 @@
             <h3>“Alamin at Bantayan ang Kalusugan, Ka-RTU!”</h3>
             <p>Empowering Rizalian students, faculty, and personnel in Pasig with contactless, fast, and preventive vital signs assessment.</p>
         </div>
-        <div class="ribbon-action">
-            <a href="{{ url_for('instructions') }}" class="btn-ribbon">
-                <i class="fas fa-book-medical"></i> View Kiosk Instructions
-            </a>
-        </div>
     </div>
 </section>
 
@@ -115,34 +89,25 @@
             <div class="arch-card">
                 <div class="arch-icon"><i class="fas fa-file-pdf"></i></div>
                 <h3>Full Research Paper</h3>
-                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 0;">
                     Download the comprehensive 194 MB thesis manuscript containing all clinical trials, statistical validations, circuit schematics, and sensor calibration blueprints.
                 </p>
-                <a href="{{ url_for('about') }}" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                    <i class="fas fa-arrow-right"></i> View &amp; Download Paper
-                </a>
             </div>
 
             <div class="arch-card">
                 <div class="arch-icon"><i class="fas fa-compass-drafting"></i></div>
                 <h3>The Innovation Journey</h3>
-                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 0;">
                     Explore our 5-stage engineering timeline: from identifying RTU Pasig Clinic queue friction, to training custom YOLOv8 OCR on 7-segment displays and field testing.
                 </p>
-                <a href="{{ url_for('about') }}" class="btn-outline" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                    <i class="fas fa-history"></i> Read the Story
-                </a>
             </div>
 
             <div class="arch-card">
                 <div class="arch-icon"><i class="fas fa-user-plus"></i></div>
                 <h3>Create Your Personal Account</h3>
-                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 1.25rem;">
-                    Register for your own personal portal to link your RFID card, track your individual health checkup history, and simulate kiosk screenings.
+                <p style="font-size: 0.92rem; color: var(--text-body); line-height: 1.6; margin-bottom: 0;">
+                    Sign up for your own personal portal to link your RFID card, track your individual health checkup history, and simulate kiosk screenings.
                 </p>
-                <a href="{{ url_for('register') }}" class="btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.1rem; display: inline-flex; align-items: center; gap: 0.4rem;">
-                    <i class="fas fa-user-plus"></i> Register Free
-                </a>
             </div>
         </div>
     </div>
@@ -287,8 +252,8 @@
             <div class="step-card">
                 <div class="step-number">1</div>
                 <div class="step-icon"><i class="fas fa-id-badge"></i></div>
-                <h3>1. Register with USB RFID</h3>
-                <p>Register online through this portal using your laptop and USB RFID scanner (or manual entry). Your profile is securely linked to your RTU ID.</p>
+                <h3>1. Sign Up with USB RFID</h3>
+                <p>Sign up online through this portal using your laptop and USB RFID scanner (or manual entry). Your profile is securely linked to your RTU ID.</p>
             </div>
 
             <!-- Step 2 -->
@@ -375,24 +340,6 @@
                 </div>
                 <p>Asia-Pacific WHO metric assessing healthy weight distribution for height to screen obesity and malnutrition.</p>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- Call to Action Banner -->
-<section class="cta-banner">
-    <div class="container cta-container">
-        <div class="cta-text">
-            <h2>Ready to monitor your health at RTU Pasig Clinic?</h2>
-            <p>Sign up now to register your RFID card, skip checkup queues, and track your health risk prediction online.</p>
-        </div>
-        <div class="cta-buttons">
-            <a href="{{ url_for('register') }}" class="btn-cta-white">
-                <i class="fas fa-user-plus"></i> Create Free Account
-            </a>
-            <a href="{{ url_for('login') }}" class="btn-cta-trans">
-                <i class="fas fa-sign-in-alt"></i> Sign In to Portal
-            </a>
         </div>
     </div>
 </section>

@@ -268,7 +268,7 @@ function updateNavbar() {
     } else {
         authArea.innerHTML = `
             <li><a href="login.html" class="nav-link-login">Sign In</a></li>
-            <li><a href="register.html" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+            <li><a href="register.html" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Sign Up</a></li>
         `;
     }
 }

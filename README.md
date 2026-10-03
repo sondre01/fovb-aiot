@@ -137,7 +137,7 @@ python -m unittest discover tests
 
 ### Account Access & Evaluation
 - **Public Access & Open Documentation:** Visitors can freely explore the system documentation, engineering journey, and download the full research paper PDF without logging in.
-- **Personal Accounts:** Visitors can click **Register** to create their own personal account, receive a unique RFID token, and record/view their own checkup history.
+- **Personal Accounts:** Visitors can click **Sign Up** to create their own personal account, receive a unique RFID token, and record/view their own checkup history.
 - **Pre-configured Demo Student (for Thesis Evaluation):**
   - **Identifier:** `DEMO-2026-01` (or `demo.student@rtu.edu.ph` or RFID: `E2 80 68 31`)
   - **Password:** `password123`

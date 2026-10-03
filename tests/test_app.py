@@ -100,5 +100,19 @@ class TestFovbAiot(unittest.TestCase):
         response.close()
         print("[PASS] File serving routes (pictures, docs, index.html) passed")
 
+    def test_register_and_signup_pages(self):
+        # Test /register route
+        response = self.client.get('/register')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Sign Up', response.data)
+        response.close()
+
+        # Test /signup alias route
+        response = self.client.get('/signup')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn(b'Sign Up', response.data)
+        response.close()
+        print("[PASS] Register & Sign Up routes test passed")
+
 if __name__ == '__main__':
     unittest.main()

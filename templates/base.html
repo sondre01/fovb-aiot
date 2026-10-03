@@ -52,7 +52,7 @@
             <!-- Navigation Links -->
             <ul class="nav-links" id="navLinks">
                 <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
-                <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About &amp; Memories</a></li>
+                <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
                 <li><a href="{{ url_for('instructions') }}" class="{% if request.endpoint == 'instructions' %}active{% endif %}">Kiosk Guide</a></li>
                 <li><a href="{{ url_for('contact') }}" class="{% if request.endpoint == 'contact' %}active{% endif %}">Clinic &amp; Contact</a></li>
                 
@@ -72,7 +72,7 @@
                     </li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}" class="nav-link-login {% if request.endpoint == 'login' %}active{% endif %}">Sign In</a></li>
-                    <li><a href="{{ url_for('register') }}" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Register</a></li>
+                    <li><a href="{{ url_for('register') }}" class="btn-nav-cta"><i class="fas fa-user-plus"></i> Sign Up</a></li>
                 {% endif %}
             </ul>
         </nav>

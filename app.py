@@ -400,6 +400,8 @@ def contact():
 
 @app.route('/register', methods=['GET', 'POST'])
 @app.route('/register.html', methods=['GET', 'POST'])
+@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/signup.html', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         full_name = request.form.get('full_name', '').strip()
@@ -463,7 +465,7 @@ def register():
         # Automatically log the user in
         session['user_id'] = user_id
         session['user_name'] = full_name
-        flash(f'Mabuhay, {full_name}! Registration successful. Your RFID UID is {rfid_uid}.', 'success')
+        flash(f'Mabuhay, {full_name}! Sign up successful. Your RFID UID is {rfid_uid}.', 'success')
         return redirect(url_for('dashboard'))
 
     return render_template('register.html')
@@ -508,7 +510,7 @@ def demo_login():
         session['user_name'] = user['full_name']
         flash(f'Logged in as Demo Student: {user["full_name"]} (RFID: {user["rfid_uid"]})', 'info')
         return redirect(url_for('dashboard'))
-    flash('Demo user not found. Please register a new account.', 'warning')
+    flash('Demo user not found. Please sign up for a new account.', 'warning')
     return redirect(url_for('register'))
 
 @app.route('/logout')
@@ -622,7 +624,7 @@ def api_check_rfid(rfid_uid):
         return jsonify({
             'status': 'not_found',
             'found': False,
-            'message': f'RFID UID {cleaned_rfid} not registered in FOVB-AIoT system. Please register online.'
+            'message': f'RFID UID {cleaned_rfid} not registered in FOVB-AIoT system. Please sign up online.'
         }), 404
 
 @app.route('/api/kiosk/checkup', methods=['POST'])
@@ -636,7 +638,7 @@ def api_record_checkup():
         conn.close()
         return jsonify({
             'status': 'error',
-            'message': 'Unregistered RFID card. Please register at the FOVB-AIoT web portal.'
+            'message': 'Unregistered RFID card. Please sign up at the FOVB-AIoT web portal.'
         }), 400
 
     user_id = user['id']

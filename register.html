@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Registration &amp; RFID Linking | FOVB-AIoT</title>
+    <title>Online Sign Up &amp; RFID Linking | FOVB-AIoT</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,12 +27,12 @@
             <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
             <ul class="nav-links" id="navLinks">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Thesis</a></li>
+                <li><a href="about.html">About</a></li>
                 <li><a href="instructions.html">Kiosk Guide</a></li>
                 <li><a href="contact.html">Clinic &amp; Contact</a></li>
                 <span id="navbarAuthArea" style="display: flex; align-items: center; gap: 1rem;">
                     <li><a href="login.html">Sign In</a></li>
-                    <li><a href="register.html" class="btn-nav-cta active"><i class="fas fa-user-plus"></i> Register</a></li>
+                    <li><a href="register.html" class="btn-nav-cta active"><i class="fas fa-user-plus"></i> Sign Up</a></li>
                 </span>
             </ul>
         </nav>
@@ -47,7 +47,7 @@
                             <img src="static/pictures/logo.png" alt="FOVB-AIoT Logo">
                         </div>
                         <h2>Create Your Health Account</h2>
-                        <p>Register online to link your RTU Student/Employee ID &amp; RFID card for fast kiosk screening.</p>
+                        <p>Sign up online to link your RTU Student/Employee ID &amp; RFID card for fast kiosk screening.</p>
                     </div>
 
                     <div class="demo-helper-bar">
@@ -149,7 +149,7 @@
                         </div>
 
                         <button type="submit" class="btn-primary btn-submit-full mt-3">
-                            <i class="fas fa-user-plus"></i> Complete Online Registration
+                            <i class="fas fa-user-plus"></i> Complete Online Sign Up
                         </button>
                     </form>
 
@@ -229,7 +229,7 @@
             localStorage.setItem('fovb_current_user', JSON.stringify(newUser));
             localStorage.setItem(`fovb_logs_user_${newUser.id}`, JSON.stringify([]));
 
-            alert(`Mabuhay, ${newUser.full_name}! Registration successful. Your RFID UID is ${newUser.rfid_uid}.`);
+            alert(`Mabuhay, ${newUser.full_name}! Sign up successful. Your RFID UID is ${newUser.rfid_uid}.`);
             window.location.href = 'dashboard.html';
         });
     </script>
