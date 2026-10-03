@@ -19,7 +19,7 @@ An undergraduate capstone thesis project presented to the Faculty of the **Colle
 1. **Non-Contact Core Temperature:** MLX90614 Infrared optical sensor (±0.2 °C accuracy, 100% hygienic zero-touch operation).
 2. **Pulse Oximetry (Heart Rate & Respiratory Rate):** MAX30102 Photoplethysmography (PPG) optical sensor measuring Heart Rate (BPM), blood Oxygen Saturation (SpO2 %), and derived respiratory rhythm.
 3. **Blood Pressure (AI Computer Vision):** Digital blood pressure cuff monitored by an HD webcam using a custom-trained **YOLO** object detection model running on the Mini PC to extract systolic, diastolic, and pulse readings from the LCD.
-4. **Automated Anthropometric BMI:** TF-Luna LiDAR laser time-of-flight sensor for overhead height measurement combined with four HX711 industrial load cells for weight, auto-computing Asia-Pacific WHO Body Mass Index.
+4. **Automated Anthropometric BMI (AI Clearance & Vision):** TF-Luna LiDAR laser time-of-flight sensor for overhead height measurement combined with four HX711 industrial load cells for weight, reinforced by AI computer vision for body clearance and footwear detection (detecting shoes, carried bags, or objects that affect height or weight) before auto-computing Asia-Pacific WHO Body Mass Index.
 5. **Fast-Track Contactless RFID:** RC522 13.56 MHz RFID reader on the physical kiosk console allowing students and faculty to tap their ID card to complete screening in under 60 seconds without retyping credentials.
 6. **Central Processing Unit:** Dell Mini PC (Intel Core i5 10th Gen) coupled with an Arduino Mega 2560 and Arduino Nano dual-controller setup, integrated with an embedded thermal slip printer.
 
